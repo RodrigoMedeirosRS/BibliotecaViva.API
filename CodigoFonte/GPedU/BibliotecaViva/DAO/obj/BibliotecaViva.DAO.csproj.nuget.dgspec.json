@@ -1,35 +1,33 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\edmundo\\Documents\\Rodrigo\\Projetos\\Biblioteca_Viva\\CodigoFonte\\GPedU\\BibliotecaViva\\DAO\\BibliotecaViva.DAO.csproj": {}
+    "/home/rmlehnemann/Projetos/Biblioteca_Viva/CodigoFonte/GPedU/BibliotecaViva/DAO/BibliotecaViva.DAO.csproj": {}
   },
   "projects": {
-    "C:\\Users\\edmundo\\Documents\\Rodrigo\\Projetos\\Biblioteca_Viva\\CodigoFonte\\GPedU\\BibliotecaViva\\DAO\\BibliotecaViva.DAO.csproj": {
+    "/home/rmlehnemann/Projetos/Biblioteca_Viva/CodigoFonte/GPedU/BibliotecaViva/DAO/BibliotecaViva.DAO.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\edmundo\\Documents\\Rodrigo\\Projetos\\Biblioteca_Viva\\CodigoFonte\\GPedU\\BibliotecaViva\\DAO\\BibliotecaViva.DAO.csproj",
+        "projectUniqueName": "/home/rmlehnemann/Projetos/Biblioteca_Viva/CodigoFonte/GPedU/BibliotecaViva/DAO/BibliotecaViva.DAO.csproj",
         "projectName": "BibliotecaViva.DAO",
-        "projectPath": "C:\\Users\\edmundo\\Documents\\Rodrigo\\Projetos\\Biblioteca_Viva\\CodigoFonte\\GPedU\\BibliotecaViva\\DAO\\BibliotecaViva.DAO.csproj",
-        "packagesPath": "C:\\Users\\edmundo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\edmundo\\Documents\\Rodrigo\\Projetos\\Biblioteca_Viva\\CodigoFonte\\GPedU\\BibliotecaViva\\DAO\\obj\\",
+        "projectPath": "/home/rmlehnemann/Projetos/Biblioteca_Viva/CodigoFonte/GPedU/BibliotecaViva/DAO/BibliotecaViva.DAO.csproj",
+        "packagesPath": "/home/rmlehnemann/.nuget/packages/",
+        "outputPath": "/home/rmlehnemann/Projetos/Biblioteca_Viva/CodigoFonte/GPedU/BibliotecaViva/DAO/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\edmundo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/rmlehnemann/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "netstandard2.0"
+          "netstandard2.1"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netstandard2.0": {
-            "targetAlias": "netstandard2.0",
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
             "projectReferences": {
-              "C:\\Users\\edmundo\\Documents\\Rodrigo\\Projetos\\Biblioteca_Viva\\CodigoFonte\\GPedU\\BibliotecaViva\\System.Data.SQLite.NetStandard\\System.Data.SQLite.NetStandard.csproj": {
-                "projectPath": "C:\\Users\\edmundo\\Documents\\Rodrigo\\Projetos\\Biblioteca_Viva\\CodigoFonte\\GPedU\\BibliotecaViva\\System.Data.SQLite.NetStandard\\System.Data.SQLite.NetStandard.csproj"
+              "/home/rmlehnemann/Projetos/Biblioteca_Viva/CodigoFonte/GPedU/BibliotecaViva/System.Data.SQLite.NetStandard/System.Data.SQLite.NetStandard.csproj": {
+                "projectPath": "/home/rmlehnemann/Projetos/Biblioteca_Viva/CodigoFonte/GPedU/BibliotecaViva/System.Data.SQLite.NetStandard/System.Data.SQLite.NetStandard.csproj"
               }
             }
           }
@@ -41,14 +39,18 @@
         }
       },
       "frameworks": {
-        "netstandard2.0": {
-          "targetAlias": "netstandard2.0",
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
           "dependencies": {
-            "NETStandard.Library": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[2.0.3, )",
-              "autoReferenced": true
+              "version": "[5.0.10, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[5.0.10, )"
             }
           },
           "imports": [
@@ -61,28 +63,31 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.401/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\edmundo\\Documents\\Rodrigo\\Projetos\\Biblioteca_Viva\\CodigoFonte\\GPedU\\BibliotecaViva\\System.Data.SQLite.NetStandard\\System.Data.SQLite.NetStandard.csproj": {
+    "/home/rmlehnemann/Projetos/Biblioteca_Viva/CodigoFonte/GPedU/BibliotecaViva/System.Data.SQLite.NetStandard/System.Data.SQLite.NetStandard.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\edmundo\\Documents\\Rodrigo\\Projetos\\Biblioteca_Viva\\CodigoFonte\\GPedU\\BibliotecaViva\\System.Data.SQLite.NetStandard\\System.Data.SQLite.NetStandard.csproj",
+        "projectUniqueName": "/home/rmlehnemann/Projetos/Biblioteca_Viva/CodigoFonte/GPedU/BibliotecaViva/System.Data.SQLite.NetStandard/System.Data.SQLite.NetStandard.csproj",
         "projectName": "System.Data.SQLite.NetStandard",
-        "projectPath": "C:\\Users\\edmundo\\Documents\\Rodrigo\\Projetos\\Biblioteca_Viva\\CodigoFonte\\GPedU\\BibliotecaViva\\System.Data.SQLite.NetStandard\\System.Data.SQLite.NetStandard.csproj",
-        "packagesPath": "C:\\Users\\edmundo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\edmundo\\Documents\\Rodrigo\\Projetos\\Biblioteca_Viva\\CodigoFonte\\GPedU\\BibliotecaViva\\System.Data.SQLite.NetStandard\\obj\\",
+        "projectPath": "/home/rmlehnemann/Projetos/Biblioteca_Viva/CodigoFonte/GPedU/BibliotecaViva/System.Data.SQLite.NetStandard/System.Data.SQLite.NetStandard.csproj",
+        "packagesPath": "/home/rmlehnemann/.nuget/packages/",
+        "outputPath": "/home/rmlehnemann/Projetos/Biblioteca_Viva/CodigoFonte/GPedU/BibliotecaViva/System.Data.SQLite.NetStandard/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\edmundo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/rmlehnemann/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -118,7 +123,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.401/RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -32,23 +32,23 @@ namespace BibliotecaViva.DAL
         {
             return (from pessoa in DataContext.ObterDataContext().Table<Pessoa>()
                 join
-                    nomeSocial in DataContext.ObterDataContext().Table<NomeSocial>()
+                    nomeSocial in DataContext.ObterDataContext().Table<Nomesocial>()
                     on pessoa.Codigo equals nomeSocial.Pessoa into nomeSocialLeftJoin from nomeSocialLeft in nomeSocialLeftJoin.DefaultIfEmpty()
                 join
-                    pessoaApelido in DataContext.ObterDataContext().Table<PessoaApelido>()
+                    pessoaApelido in DataContext.ObterDataContext().Table<Pessoaapelido>()
                     on pessoa.Codigo equals pessoaApelido.Pessoa into pessoaApelidoLeftJoin from pessoaApelidoLeft in pessoaApelidoLeftJoin.DefaultIfEmpty()
                 join
                    apelido in DataContext.ObterDataContext().Table<Apelido>()
-                   on new PessoaApelido(){ 
+                   on new Pessoaapelido(){ 
                        Apelido = pessoaApelidoLeft != null ? pessoaApelidoLeft.Apelido : 0
                     }.Apelido equals apelido.Codigo into apelidoLeftJoin from apelidoLeft in apelidoLeftJoin.DefaultIfEmpty()
                 join
-                    pessoaLocalizacao in DataContext.ObterDataContext().Table<PessoaLocalizao>()
+                    pessoaLocalizacao in DataContext.ObterDataContext().Table<Pessoalocalizacao>()
                     on pessoa.Codigo equals pessoaLocalizacao.Pessoa into pessoaLocalizacaoLeftJoin from pessoaLocalizacaoLeft in pessoaLocalizacaoLeftJoin.DefaultIfEmpty()
                 join
-                   localizacaoGeografica in DataContext.ObterDataContext().Table<LocalizacaoGeografica>()
-                   on new PessoaLocalizao(){ 
-                       LocalizacaoGeografica = pessoaLocalizacaoLeft != null ? pessoaLocalizacaoLeft.LocalizacaoGeografica : 0
+                   localizacaoGeografica in DataContext.ObterDataContext().Table<Localizacaogeografica>()
+                   on new Pessoalocalizacao(){ 
+                       Localizacaogeografica = pessoaLocalizacaoLeft != null ? pessoaLocalizacaoLeft.LocalizacaoGeografica : 0
                     }.LocalizacaoGeografica equals localizacaoGeografica.Codigo into localizacaoGeograficaLeftJoin from localizacaoGeograficaLeft in localizacaoGeograficaLeftJoin.DefaultIfEmpty()
                 
                 where pessoa.Nome == pessoaDTO.Nome && pessoa.Sobrenome == pessoaDTO.Sobrenome
@@ -67,7 +67,7 @@ namespace BibliotecaViva.DAL
                 }).DistinctBy(pessoaDB => pessoaDB.Codigo).ToList();
         }
 
-        private double? ObterLocalizacaoGeorafica(LocalizacaoGeografica localizacaoGeograficaLeft, bool latitude)
+        private double? ObterLocalizacaoGeorafica(Localizacaogeografica localizacaoGeograficaLeft, bool latitude)
         {
             if (localizacaoGeograficaLeft != null)
                 return latitude ? localizacaoGeograficaLeft.Latitude : localizacaoGeograficaLeft.Longitude;

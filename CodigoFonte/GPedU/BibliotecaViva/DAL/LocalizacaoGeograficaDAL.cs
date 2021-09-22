@@ -14,17 +14,17 @@ namespace BibliotecaViva.DAL
         public void Cadastrar(LocalizacaoGeograficaDTO localizacaoGeograficaDTO)
         {
             localizacaoGeograficaDTO.Codigo = ValidarJaCadastrado(localizacaoGeograficaDTO);
-            DataContext.ObterDataContext().InsertOrReplace(Mapear<LocalizacaoGeograficaDTO, LocalizacaoGeografica>(localizacaoGeograficaDTO));
+            DataContext.ObterDataContext().InsertOrReplace(Mapear<LocalizacaoGeograficaDTO, Localizacaogeografica>(localizacaoGeograficaDTO));
         }
 
         public void Vincular(LocalizacaoGeograficaDTO localizacaoGeograficaDTO, PessoaDTO pessoaDTO)
         {
             localizacaoGeograficaDTO.Codigo = ValidarJaCadastrado(localizacaoGeograficaDTO);
             if (localizacaoGeograficaDTO.Codigo != null)
-                DataContext.ObterDataContext().InsertOrReplace(new PessoaLocalizao()
+                DataContext.ObterDataContext().InsertOrReplace(new Pessoalocalizacao()
                 {
                     Pessoa = (int)pessoaDTO.Codigo,
-                    LocalizacaoGeografica = (int)localizacaoGeograficaDTO.Codigo
+                    Localizacaogeografica = (int)localizacaoGeograficaDTO.Codigo
                 });
         }
 
@@ -32,30 +32,30 @@ namespace BibliotecaViva.DAL
         {
             localizacaoGeograficaDTO.Codigo = ValidarJaCadastrado(localizacaoGeograficaDTO);
             if (localizacaoGeograficaDTO.Codigo != null)
-                DataContext.ObterDataContext().InsertOrReplace(new RegistroLocalizacao()
+                DataContext.ObterDataContext().InsertOrReplace(new Registrolocalizacao()
                 {
                     Registro = (int)registroDTO.Codigo,
-                    LocalizacaoGeografica = (int)localizacaoGeograficaDTO.Codigo
+                    Localizacaogeografica = (int)localizacaoGeograficaDTO.Codigo
                 });
         }
         
         public void RemoverVinculoPessoa(int? codigoPessoa)
         {
-            var resultado = DataContext.ObterDataContext().Table<PessoaLocalizao>().FirstOrDefault(localizacaoGeografica => localizacaoGeografica.Pessoa == codigoPessoa);
+            var resultado = DataContext.ObterDataContext().Table<Pessoalocalizacao>().FirstOrDefault(localizacaoGeografica => localizacaoGeografica.Pessoa == codigoPessoa);
             if (resultado != null)
                 DataContext.ObterDataContext().Delete(resultado);
         }
 
         public void RemoverVinculoRegistro(int? codigoRegistro)
         {
-            var resultado = DataContext.ObterDataContext().Table<RegistroApelido>().FirstOrDefault(localizacaoGeografica => localizacaoGeografica.Registro == codigoRegistro);
+            var resultado = DataContext.ObterDataContext().Table<Registroapelido>().FirstOrDefault(localizacaoGeografica => localizacaoGeografica.Registro == codigoRegistro);
             if (resultado != null)
                 DataContext.ObterDataContext().Delete(resultado);
         }
 
         private int? ValidarJaCadastrado(LocalizacaoGeograficaDTO localizacaoGeograficaDTO)
         {
-            var resultado = DataContext.ObterDataContext().Table<LocalizacaoGeografica>().
+            var resultado = DataContext.ObterDataContext().Table<Localizacaogeografica>().
                 FirstOrDefault(localizacaoGeografica => 
                     localizacaoGeografica.Latitude == localizacaoGeograficaDTO.Latitude &&
                     localizacaoGeografica.Longitude == localizacaoGeograficaDTO.Longitude);

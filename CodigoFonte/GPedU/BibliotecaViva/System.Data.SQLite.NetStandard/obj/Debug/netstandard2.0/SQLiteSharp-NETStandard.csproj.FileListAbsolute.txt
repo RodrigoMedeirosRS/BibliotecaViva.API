@@ -1,8 +1,0 @@
-C:\Users\edmundo\Documents\Rodrigo\Projetos\SQLiteSharp-NETStandard\SQLiteSharp-NETStandard\SQLiteSharp-NETStandard\obj\Debug\netstandard2.0\SQLiteSharp-NETStandard.AssemblyInfoInputs.cache
-C:\Users\edmundo\Documents\Rodrigo\Projetos\SQLiteSharp-NETStandard\SQLiteSharp-NETStandard\SQLiteSharp-NETStandard\obj\Debug\netstandard2.0\SQLiteSharp-NETStandard.AssemblyInfo.cs
-C:\Users\edmundo\Documents\Rodrigo\Projetos\SQLiteSharp-NETStandard\SQLiteSharp-NETStandard\SQLiteSharp-NETStandard\obj\Debug\netstandard2.0\SQLiteSharp-NETStandard.csproj.CoreCompileInputs.cache
-C:\Users\edmundo\Documents\Rodrigo\Projetos\SQLiteSharp-NETStandard\SQLiteSharp-NETStandard\SQLiteSharp-NETStandard\bin\Debug\netstandard2.0\SQLiteSharp-NETStandard.deps.json
-C:\Users\edmundo\Documents\Rodrigo\Projetos\SQLiteSharp-NETStandard\SQLiteSharp-NETStandard\SQLiteSharp-NETStandard\bin\Debug\netstandard2.0\SQLiteSharp-NETStandard.dll
-C:\Users\edmundo\Documents\Rodrigo\Projetos\SQLiteSharp-NETStandard\SQLiteSharp-NETStandard\SQLiteSharp-NETStandard\bin\Debug\netstandard2.0\SQLiteSharp-NETStandard.pdb
-C:\Users\edmundo\Documents\Rodrigo\Projetos\SQLiteSharp-NETStandard\SQLiteSharp-NETStandard\SQLiteSharp-NETStandard\obj\Debug\netstandard2.0\SQLiteSharp-NETStandard.dll
-C:\Users\edmundo\Documents\Rodrigo\Projetos\SQLiteSharp-NETStandard\SQLiteSharp-NETStandard\SQLiteSharp-NETStandard\obj\Debug\netstandard2.0\SQLiteSharp-NETStandard.pdb

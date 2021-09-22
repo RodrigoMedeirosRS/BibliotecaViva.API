@@ -16,7 +16,7 @@ namespace BibliotecaViva.DAL
         {
             DataContext.ObterDataContext().InsertOrReplace(new Idioma()
             {
-                Codigo = ValidarJaCadastrado(idiomaDTO),
+                Codigo = (int)ValidarJaCadastrado(idiomaDTO),
                 Nome = idiomaDTO.Nome
             });
         }
