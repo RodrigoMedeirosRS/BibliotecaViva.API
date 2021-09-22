@@ -1,32 +1,14 @@
 {
   "files.exclude": {
-    ".vs/GPedU": true,
-    ".vs": true,
     ".vscode": true,
-    "BibliotecaViva/.vscode": true,
-    "BibliotecaViva/bin/Debug/netcoreapp3.1": true,
-    "BibliotecaViva/bin": true,
-    "BibliotecaViva/BLL/bin/Debug/netstandard2.0": true,
+    "BibliotecaViva/API/bin": true,
     "BibliotecaViva/BLL/bin": true,
     "BibliotecaViva/BLL/obj": true,
     "BibliotecaViva/DAL/bin": true,
     "BibliotecaViva/DAL/obj": true,
-    "BibliotecaViva/DTO/bin": true,
-    "BibliotecaViva/DTO/obj": true,
-    "BibliotecaViva/obj": true,
-    "BibliotecaViva/System.Data.SQLite.NetStandard/bin": true,
-    "BibliotecaViva/System.Data.SQLite.NetStandard/obj": true,
-    "BibliotecaViva\\API\\bin\\Debug\\netcoreapp3.1": true,
-    "BibliotecaViva\\API\\bin": true,
-    "BibliotecaViva\\API\\obj": true,
-    "BibliotecaViva\\DAO\\bin": true,
-    "BibliotecaViva\\DAO\\obj": true,
     "BibliotecaViva/DAO/bin": true,
-    "BibliotecaViva/DAO/bin/Debug/netstandard2.0/System.Data.SQLite.NetStandard.pdb": true,
-    "BibliotecaViva/DAO/bin/Debug/netstandard2.0": true,
     "BibliotecaViva/DAO/obj": true,
-    "BibliotecaViva/API/obj": true,
-    "BibliotecaViva/API/bin": true,
-    "BibliotecaViva/API/.vscode": true
+    "BibliotecaViva/DTO/bin": true,
+    "BibliotecaViva/DTO/obj": true
   }
 }
