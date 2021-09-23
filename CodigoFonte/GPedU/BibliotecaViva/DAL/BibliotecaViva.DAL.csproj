@@ -6,14 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DTO\BibliotecaViva.DTO.csproj" />
-    <ProjectReference Include="..\System.Data.SQLite.NetStandard\System.Data.SQLite.NetStandard.csproj" />
     <ProjectReference Include="..\DAO\BibliotecaViva.DAO.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="BibliotecaViva.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
