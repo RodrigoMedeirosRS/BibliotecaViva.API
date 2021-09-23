@@ -34,7 +34,8 @@ namespace BibliotecaViva.DAL
         public void Remover(int? codigoPessoa)
         {
             var nomesocial = DataContext.Nomesocials.AsNoTracking().FirstOrDefault(nomeSocial => nomeSocial.Pessoa == codigoPessoa);
-            DataContext.Remove(nomesocial);
+            if (nomesocial != null)
+                DataContext.Remove(nomesocial);
             DataContext.SaveChanges();
         }
 

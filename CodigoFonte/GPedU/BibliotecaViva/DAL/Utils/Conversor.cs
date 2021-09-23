@@ -9,7 +9,7 @@ namespace BibliotecaViva.DAL.Utils
         {
             return apelido != null ? new Apelido()
             {
-                Codigo = (int)apelido.Codigo,
+                Codigo = apelido.Codigo,
                 Nome = apelido.Nome
             } : null;
         }
@@ -25,7 +25,7 @@ namespace BibliotecaViva.DAL.Utils
         {
             return descricao != null ? new Descricao()
             {
-                Registro = (int)descricao.Registro,
+                Registro = descricao.Registro,
                 Conteudo = descricao.Conteudo
             } : null;
         }
@@ -33,7 +33,7 @@ namespace BibliotecaViva.DAL.Utils
         {
             return descricao != null ? new DescricaoDTO()
             {
-                Registro = (int)descricao.Registro,
+                Registro = descricao.Registro,
                 Conteudo = descricao.Conteudo
             } : null;
         }
@@ -41,7 +41,7 @@ namespace BibliotecaViva.DAL.Utils
         {
             return idioma != null ? new Idioma()
             {
-                Codigo = (int)idioma.Codigo,
+                Codigo = idioma.Codigo,
                 Nome = idioma.Nome
             } : null;
         }
@@ -57,7 +57,7 @@ namespace BibliotecaViva.DAL.Utils
         {
             return tipo != null ? new Tipo()
             {
-                Codigo = (int)tipo.Codigo,
+                Codigo = tipo.Codigo,
                 Nome = tipo.Nome,
                 Extensao = tipo.Extensao,
                 Binario = tipo.Binario
@@ -77,7 +77,7 @@ namespace BibliotecaViva.DAL.Utils
         {
             return localizacaoGeografica != null ? new Localizacaogeografica()
             {
-                Codigo = (int) localizacaoGeografica.Codigo,
+                Codigo = localizacaoGeografica.Codigo,
                 Latitude = localizacaoGeografica.Latitude,
                 Longitude = localizacaoGeografica.Longitude
             } : null;
@@ -95,9 +95,9 @@ namespace BibliotecaViva.DAL.Utils
         {
             return nomeSocial != null ? new Nomesocial()
             {
-                Codigo = (int)nomeSocial.Codigo,
+                Codigo = nomeSocial.Codigo,
                 Nome = nomeSocial.Nome,
-                Pessoa = (int)nomeSocial.Pessoa  
+                Pessoa = nomeSocial.Pessoa  
             } : null;
         }
         internal static NomeSocialDTO Mapear(Nomesocial nomeSocial)
@@ -113,7 +113,7 @@ namespace BibliotecaViva.DAL.Utils
         {
             return pessoa != null ? new Pessoa()
             {
-                Codigo = (int)pessoa.Codigo,
+                Codigo = pessoa.Codigo,
                 Nome = pessoa.Nome,
                 Sobrenome = pessoa.Sobrenome,
                 Genero = pessoa.Genero
@@ -133,7 +133,7 @@ namespace BibliotecaViva.DAL.Utils
         {
             return tipoRelacao != null ? new Tiporelacao()
             {
-                Codigo = (int)tipoRelacao.Codigo,
+                Codigo = tipoRelacao.Codigo,
                 Nome = tipoRelacao.Nome
             } : null;
         }

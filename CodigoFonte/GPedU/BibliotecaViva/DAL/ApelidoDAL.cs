@@ -28,8 +28,8 @@ namespace BibliotecaViva.DAL
         {
             DataContext.Add(new Pessoaapelido()
             {
-                Pessoa = (int)pessoaDTO.Codigo,
-                Apelido = (int)apelidoDTO.Codigo
+                Pessoa = pessoaDTO.Codigo,
+                Apelido = apelidoDTO.Codigo
             });
             DataContext.SaveChanges();
         }
@@ -38,23 +38,25 @@ namespace BibliotecaViva.DAL
         {
             DataContext.Add(new Registroapelido()
             {
-                Registro = (int)registroDTO.Codigo,
-                Apelido = (int)apelidoDTO.Codigo
+                Registro = registroDTO.Codigo,
+                Apelido = apelidoDTO.Codigo
             });
             DataContext.SaveChanges();
         }
         
-        public void RemoverVinculo(int? codigoPessoa)
+        public void RemoverVinculo(int codigoPessoa)
         {
             var apelido = DataContext.Pessoaapelidos.AsNoTracking().FirstOrDefault(apelido => apelido.Pessoa == codigoPessoa);
-            DataContext.Remove(apelido);
+            if (apelido != null)
+                DataContext.Remove(apelido);
             DataContext.SaveChanges();
         }
 
-        public void RemoverVinculoRegistro(int? codigoRegistro)
+        public void RemoverVinculoRegistro(int codigoRegistro)
         {
-            var apelido = DataContext.Registroapelidos.AsNoTracking().FirstOrDefault(apelido => apelido.Registro == codigoRegistro);
-            DataContext.Remove(apelido);
+            var registro = DataContext.Registroapelidos.AsNoTracking().FirstOrDefault(apelido => apelido.Registro == codigoRegistro);
+            if (registro != null)
+                DataContext.Remove(registro);
             DataContext.SaveChanges();
         }
 
