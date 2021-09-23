@@ -1,4 +1,6 @@
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+
 using BibliotecaViva.DAO;
 using BibliotecaViva.DTO;
 using BibliotecaViva.DAL.Utils;
@@ -24,43 +26,41 @@ namespace BibliotecaViva.DAL
 
         public void VincularPessoa(ApelidoDTO apelidoDTO, PessoaDTO pessoaDTO)
         {
-            apelidoDTO.Codigo = ValidarJaCadastrado(apelidoDTO);
-            if (apelidoDTO.Codigo != null)
-                DataContext.ObterDataContext().InsertOrReplace(new Pessoaapelido()
-                {
-                    Pessoa = (int)pessoaDTO.Codigo,
-                    Apelido = (int)apelidoDTO.Codigo
-                });
+            DataContext.Add(new Pessoaapelido()
+            {
+                Pessoa = (int)pessoaDTO.Codigo,
+                Apelido = (int)apelidoDTO.Codigo
+            });
+            DataContext.SaveChanges();
         }
 
         public void VincularRegistro(ApelidoDTO apelidoDTO, RegistroDTO registroDTO)
         {
-            apelidoDTO.Codigo = ValidarJaCadastrado(apelidoDTO);
-            if (apelidoDTO.Codigo != null)
-                DataContext.ObterDataContext().InsertOrReplace(new Registroapelido()
-                {
-                    Registro = (int)registroDTO.Codigo,
-                    Apelido = (int)apelidoDTO.Codigo
-                });
+            DataContext.Add(new Registroapelido()
+            {
+                Registro = (int)registroDTO.Codigo,
+                Apelido = (int)apelidoDTO.Codigo
+            });
+            DataContext.SaveChanges();
         }
         
         public void RemoverVinculo(int? codigoPessoa)
         {
-            var resultado = DataContext.ObterDataContext().Table<Pessoaapelido>().FirstOrDefault(apelido => apelido.Pessoa == codigoPessoa);
-            if (resultado != null)
-                DataContext.ObterDataContext().Delete(resultado);
+            var apelido = DataContext.Pessoaapelidos.AsNoTracking().FirstOrDefault(apelido => apelido.Pessoa == codigoPessoa);
+            DataContext.Remove(apelido);
+            DataContext.SaveChanges();
         }
 
         public void RemoverVinculoRegistro(int? codigoRegistro)
         {
-            var resultado = DataContext.ObterDataContext().Table<Registroapelido>().FirstOrDefault(apelido => apelido.Registro == codigoRegistro);
-            if (resultado != null)
-                DataContext.ObterDataContext().Delete(resultado);
+            var apelido = DataContext.Registroapelidos.AsNoTracking().FirstOrDefault(apelido => apelido.Registro == codigoRegistro);
+            DataContext.Remove(apelido);
+            DataContext.SaveChanges();
         }
 
         private bool ValidarJaCadastrado(ApelidoDTO apelidoDTO)
         {
-            var resultado = DataContext.Apelidos.FirstOrDefault(apelido => apelido.Nome == apelidoDTO.Nome);
+            var resultado = DataContext.Apelidos.AsNoTracking().FirstOrDefault(apelido => apelido.Nome == apelidoDTO.Nome);
             return resultado != null;
         }  
     }

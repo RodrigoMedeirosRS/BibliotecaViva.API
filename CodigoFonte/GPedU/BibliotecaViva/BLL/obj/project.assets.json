@@ -391,7 +391,6 @@
           "AutoMapper": "10.0.0",
           "BibliotecaViva.DAO": "1.0.0",
           "BibliotecaViva.DTO": "1.0.0",
-          "System.Data.SQLite.NetStandard": "1.0.0",
           "morelinq": "3.3.2"
         },
         "compile": {
@@ -405,8 +404,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
-          "Npgsql.EntityFrameworkCore.PostgreSQL": "5.0.10",
-          "System.Data.SQLite.NetStandard": "1.0.0"
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "5.0.10"
         },
         "compile": {
           "bin/placeholder/BibliotecaViva.DAO.dll": {}
@@ -418,24 +416,11 @@
       "BibliotecaViva.DTO/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
-        "dependencies": {
-          "System.Data.SQLite.NetStandard": "1.0.0"
-        },
         "compile": {
           "bin/placeholder/BibliotecaViva.DTO.dll": {}
         },
         "runtime": {
           "bin/placeholder/BibliotecaViva.DTO.dll": {}
-        }
-      },
-      "System.Data.SQLite.NetStandard/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "compile": {
-          "bin/placeholder/System.Data.SQLite.NetStandard.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/System.Data.SQLite.NetStandard.dll": {}
         }
       }
     }
@@ -1324,11 +1309,6 @@
       "type": "project",
       "path": "../DTO/BibliotecaViva.DTO.csproj",
       "msbuildProject": "../DTO/BibliotecaViva.DTO.csproj"
-    },
-    "System.Data.SQLite.NetStandard/1.0.0": {
-      "type": "project",
-      "path": "../System.Data.SQLite.NetStandard/System.Data.SQLite.NetStandard.csproj",
-      "msbuildProject": "../System.Data.SQLite.NetStandard/System.Data.SQLite.NetStandard.csproj"
     }
   },
   "projectFileDependencyGroups": {

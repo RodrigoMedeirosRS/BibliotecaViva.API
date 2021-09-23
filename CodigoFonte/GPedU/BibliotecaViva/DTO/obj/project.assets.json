@@ -1,30 +1,11 @@
 {
   "version": 3,
   "targets": {
-    ".NETStandard,Version=v2.1": {
-      "System.Data.SQLite.NetStandard/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "compile": {
-          "bin/placeholder/System.Data.SQLite.NetStandard.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/System.Data.SQLite.NetStandard.dll": {}
-        }
-      }
-    }
+    ".NETStandard,Version=v2.1": {}
   },
-  "libraries": {
-    "System.Data.SQLite.NetStandard/1.0.0": {
-      "type": "project",
-      "path": "../System.Data.SQLite.NetStandard/System.Data.SQLite.NetStandard.csproj",
-      "msbuildProject": "../System.Data.SQLite.NetStandard/System.Data.SQLite.NetStandard.csproj"
-    }
-  },
+  "libraries": {},
   "projectFileDependencyGroups": {
-    ".NETStandard,Version=v2.1": [
-      "System.Data.SQLite.NetStandard >= 1.0.0"
-    ]
+    ".NETStandard,Version=v2.1": []
   },
   "packageFolders": {
     "/home/rmlehnemann/.nuget/packages/": {}
@@ -50,11 +31,7 @@
       "frameworks": {
         "netstandard2.1": {
           "targetAlias": "netstandard2.1",
-          "projectReferences": {
-            "/home/rmlehnemann/Projetos/Biblioteca_Viva/CodigoFonte/GPedU/BibliotecaViva/System.Data.SQLite.NetStandard/System.Data.SQLite.NetStandard.csproj": {
-              "projectPath": "/home/rmlehnemann/Projetos/Biblioteca_Viva/CodigoFonte/GPedU/BibliotecaViva/System.Data.SQLite.NetStandard/System.Data.SQLite.NetStandard.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

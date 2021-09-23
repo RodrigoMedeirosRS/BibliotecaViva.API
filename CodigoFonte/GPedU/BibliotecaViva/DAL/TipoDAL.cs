@@ -1,25 +1,27 @@
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+
 using BibliotecaViva.DAO;
 using BibliotecaViva.DTO;
+using BibliotecaViva.DAL.Utils;
 using BibliotecaViva.DAL.Interfaces;
 
 namespace BibliotecaViva.DAL
 {
     public class TipoDAL : BaseDAL, ITipoDAL
     {
-        public TipoDAL(ISQLiteDataContext dataContext) : base(dataContext)
+        public TipoDAL(bibliotecavivaContext dataContext) : base(dataContext)
         {
         }
 
         public void Cadastrar(TipoDTO tipoDTO)
         {
-            DataContext.ObterDataContext().InsertOrReplace(new Tipo()
+            if(Consultar(tipoDTO) != null)
             {
-                Codigo = ValidarJaCadastrado(tipoDTO),
-                Nome = tipoDTO.Nome,
-                Extensao = tipoDTO.Extensao
-            });
+                DataContext.Tipos.Add(Conversor.Mapear(tipoDTO));
+                DataContext.SaveChanges();
+            };
         }
         
         public TipoDTO Consultar(TipoDTO tipoDTO)
@@ -27,26 +29,17 @@ namespace BibliotecaViva.DAL
             var resultado = new Tipo();
 
             if (string.IsNullOrEmpty(tipoDTO.Nome))
-                resultado = DataContext.ObterDataContext().Table<Tipo>().FirstOrDefault(tipo => tipo.Codigo == tipoDTO.Codigo);
+                resultado = DataContext.Tipos.AsNoTracking().FirstOrDefault(tipo => tipo.Codigo == tipoDTO.Codigo);
             else
-                resultado = DataContext.ObterDataContext().Table<Tipo>().FirstOrDefault(tipo => tipo.Nome == tipoDTO.Nome);
+                resultado = DataContext.Tipos.AsNoTracking().FirstOrDefault(tipo => tipo.Nome == tipoDTO.Nome);
             
-            return Mapear<Tipo, TipoDTO>(resultado);
+            return Conversor.Mapear(resultado);
         }
         public List<TipoDTO> Listar()
         {
-            return (from tipo in DataContext.ObterDataContext().Table<Tipo>() select new TipoDTO()
-            {
-                Codigo = tipo.Codigo,
-                Nome = tipo.Nome,
-                Extensao = tipo.Extensao
-            }).ToList(); 
-        }
-
-        private int? ValidarJaCadastrado(TipoDTO tipoDTO)
-        {
-            var resultado = DataContext.ObterDataContext().Table<Tipo>().FirstOrDefault(tipo => tipo.Nome == tipoDTO.Nome);
-            return resultado != null ? resultado.Codigo : null;
-        }  
+            return (from tipo in DataContext.Tipos 
+            select 
+                Conversor.Mapear(tipo)).ToList(); 
+        } 
     }
 }

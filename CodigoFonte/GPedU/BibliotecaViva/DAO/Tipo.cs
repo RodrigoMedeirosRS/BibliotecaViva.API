@@ -13,7 +13,7 @@ namespace BibliotecaViva.DAO
         }
 
         public int Codigo { get; set; }
-        public int Nome { get; set; }
+        public string Nome { get; set; }
         public string Extensao { get; set; }
 
         public virtual ICollection<Registro> Registros { get; set; }

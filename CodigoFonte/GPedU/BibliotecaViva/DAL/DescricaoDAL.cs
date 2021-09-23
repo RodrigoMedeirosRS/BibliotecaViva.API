@@ -1,30 +1,43 @@
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+
 using BibliotecaViva.DAO;
 using BibliotecaViva.DTO;
+using BibliotecaViva.DAL.Utils;
 using BibliotecaViva.DAL.Interfaces;
 
 namespace BibliotecaViva.DAL
 {
     public class DescricaoDAL : BaseDAL, IDescricaoDAL
     {
-        public DescricaoDAL(ISQLiteDataContext dataContext) : base(dataContext)
+        public DescricaoDAL(bibliotecavivaContext dataContext) : base(dataContext)
         {
         }
         public void Cadastrar(DescricaoDTO descricaoDTO)
         {
-            descricaoDTO.Codigo = ValidarJaCadastrado(descricaoDTO);
-            DataContext.ObterDataContext().InsertOrReplace(Mapear<DescricaoDTO, Descricao>(descricaoDTO));
+            var descricao = ValidarJaCadastrado(descricaoDTO);
+            if (descricao != null)
+            {
+                descricao.Descricao1 = descricaoDTO.Conteudo;
+                DataContext.Update(descricao);
+                DataContext.SaveChanges();
+            }
+            else
+            {
+                DataContext.Add(Conversor.Mapear(descricaoDTO));
+                DataContext.SaveChanges();
+            }
         }
         public void Remover(int? codigoRegistro)
         {
-            var resultado = DataContext.ObterDataContext().Table<Descricao>().FirstOrDefault(descricao => descricao.Registro == codigoRegistro);
-            if (resultado != null)
-                DataContext.ObterDataContext().Delete(resultado);
+            var apelido = DataContext.Descricaos.AsNoTracking().FirstOrDefault(descricao => descricao.Registro == codigoRegistro);
+            DataContext.Remove(apelido);
+            DataContext.SaveChanges();
         }
 
-        private int? ValidarJaCadastrado(DescricaoDTO descricaoDTO)
+        private Descricao ValidarJaCadastrado(DescricaoDTO descricaoDTO)
         {
-            var resultado = DataContext.ObterDataContext().Table<Descricao>().FirstOrDefault(descricao => descricao.Registro == descricaoDTO.Registro);
-            return resultado != null ? resultado.Codigo : null;
+            return DataContext.Descricaos.AsNoTracking().FirstOrDefault(descricao => descricao.Registro == descricaoDTO.Registro);
         }  
     }
 }
