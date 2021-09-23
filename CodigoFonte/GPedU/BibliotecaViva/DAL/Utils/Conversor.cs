@@ -26,7 +26,7 @@ namespace BibliotecaViva.DAL.Utils
             return new Descricao()
             {
                 Registro = (int)descricao.Registro,
-                Descricao1 = descricao.Conteudo
+                Conteudo = descricao.Conteudo
             };
         }
         internal static DescricaoDTO Mapear(Descricao descricao)
@@ -34,7 +34,7 @@ namespace BibliotecaViva.DAL.Utils
             return new DescricaoDTO()
             {
                 Registro = (int)descricao.Registro,
-                Conteudo = descricao.Descricao1
+                Conteudo = descricao.Conteudo
             };
         }
         internal static Idioma Mapear(IdiomaDTO idioma)

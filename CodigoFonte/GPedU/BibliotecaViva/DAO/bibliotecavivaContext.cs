@@ -37,6 +37,8 @@ namespace BibliotecaViva.DAO
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseNpgsql("User ID=postgres;Password=@rodrigo1;Server=127.0.0.1;Port=5432;Database=bibliotecaviva;Integrated Security=true;");
             }
         }
 
@@ -71,19 +73,22 @@ namespace BibliotecaViva.DAO
 
                 entity.HasIndex(e => e.Registro, "descricao_fkindex1");
 
+                entity.HasIndex(e => e.Registro, "descricao_registro_key")
+                    .IsUnique();
+
                 entity.HasIndex(e => e.Registro, "ifk_rel_14");
 
                 entity.Property(e => e.Codigo).HasColumnName("codigo");
 
-                entity.Property(e => e.Descricao1)
+                entity.Property(e => e.Conteudo)
                     .IsRequired()
-                    .HasColumnName("descricao");
+                    .HasColumnName("conteudo");
 
                 entity.Property(e => e.Registro).HasColumnName("registro");
 
                 entity.HasOne(d => d.RegistroNavigation)
-                    .WithMany(p => p.Descricaos)
-                    .HasForeignKey(d => d.Registro)
+                    .WithOne(p => p.Descricao)
+                    .HasForeignKey<Descricao>(d => d.Registro)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("descricao_registro_fkey");
             });
@@ -452,7 +457,10 @@ namespace BibliotecaViva.DAO
                     .HasMaxLength(7)
                     .HasColumnName("extensao");
 
-                entity.Property(e => e.Nome).HasColumnName("nome");
+                entity.Property(e => e.Nome)
+                    .IsRequired()
+                    .HasMaxLength(20)
+                    .HasColumnName("nome");
             });
 
             modelBuilder.Entity<Tiporelacao>(entity =>

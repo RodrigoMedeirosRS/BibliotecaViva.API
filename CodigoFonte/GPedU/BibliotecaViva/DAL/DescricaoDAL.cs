@@ -18,7 +18,7 @@ namespace BibliotecaViva.DAL
             var descricao = ValidarJaCadastrado(descricaoDTO);
             if (descricao != null)
             {
-                descricao.Descricao1 = descricaoDTO.Conteudo;
+                descricao.Conteudo = descricaoDTO.Conteudo;
                 DataContext.Update(descricao);
                 DataContext.SaveChanges();
             }

@@ -9,7 +9,7 @@ namespace BibliotecaViva.DAO
     {
         public int Codigo { get; set; }
         public int Registro { get; set; }
-        public string Descricao1 { get; set; }
+        public string Conteudo { get; set; }
 
         public virtual Registro RegistroNavigation { get; set; }
     }
