@@ -9,6 +9,7 @@
     "BibliotecaViva/DAO/bin": true,
     "BibliotecaViva/DAO/obj": true,
     "BibliotecaViva/DTO/bin": true,
-    "BibliotecaViva/DTO/obj": true
+    "BibliotecaViva/DTO/obj": true,
+    "BibliotecaViva/API/obj": true
   }
 }

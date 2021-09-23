@@ -1,32 +1,46 @@
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+
 using BibliotecaViva.DAO;
 using BibliotecaViva.DTO;
+using BibliotecaViva.DAL.Utils;
 using BibliotecaViva.DAL.Interfaces;
 
 namespace BibliotecaViva.DAL
 {
     public class NomeSocialDAL : BaseDAL, INomeSocialDAL
     {
-        public NomeSocialDAL(ISQLiteDataContext dataContext) : base(dataContext)
+        public NomeSocialDAL(bibliotecavivaContext dataContext) : base(dataContext)
         {
+
         }
 
-        public void Cadastrar(NomeSocialDTO nomeSocial)
+        public void Cadastrar(NomeSocialDTO nomeSocialDTO)
         {
-            nomeSocial.Codigo = ValidarJaCadastrado(nomeSocial);
-            DataContext.ObterDataContext().InsertOrReplace(Mapear<NomeSocialDTO, Nomesocial>(nomeSocial));
+            var nomeSocial = ValidarJaCadastrado(nomeSocialDTO);
+            if (nomeSocial != null)
+            {
+                nomeSocial.Nome = nomeSocialDTO.Nome;
+                DataContext.Update(nomeSocial);
+                DataContext.SaveChanges();
+            }
+            else
+            {
+                DataContext.Add(Conversor.Mapear(nomeSocialDTO));
+                DataContext.SaveChanges();
+            }
         }
         
         public void Remover(int? codigoPessoa)
         {
-            var resultado = DataContext.ObterDataContext().Table<Nomesocial>().FirstOrDefault(nomeSocial => nomeSocial.Pessoa == codigoPessoa);
-            if (resultado != null)
-                DataContext.ObterDataContext().Delete(resultado);
+            var nomesocial = DataContext.Nomesocials.AsNoTracking().FirstOrDefault(nomeSocial => nomeSocial.Pessoa == codigoPessoa);
+            DataContext.Remove(nomesocial);
+            DataContext.SaveChanges();
         }
 
-        private int? ValidarJaCadastrado(NomeSocialDTO nomeSocialDTO)
+        private Nomesocial ValidarJaCadastrado(NomeSocialDTO nomeSocialDTO)
         {
-            var resultado = DataContext.ObterDataContext().Table<Nomesocial>().FirstOrDefault(nomeSocial => nomeSocial.Pessoa == nomeSocialDTO.Pessoa);
-            return resultado != null ? resultado.Codigo : null;
+            return DataContext.Nomesocials.AsNoTracking().FirstOrDefault(nomeSocial => nomeSocial.Pessoa == nomeSocialDTO.Pessoa);
         }  
     }
 }

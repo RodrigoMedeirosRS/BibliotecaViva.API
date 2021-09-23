@@ -89,5 +89,23 @@ namespace BibliotecaViva.DAL.Utils
                 Longitude = localizacaoGeografica.Longitude
             };
         }
+        internal static Nomesocial Mapear(NomeSocialDTO nomeSocial)
+        {
+            return new Nomesocial()
+            {
+                Codigo = (int)nomeSocial.Codigo,
+                Nome = nomeSocial.Nome,
+                Pessoa = (int)nomeSocial.Pessoa  
+            };
+        }
+        internal static NomeSocialDTO Mapear(Nomesocial nomeSocial)
+        {
+            return new NomeSocialDTO()
+            {
+                Codigo = nomeSocial.Codigo,
+                Nome = nomeSocial.Nome,
+                Pessoa = nomeSocial.Pessoa  
+            };
+        }
     }
 }
