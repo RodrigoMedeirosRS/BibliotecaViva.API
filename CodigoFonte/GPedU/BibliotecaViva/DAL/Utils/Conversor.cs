@@ -127,5 +127,21 @@ namespace BibliotecaViva.DAL.Utils
                 Genero = pessoa.Genero
             };
         }
+        internal static Tiporelacao Mapear(TipoRelacaoDTO tipoRelacao)
+        {
+            return new Tiporelacao()
+            {
+                Codigo = (int)tipoRelacao.Codigo,
+                Nome = tipoRelacao.Nome
+            };
+        }
+        internal static TipoRelacaoDTO Mapear(Tiporelacao tipoRelacao)
+        {
+            return new TipoRelacaoDTO()
+            {
+                Codigo = tipoRelacao.Codigo,
+                Nome = tipoRelacao.Nome
+            };
+        }
     }
 }
