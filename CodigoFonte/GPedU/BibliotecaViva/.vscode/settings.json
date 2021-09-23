@@ -1,0 +1,10 @@
+{
+  "files.exclude": {
+    "API/obj": true,
+    "BLL/bin": true,
+    "BLL/obj": true,
+    "DAL/bin": true,
+    "DAL/obj": true,
+    "API/bin": true
+  }
+}

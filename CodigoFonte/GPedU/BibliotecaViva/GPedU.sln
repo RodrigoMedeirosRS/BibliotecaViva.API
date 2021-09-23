@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BibliotecaViva.DAL", "BibliotecaViva\DAL\BibliotecaViva.DAL.csproj", "{70730335-9255-449B-B432-952B43E2C4D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BibliotecaViva.DAL", "DAL\BibliotecaViva.DAL.csproj", "{70730335-9255-449B-B432-952B43E2C4D4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BibliotecaViva.BLL", "BibliotecaViva\BLL\BibliotecaViva.BLL.csproj", "{C062C3F2-E534-4F93-8051-95E27431003D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BibliotecaViva.BLL", "BLL\BibliotecaViva.BLL.csproj", "{C062C3F2-E534-4F93-8051-95E27431003D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BibliotecaViva.DTO", "BibliotecaViva\DTO\BibliotecaViva.DTO.csproj", "{F7998399-6397-4978-98BE-2BDF36094BB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BibliotecaViva.DTO", "DTO\BibliotecaViva.DTO.csproj", "{F7998399-6397-4978-98BE-2BDF36094BB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BibliotecaViva.DAO", "BibliotecaViva\DAO\BibliotecaViva.DAO.csproj", "{B5984C4D-F1B5-4F23-8BD5-5D9AFCA5F1D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BibliotecaViva.DAO", "DAO\BibliotecaViva.DAO.csproj", "{B5984C4D-F1B5-4F23-8BD5-5D9AFCA5F1D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "BibliotecaViva\API\API.csproj", "{B1965034-23F0-40C0-BC0A-72ACB6D8186C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{B1965034-23F0-40C0-BC0A-72ACB6D8186C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
