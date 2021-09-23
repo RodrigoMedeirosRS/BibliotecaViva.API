@@ -71,5 +71,23 @@ namespace BibliotecaViva.DAL.Utils
                 Extensao = tipo.Extensao
             };
         }
+        internal static Localizacaogeografica Mapear(LocalizacaoGeograficaDTO localizacaoGeografica)
+        {
+            return new Localizacaogeografica()
+            {
+                Codigo = (int) localizacaoGeografica.Codigo,
+                Latitude = localizacaoGeografica.Latitude,
+                Longitude = localizacaoGeografica.Longitude
+            };
+        }
+        internal static LocalizacaoGeograficaDTO Mapear(Localizacaogeografica localizacaoGeografica)
+        {
+            return new LocalizacaoGeograficaDTO()
+            {
+                Codigo = localizacaoGeografica.Codigo,
+                Latitude = localizacaoGeografica.Latitude,
+                Longitude = localizacaoGeografica.Longitude
+            };
+        }
     }
 }
