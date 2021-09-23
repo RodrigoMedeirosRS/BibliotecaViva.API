@@ -73,7 +73,7 @@ namespace BibliotecaViva.DAL
                     Latitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, true),
                     Longitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, false),
                     Referencias = ReferenciaDAL.ObterReferencia((int)registro.Codigo)
-                }).FirstOrDefault(); 
+                }).AsNoTracking().FirstOrDefault(); 
         }
 
         public List<RegistroDTO> Consultar(RegistroDTO registroDTO)
@@ -121,10 +121,10 @@ namespace BibliotecaViva.DAL
                     Latitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, true),
                     Longitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, false),
                     Referencias = ReferenciaDAL.ObterReferencia((int)registro.Codigo)
-                }).DistinctBy(registroDB => registroDB.Codigo).ToList(); 
+                }).AsNoTracking().DistinctBy(registroDB => registroDB.Codigo).ToList(); 
         }
 
-        private long? ObterLocalizacaoGeografica(Localizacaogeografica localizacaoGeograficaLeft, bool latitude)
+        private static long? ObterLocalizacaoGeografica(Localizacaogeografica localizacaoGeograficaLeft, bool latitude)
         {
             if (localizacaoGeograficaLeft != null)
                 return latitude ? localizacaoGeograficaLeft.Latitude : localizacaoGeograficaLeft.Longitude;
@@ -174,7 +174,7 @@ namespace BibliotecaViva.DAL
 
         private RegistroDTO PopularCodigo(RegistroDTO registroDTO)
         {
-            if (registroDTO.Codigo == null)
+            if (registroDTO.Codigo == null || registroDTO.Codigo == 0)
                 registroDTO.Codigo = Consultar(registroDTO).FirstOrDefault().Codigo;
             return registroDTO;
         }

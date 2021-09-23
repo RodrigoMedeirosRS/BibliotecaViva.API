@@ -3,7 +3,7 @@ using BibliotecaViva.DAL.Interfaces;
 
 namespace BibliotecaViva.DAL 
 {
-    public abstract class BaseDAL : IBaseDAL
+    public abstract class BaseDAL
     {
         public bibliotecavivaContext DataContext { protected get; set; }
 

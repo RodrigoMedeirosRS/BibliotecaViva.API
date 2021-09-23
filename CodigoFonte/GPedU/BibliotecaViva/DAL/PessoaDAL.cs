@@ -37,7 +37,7 @@ namespace BibliotecaViva.DAL
             }
             else
             {
-                DataContext.Add(Conversor.Mapear(pessoa));
+                DataContext.Add(Conversor.Mapear(pessoaDTO));
                 DataContext.SaveChanges();
             }
             CadastrarDadosOpcionais(pessoaDTO);
@@ -79,10 +79,10 @@ namespace BibliotecaViva.DAL
                     Latitude = ObterLocalizacaoGeorafica(localizacaoGeograficaLeft, true),
                     Longitude = ObterLocalizacaoGeorafica(localizacaoGeograficaLeft, false),
                     Relacoes = PessoaRegistroDAL.ObterRelacao((int)pessoa.Codigo)
-                }).DistinctBy(pessoaDB => pessoaDB.Codigo).ToList();
+                }).AsNoTracking().DistinctBy(pessoaDB => pessoaDB.Codigo).ToList();
         }
 
-        private long? ObterLocalizacaoGeorafica(Localizacaogeografica localizacaoGeograficaLeft, bool latitude)
+        private static long? ObterLocalizacaoGeorafica(Localizacaogeografica localizacaoGeograficaLeft, bool latitude)
         {
             if (localizacaoGeograficaLeft != null)
                 return latitude ? localizacaoGeograficaLeft.Latitude : localizacaoGeograficaLeft.Longitude;
@@ -101,8 +101,15 @@ namespace BibliotecaViva.DAL
 
         private PessoaDTO PopularCodigo(PessoaDTO pessoaDTO)
         {
-            if (pessoaDTO.Codigo == null)
-                pessoaDTO.Codigo = Consultar(pessoaDTO).FirstOrDefault().Codigo;
+            try
+            {
+                if (pessoaDTO.Codigo == null || pessoaDTO.Codigo == 0)
+                    pessoaDTO.Codigo = Consultar(pessoaDTO).FirstOrDefault().Codigo;
+            }
+            catch (System.Exception ex)
+            {
+                
+            }
             return pessoaDTO;
         }
 

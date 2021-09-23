@@ -2,7 +2,7 @@ using BibliotecaViva.DTO;
 
 namespace BibliotecaViva.DAL.Interfaces
 {
-    public interface IApelidoDAL : IBaseDAL
+    public interface IApelidoDAL
     {
         void Cadastrar(ApelidoDTO apelidoDTO);
         void RemoverVinculo(int? codigoPessoa);

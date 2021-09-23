@@ -35,7 +35,7 @@ namespace API
 
         private static void AdicionarControladores(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
         }
         private static void AdicionarDataContext(IServiceCollection services, string connectionString)
         {
