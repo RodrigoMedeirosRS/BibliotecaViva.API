@@ -91,7 +91,7 @@ namespace BibliotecaViva.DAL
                     Codigo = registro.Codigo,
                     Nome = registro.Nome,
                     Idioma = idioma.Nome
-                }).ToList();
+                }).AsNoTracking().ToList();
         }
 
         
