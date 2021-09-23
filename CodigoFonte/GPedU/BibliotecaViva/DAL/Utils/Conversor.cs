@@ -107,5 +107,25 @@ namespace BibliotecaViva.DAL.Utils
                 Pessoa = nomeSocial.Pessoa  
             };
         }
+        internal static Pessoa Mapear(PessoaDTO pessoa)
+        {
+            return new Pessoa()
+            {
+                Codigo = (int)pessoa.Codigo,
+                Nome = pessoa.Nome,
+                Sobrenome = pessoa.Sobrenome,
+                Genero = pessoa.Genero
+            };
+        }
+        internal static PessoaDTO Mapear(Pessoa pessoa)
+        {
+            return new PessoaDTO()
+            {
+                Codigo = pessoa.Codigo,
+                Nome = pessoa.Nome,
+                Sobrenome = pessoa.Sobrenome,
+                Genero = pessoa.Genero
+            };
+        }
     }
 }
