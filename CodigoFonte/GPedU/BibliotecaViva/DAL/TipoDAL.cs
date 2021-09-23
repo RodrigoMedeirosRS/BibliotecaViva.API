@@ -21,7 +21,7 @@ namespace BibliotecaViva.DAL
             {
                 DataContext.Tipos.Add(Conversor.Mapear(tipoDTO));
                 DataContext.SaveChanges();
-            };
+            }
         }
         
         public TipoDTO Consultar(TipoDTO tipoDTO)
