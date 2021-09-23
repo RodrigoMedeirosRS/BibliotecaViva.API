@@ -53,9 +53,6 @@ namespace BibliotecaViva.DAO
 
                 entity.ToTable("apelido");
 
-                entity.HasIndex(e => e.Nome, "apelido_nome_key")
-                    .IsUnique();
-
                 entity.Property(e => e.Codigo).HasColumnName("codigo");
 
                 entity.Property(e => e.Nome)
@@ -73,9 +70,6 @@ namespace BibliotecaViva.DAO
 
                 entity.HasIndex(e => e.Registro, "descricao_fkindex1");
 
-                entity.HasIndex(e => e.Registro, "descricao_registro_key")
-                    .IsUnique();
-
                 entity.HasIndex(e => e.Registro, "ifk_rel_14");
 
                 entity.Property(e => e.Codigo).HasColumnName("codigo");
@@ -87,8 +81,8 @@ namespace BibliotecaViva.DAO
                 entity.Property(e => e.Registro).HasColumnName("registro");
 
                 entity.HasOne(d => d.RegistroNavigation)
-                    .WithOne(p => p.Descricao)
-                    .HasForeignKey<Descricao>(d => d.Registro)
+                    .WithMany(p => p.Descricaos)
+                    .HasForeignKey(d => d.Registro)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("descricao_registro_fkey");
             });
@@ -451,6 +445,8 @@ namespace BibliotecaViva.DAO
                     .IsUnique();
 
                 entity.Property(e => e.Codigo).HasColumnName("codigo");
+
+                entity.Property(e => e.Binario).HasColumnName("binario");
 
                 entity.Property(e => e.Extensao)
                     .IsRequired()

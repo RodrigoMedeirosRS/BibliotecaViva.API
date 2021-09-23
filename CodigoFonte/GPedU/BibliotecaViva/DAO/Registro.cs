@@ -9,6 +9,7 @@ namespace BibliotecaViva.DAO
     {
         public Registro()
         {
+            Descricaos = new HashSet<Descricao>();
             Pessoaregistros = new HashSet<Pessoaregistro>();
             ReferenciumReferenciaNavigations = new HashSet<Referencium>();
             ReferenciumRegistroNavigations = new HashSet<Referencium>();
@@ -25,7 +26,7 @@ namespace BibliotecaViva.DAO
 
         public virtual Idioma IdiomaNavigation { get; set; }
         public virtual Tipo TipoNavigation { get; set; }
-        public virtual Descricao Descricao { get; set; }
+        public virtual ICollection<Descricao> Descricaos { get; set; }
         public virtual ICollection<Pessoaregistro> Pessoaregistros { get; set; }
         public virtual ICollection<Referencium> ReferenciumReferenciaNavigations { get; set; }
         public virtual ICollection<Referencium> ReferenciumRegistroNavigations { get; set; }

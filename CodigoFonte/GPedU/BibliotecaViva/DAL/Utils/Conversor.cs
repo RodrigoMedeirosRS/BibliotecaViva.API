@@ -59,7 +59,8 @@ namespace BibliotecaViva.DAL.Utils
             {
                 Codigo = (int)tipo.Codigo,
                 Nome = tipo.Nome,
-                Extensao = tipo.Extensao
+                Extensao = tipo.Extensao,
+                Binario = tipo.Binario
             } : null;
         }
         internal static TipoDTO Mapear(Tipo tipo)
@@ -68,7 +69,8 @@ namespace BibliotecaViva.DAL.Utils
             {
                 Codigo = tipo.Codigo,
                 Nome = tipo.Nome,
-                Extensao = tipo.Extensao
+                Extensao = tipo.Extensao,
+                Binario = tipo.Binario
             } : null;
         }
         internal static Localizacaogeografica Mapear(LocalizacaoGeograficaDTO localizacaoGeografica)
