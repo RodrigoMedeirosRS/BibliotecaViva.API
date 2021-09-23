@@ -4,8 +4,4 @@
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\System.Data.SQLite.NetStandard\System.Data.SQLite.NetStandard.csproj" />
-  </ItemGroup>
-
 </Project>

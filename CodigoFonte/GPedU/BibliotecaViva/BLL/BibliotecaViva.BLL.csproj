@@ -5,13 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DAL\BibliotecaViva.DAL.csproj" />
-    <ProjectReference Include="..\DTO\BibliotecaViva.DTO.csproj" />
+    <Compile Remove="Enum\**" />
+    <Compile Remove="Utils\**" />
+    <EmbeddedResource Remove="Enum\**" />
+    <EmbeddedResource Remove="Utils\**" />
+    <None Remove="Enum\**" />
+    <None Remove="Utils\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Enum\" />
-    <Folder Include="Utils\" />
+    <ProjectReference Include="..\DAL\BibliotecaViva.DAL.csproj" />
+    <ProjectReference Include="..\DTO\BibliotecaViva.DTO.csproj" />
   </ItemGroup>
 
   <ItemGroup>

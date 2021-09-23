@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\System.Data.SQLite.NetStandard\System.Data.SQLite.NetStandard.csproj" />
     <ProjectReference Include="..\DAO\BibliotecaViva.DAO.csproj" />
     <ProjectReference Include="..\DTO\BibliotecaViva.DTO.csproj" />
     <ProjectReference Include="..\BLL\BibliotecaViva.BLL.csproj" />
