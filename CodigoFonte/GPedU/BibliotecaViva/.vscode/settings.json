@@ -5,6 +5,10 @@
     "BLL/obj": true,
     "DAL/bin": true,
     "DAL/obj": true,
-    "API/bin": true
+    "API/bin": true,
+    "DTO/bin": true,
+    "DTO/obj": true,
+    "DAO/bin": true,
+    "DAO/obj": true
   }
 }

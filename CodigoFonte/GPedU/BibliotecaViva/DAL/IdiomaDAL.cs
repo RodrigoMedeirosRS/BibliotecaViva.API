@@ -17,7 +17,7 @@ namespace BibliotecaViva.DAL
 
         public void Cadastrar(IdiomaDTO idiomaDTO)
         {
-            if (Consultar(idiomaDTO) != null)
+            if (Consultar(idiomaDTO) == null)
             {
                 DataContext.Add(Conversor.Mapear(idiomaDTO));
                 DataContext.SaveChanges();

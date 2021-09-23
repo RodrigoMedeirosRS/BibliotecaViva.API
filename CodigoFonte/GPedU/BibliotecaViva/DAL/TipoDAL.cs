@@ -17,7 +17,7 @@ namespace BibliotecaViva.DAL
 
         public void Cadastrar(TipoDTO tipoDTO)
         {
-            if(Consultar(tipoDTO) != null)
+            if(Consultar(tipoDTO) == null)
             {
                 DataContext.Tipos.Add(Conversor.Mapear(tipoDTO));
                 DataContext.SaveChanges();
