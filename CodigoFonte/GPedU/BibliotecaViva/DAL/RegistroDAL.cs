@@ -1,9 +1,11 @@
-using System;
 using MoreLinq;
+using System;
 using System.Linq;
 using System.Collections.Generic;
-using BibliotecaViva.DTO;
+using Microsoft.EntityFrameworkCore;
 using BibliotecaViva.DAO;
+using BibliotecaViva.DTO;
+using BibliotecaViva.DAL.Utils;
 using BibliotecaViva.DAL.Interfaces;
 
 namespace BibliotecaViva.DAL
@@ -17,7 +19,7 @@ namespace BibliotecaViva.DAL
         private IDescricaoDAL DescricaoDAL { get ; set; }
         private ILocalizacaoGeograficaDAL LocalizacaoGeograficaDAL { get; set; }
 
-        public RegistroDAL(ISQLiteDataContext dataContext, IDescricaoDAL descricaoDAL, IIdiomaDAL idiomaDAL, IApelidoDAL apelidoDAL,ITipoDAL tipoDAL, ILocalizacaoGeograficaDAL localizacaoGeograficaDAL, IReferenciaDAL referenciaDAL) : base(dataContext)
+        public RegistroDAL(bibliotecavivaContext dataContext, IDescricaoDAL descricaoDAL, IIdiomaDAL idiomaDAL, IApelidoDAL apelidoDAL,ITipoDAL tipoDAL, ILocalizacaoGeograficaDAL localizacaoGeograficaDAL, IReferenciaDAL referenciaDAL) : base(dataContext)
         {
             TipoDAL = tipoDAL;
             IdiomaDAL = idiomaDAL;
@@ -29,32 +31,32 @@ namespace BibliotecaViva.DAL
 
         public RegistroDTO Consultar(int codRegistro)
         {
-            return (from registro in DataContext.ObterDataContext().Table<Registro>()
+            return (from registro in DataContext.Registros
                 join
-                    idioma in DataContext.ObterDataContext().Table<Idioma>()
+                    idioma in DataContext.Idiomas
                     on registro.Idioma equals idioma.Codigo
                 join
-                    tipo in DataContext.ObterDataContext().Table<Tipo>()
+                    tipo in DataContext.Tipos
                     on registro.Tipo equals tipo.Codigo
                 join
-                    descricao in DataContext.ObterDataContext().Table<Descricao>()
+                    descricao in DataContext.Descricaos
                     on registro.Codigo equals descricao.Registro into descricaoLeftJoin from descricaoLeft in descricaoLeftJoin.DefaultIfEmpty()
                 join
-                    registroApelido in DataContext.ObterDataContext().Table<RegistroApelido>()
+                    registroApelido in DataContext.Registroapelidos
                     on registro.Codigo equals registroApelido.Registro into registroApelidoLeftJoin from registroApelidoLeft in registroApelidoLeftJoin.DefaultIfEmpty()
                 join
-                   apelido in DataContext.ObterDataContext().Table<Apelido>()
-                   on new RegistroApelido(){ 
+                   apelido in DataContext.Apelidos
+                   on new Registroapelido(){ 
                        Apelido = registroApelidoLeft != null ? registroApelidoLeft.Apelido : 0
                     }.Apelido equals apelido.Codigo into apelidoLeftJoin from apelidoLeft in apelidoLeftJoin.DefaultIfEmpty()
                 join
-                    registroLocalizacao in DataContext.ObterDataContext().Table<RegistroLocalizacao>()
+                    registroLocalizacao in DataContext.Registrolocalizacaos
                     on registro.Codigo equals registroLocalizacao.Registro into registroLocalizacaoLeftJoin from registroLocalizacaoLeft in registroLocalizacaoLeftJoin.DefaultIfEmpty()
                 join
-                   localizacaoGeografica in DataContext.ObterDataContext().Table<LocalizacaoGeografica>()
-                   on new RegistroLocalizacao(){ 
-                       LocalizacaoGeografica = registroLocalizacaoLeft != null ? registroLocalizacaoLeft.LocalizacaoGeografica : 0
-                    }.LocalizacaoGeografica equals localizacaoGeografica.Codigo into localizacaoGeograficaLeftJoin from localizacaoGeograficaLeft in localizacaoGeograficaLeftJoin.DefaultIfEmpty()
+                   localizacaoGeografica in DataContext.Localizacaogeograficas
+                   on new Registrolocalizacao(){ 
+                       Localizacaogeografica = registroLocalizacaoLeft != null ? registroLocalizacaoLeft.Localizacaogeografica : 0
+                    }.Localizacaogeografica equals localizacaoGeografica.Codigo into localizacaoGeograficaLeftJoin from localizacaoGeograficaLeft in localizacaoGeograficaLeftJoin.DefaultIfEmpty()
 
                 where registro.Codigo == codRegistro
                 
@@ -66,8 +68,8 @@ namespace BibliotecaViva.DAL
                     Idioma = idioma.Nome,
                     Tipo = tipo.Nome,
                     Conteudo = registro.Conteudo,
-                    Descricao = descricaoLeft != null ? descricaoLeft.Conteudo : string.Empty,
-                    DataInsercao = registro.DataInsercao,
+                    Descricao = descricaoLeft != null ? descricaoLeft.Descricao1 : string.Empty,
+                    DataInsercao = registro.Datainsercao,
                     Latitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, true),
                     Longitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, false),
                     Referencias = ReferenciaDAL.ObterReferencia((int)registro.Codigo)
@@ -76,32 +78,32 @@ namespace BibliotecaViva.DAL
 
         public List<RegistroDTO> Consultar(RegistroDTO registroDTO)
         {
-            return (from registro in DataContext.ObterDataContext().Table<Registro>()
+            return (from registro in DataContext.Registros
                 join
-                    idioma in DataContext.ObterDataContext().Table<Idioma>()
+                    idioma in DataContext.Idiomas
                     on registro.Idioma equals idioma.Codigo
                 join
-                    tipo in DataContext.ObterDataContext().Table<Tipo>()
+                    tipo in DataContext.Tipos
                     on registro.Tipo equals tipo.Codigo
                 join
-                    descricao in DataContext.ObterDataContext().Table<Descricao>()
+                    descricao in DataContext.Descricaos
                     on registro.Codigo equals descricao.Registro into descricaoLeftJoin from descricaoLeft in descricaoLeftJoin.DefaultIfEmpty()
                 join
-                    registroApelido in DataContext.ObterDataContext().Table<RegistroApelido>()
+                    registroApelido in DataContext.Registroapelidos
                     on registro.Codigo equals registroApelido.Registro into registroApelidoLeftJoin from registroApelidoLeft in registroApelidoLeftJoin.DefaultIfEmpty()
                 join
-                   apelido in DataContext.ObterDataContext().Table<Apelido>()
-                   on new RegistroApelido(){ 
+                   apelido in DataContext.Apelidos
+                   on new Registroapelido(){ 
                        Apelido = registroApelidoLeft != null ? registroApelidoLeft.Apelido : 0
                     }.Apelido equals apelido.Codigo into apelidoLeftJoin from apelidoLeft in apelidoLeftJoin.DefaultIfEmpty()
                 join
-                    registroLocalizacao in DataContext.ObterDataContext().Table<RegistroLocalizacao>()
+                    registroLocalizacao in DataContext.Registrolocalizacaos
                     on registro.Codigo equals registroLocalizacao.Registro into registroLocalizacaoLeftJoin from registroLocalizacaoLeft in registroLocalizacaoLeftJoin.DefaultIfEmpty()
                 join
-                   localizacaoGeografica in DataContext.ObterDataContext().Table<LocalizacaoGeografica>()
-                   on new RegistroLocalizacao(){ 
-                       LocalizacaoGeografica = registroLocalizacaoLeft != null ? registroLocalizacaoLeft.LocalizacaoGeografica : 0
-                    }.LocalizacaoGeografica equals localizacaoGeografica.Codigo into localizacaoGeograficaLeftJoin from localizacaoGeograficaLeft in localizacaoGeograficaLeftJoin.DefaultIfEmpty()
+                   localizacaoGeografica in DataContext.Localizacaogeograficas
+                   on new Registrolocalizacao(){ 
+                       Localizacaogeografica = registroLocalizacaoLeft != null ? registroLocalizacaoLeft.Localizacaogeografica : 0
+                    }.Localizacaogeografica equals localizacaoGeografica.Codigo into localizacaoGeograficaLeftJoin from localizacaoGeograficaLeft in localizacaoGeograficaLeftJoin.DefaultIfEmpty()
 
 
                 where registro.Nome == registroDTO.Nome && registro.Idioma == registro.Idioma
@@ -114,15 +116,15 @@ namespace BibliotecaViva.DAL
                     Idioma = idioma.Nome,
                     Tipo = tipo.Nome,
                     Conteudo = registro.Conteudo,
-                    Descricao = descricaoLeft != null ? descricaoLeft.Conteudo : string.Empty,
-                    DataInsercao = registro.DataInsercao,
+                    Descricao = descricaoLeft != null ? descricaoLeft.Descricao1 : string.Empty,
+                    DataInsercao = registro.Datainsercao,
                     Latitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, true),
                     Longitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, false),
                     Referencias = ReferenciaDAL.ObterReferencia((int)registro.Codigo)
                 }).DistinctBy(registroDB => registroDB.Codigo).ToList(); 
         }
 
-        private double? ObterLocalizacaoGeografica(LocalizacaoGeografica localizacaoGeograficaLeft, bool latitude)
+        private long? ObterLocalizacaoGeografica(Localizacaogeografica localizacaoGeograficaLeft, bool latitude)
         {
             if (localizacaoGeograficaLeft != null)
                 return latitude ? localizacaoGeograficaLeft.Latitude : localizacaoGeograficaLeft.Longitude;
@@ -131,7 +133,18 @@ namespace BibliotecaViva.DAL
         
         public void Cadastrar(RegistroDTO registroDTO)
         {
-            DataContext.ObterDataContext().InsertOrReplace(MapearRegistro(registroDTO)); 
+            var registro = DataContext.Registros.AsNoTracking().FirstOrDefault(registro => registro.Codigo == registroDTO.Codigo);
+            if(registro != null)
+            {
+                registroDTO.Codigo = registro.Codigo;
+                DataContext.Update(MapearRegistro(registroDTO));
+                DataContext.SaveChanges();
+            }
+            else
+            {
+                DataContext.Add(MapearRegistro(registroDTO));
+                DataContext.SaveChanges();
+            }
             CadastrarDadosOpcionais(registroDTO);
         }
 
@@ -142,12 +155,12 @@ namespace BibliotecaViva.DAL
 
             return new Registro()
             {
-                Codigo = registroDTO.Codigo,
+                Codigo = (int)registroDTO.Codigo,
                 Idioma = (int)idioma.Codigo,
                 Tipo = (int)tipo.Codigo,
                 Nome = registroDTO.Nome,
                 Conteudo = registroDTO.Conteudo,
-                DataInsercao = DateTime.Now
+                Datainsercao = DateTime.Now
             };
         }
 
@@ -202,8 +215,8 @@ namespace BibliotecaViva.DAL
             {
                 var localizacaoGeograficaDTO = new LocalizacaoGeograficaDTO()
                 { 
-                    Latitude = (double)registroDTO.Latitude,
-                    Longitude = (double)registroDTO.Longitude,
+                    Latitude = (long)registroDTO.Latitude,
+                    Longitude = (long)registroDTO.Longitude,
                 };
                 
                 LocalizacaoGeograficaDAL.Cadastrar(localizacaoGeograficaDTO);

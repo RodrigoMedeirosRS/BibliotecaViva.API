@@ -3,11 +3,13 @@ using MoreLinq;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 using BibliotecaViva.DTO;
 using BibliotecaViva.DAO;
 using BibliotecaViva.DTO.Dominio;
 using BibliotecaViva.DAL.Interfaces;
+
 
 namespace BibliotecaViva.DAL
 {
@@ -15,7 +17,7 @@ namespace BibliotecaViva.DAL
     {
         private IPessoaDAL PessoaDAL { get; set; }
         private IRegistroDAL RegistroDAL { get; set; }
-        public SonarDAL(ISQLiteDataContext dataContext) : base(dataContext)
+        public SonarDAL(bibliotecavivaContext dataContext) : base(dataContext)
         {
         }
         public SonarRetorno Consultar(SonarConsulta sonar)
@@ -39,13 +41,13 @@ namespace BibliotecaViva.DAL
 
         private List<PessoaDTO> BuscarPessoas(SonarConsulta sonar)
         {
-            return(from pessoaLocalizacao in DataContext.ObterDataContext().Table<PessoaLocalizao>()
+            return(from pessoaLocalizacao in DataContext.Pessoalocalizacaos
                 join
-                    pessoa in DataContext.ObterDataContext().Table<Pessoa>()
+                    pessoa in DataContext.Pessoas
                     on pessoaLocalizacao.Pessoa equals pessoa.Codigo
                 join
-                    localizacaoGeografica in DataContext.ObterDataContext().Table<LocalizacaoGeografica>()
-                    on pessoaLocalizacao.LocalizacaoGeografica equals localizacaoGeografica.Codigo
+                    localizacaoGeografica in DataContext.Localizacaogeograficas
+                    on pessoaLocalizacao.Localizacaogeografica equals localizacaoGeografica.Codigo
                 where localizacaoGeografica.Latitude >= sonar.CoordenadaInicio[0] && 
                     localizacaoGeografica.Latitude <= sonar.CoordenadaFim[0] &&
                     localizacaoGeografica.Longitude >= sonar.CoordenadaInicio[1] &&
@@ -55,7 +57,7 @@ namespace BibliotecaViva.DAL
                     Codigo = pessoa.Codigo,
                     Nome = pessoa.Nome,
                     Sobrenome = pessoa.Sobrenome
-                }).ToList();
+                }).AsNoTracking().ToList();
         }
 
         private List<RegistroDTO> PopularRegistros(List<RegistroDTO> registros)
@@ -70,15 +72,15 @@ namespace BibliotecaViva.DAL
 
         private List<RegistroDTO> BuscarRegistros(SonarConsulta sonar)
         {
-            return(from registroLocalizacao in DataContext.ObterDataContext().Table<RegistroLocalizacao>()
+            return(from registroLocalizacao in DataContext.Registrolocalizacaos
                 join
-                    registro in DataContext.ObterDataContext().Table<Registro>()
+                    registro in DataContext.Registros
                     on registroLocalizacao.Registro equals registro.Codigo
                 join
-                    localizacaoGeografica in DataContext.ObterDataContext().Table<LocalizacaoGeografica>()
-                    on registroLocalizacao.LocalizacaoGeografica equals localizacaoGeografica.Codigo
+                    localizacaoGeografica in DataContext.Localizacaogeograficas
+                    on registroLocalizacao.Localizacaogeografica equals localizacaoGeografica.Codigo
                 join
-                    idioma in DataContext.ObterDataContext().Table<Idioma>()
+                    idioma in DataContext.Idiomas
                     on registro.Idioma equals idioma.Codigo
                 where localizacaoGeografica.Latitude >= sonar.CoordenadaInicio[0] && 
                     localizacaoGeografica.Latitude <= sonar.CoordenadaFim[0] &&
