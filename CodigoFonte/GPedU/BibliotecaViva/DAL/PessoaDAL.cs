@@ -105,15 +105,8 @@ namespace BibliotecaViva.DAL
 
         private PessoaDTO PopularCodigo(PessoaDTO pessoaDTO)
         {
-            try
-            {
-                if (pessoaDTO.Codigo == null || pessoaDTO.Codigo == 0)
+            if (pessoaDTO.Codigo == null || pessoaDTO.Codigo == 0)
                     pessoaDTO.Codigo = Consultar(pessoaDTO).FirstOrDefault().Codigo;
-            }
-            catch (System.Exception ex)
-            {
-                
-            }
             return pessoaDTO;
         }
 
@@ -123,6 +116,7 @@ namespace BibliotecaViva.DAL
             CadastrarNomeSocial(pessoaDTO);
             CadastrarApelido(pessoaDTO);
             CadastrarLocalizacaoGeografica(pessoaDTO);
+            PessoaRegistroDAL.VincularReferencia(pessoaDTO);
         }
 
         private void CadastrarNomeSocial(PessoaDTO pessoaDTO)

@@ -31,7 +31,7 @@ namespace BibliotecaViva.DAL
 
         public RegistroDTO Consultar(int codRegistro)
         {
-            return (from registro in DataContext.Registros
+            var resultado = (from registro in DataContext.Registros
                 join
                     idioma in DataContext.Idiomas
                     on registro.Idioma equals idioma.Codigo
@@ -72,13 +72,16 @@ namespace BibliotecaViva.DAL
                     DataInsercao = registro.Datainsercao,
                     Latitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, true),
                     Longitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, false),
-                    Referencias = ReferenciaDAL.ObterReferencia((int)registro.Codigo)
-                }).AsNoTracking().FirstOrDefault(); 
+                }).AsNoTracking().FirstOrDefault();
+            
+            resultado.Referencias = ReferenciaDAL.ObterReferencia(resultado.Codigo);
+            
+            return resultado;
         }
 
         public List<RegistroDTO> Consultar(RegistroDTO registroDTO)
         {
-            return (from registro in DataContext.Registros
+            var registros = (from registro in DataContext.Registros
                 join
                     idioma in DataContext.Idiomas
                     on registro.Idioma equals idioma.Codigo
@@ -119,9 +122,13 @@ namespace BibliotecaViva.DAL
                     Descricao = descricaoLeft != null ? descricaoLeft.Conteudo : string.Empty,
                     DataInsercao = registro.Datainsercao,
                     Latitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, true),
-                    Longitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, false),
-                    Referencias = ReferenciaDAL.ObterReferencia((int)registro.Codigo)
+                    Longitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, false)
                 }).AsNoTracking().DistinctBy(registroDB => registroDB.Codigo).ToList(); 
+
+            foreach(var registro in registros)
+                registro.Referencias = ReferenciaDAL.ObterReferencia(registro.Codigo);
+            
+            return registros;
         }
 
         private static long? ObterLocalizacaoGeografica(Localizacaogeografica localizacaoGeograficaLeft, bool latitude)
@@ -133,7 +140,7 @@ namespace BibliotecaViva.DAL
         
         public void Cadastrar(RegistroDTO registroDTO)
         {
-            var registro = DataContext.Registros.AsNoTracking().FirstOrDefault(registro => registro.Codigo == registroDTO.Codigo);
+            var registro = DataContext.Registros.AsNoTracking().FirstOrDefault(registro => registro.Nome == registroDTO.Nome);
             if(registro != null)
             {
                 registroDTO.Codigo = registro.Codigo;
@@ -203,6 +210,7 @@ namespace BibliotecaViva.DAL
                 };
                 
                 ApelidoDAL.Cadastrar(apelidoDTO);
+                apelidoDTO.Codigo = DataContext.Apelidos.FirstOrDefault(apelido => apelido.Nome == registroDTO.Apelido).Codigo;
                 ApelidoDAL.VincularRegistro(apelidoDTO, registroDTO);
             }     
         }
@@ -220,6 +228,9 @@ namespace BibliotecaViva.DAL
                 };
                 
                 LocalizacaoGeograficaDAL.Cadastrar(localizacaoGeograficaDTO);
+                localizacaoGeograficaDTO.Codigo = DataContext.Localizacaogeograficas.FirstOrDefault
+                    (localizao => localizao.Latitude == localizacaoGeograficaDTO.Latitude && 
+                        localizao.Longitude == localizacaoGeograficaDTO.Longitude).Codigo;
                 LocalizacaoGeograficaDAL.Vincular(localizacaoGeograficaDTO, registroDTO);
             }     
         }
