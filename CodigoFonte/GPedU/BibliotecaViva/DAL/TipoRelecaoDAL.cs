@@ -1,49 +1,50 @@
 using System.Linq;
 using System.Collections.Generic;
-using BibliotecaViva.DTO;
+using Microsoft.EntityFrameworkCore;
+
 using BibliotecaViva.DAO;
+using BibliotecaViva.DTO;
+using BibliotecaViva.DAL.Utils;
 using BibliotecaViva.DAL.Interfaces;
 
 namespace BibliotecaViva.DAL
 {
     public class TipoRelecaoDAL : BaseDAL, ITipoRelacaoDAL
     {
-        public TipoRelecaoDAL(ISQLiteDataContext dataContext) : base(dataContext)
+        public TipoRelecaoDAL(bibliotecavivaContext dataContext) : base(dataContext)
         {
         }
         public void Cadastrar(TipoRelacaoDTO tipoRelacaoDTO)
         {
-            DataContext.ObterDataContext().InsertOrReplace(new TipoRelacao()
+            if(!ValidarJaCadastrado(tipoRelacaoDTO))
             {
-                Codigo = ValidarJaCadastrado(tipoRelacaoDTO),
-                Nome = tipoRelacaoDTO.Nome
-            });
+                DataContext.Add(Conversor.Mapear(tipoRelacaoDTO));
+                DataContext.SaveChanges();
+            }
         }
         public TipoRelacaoDTO Consultar(TipoRelacaoDTO tipoRelacaoDTO)
         {
-            var resultado = new TipoRelacao();
+            var resultado = new Tiporelacao();
 
             if (string.IsNullOrEmpty(tipoRelacaoDTO.Nome))
-                resultado = DataContext.ObterDataContext().Table<TipoRelacao>().FirstOrDefault(tipo => tipo.Codigo == tipoRelacaoDTO.Codigo);
+                resultado = DataContext.Tiporelacaos.AsNoTracking().FirstOrDefault(tipo => tipo.Codigo == tipoRelacaoDTO.Codigo);
             else
-                resultado = DataContext.ObterDataContext().Table<TipoRelacao>().FirstOrDefault(tipo => tipo.Nome == tipoRelacaoDTO.Nome);
+                resultado = DataContext.Tiporelacaos.AsNoTracking().FirstOrDefault(tipo => tipo.Nome == tipoRelacaoDTO.Nome);
             
-            return Mapear<TipoRelacao, TipoRelacaoDTO>(resultado);
+            return Conversor.Mapear(resultado);
         }
 
         public List<TipoRelacaoDTO> Listar()
         {
-            return (from tipo in DataContext.ObterDataContext().Table<TipoRelacao>() select new TipoRelacaoDTO()
-            {
-                Codigo = tipo.Codigo,
-                Nome = tipo.Nome
-            }).ToList(); 
+            return (from tipo in DataContext.Tiporelacaos 
+                select 
+                    Conversor.Mapear(tipo)).AsNoTracking().ToList(); 
         }
 
-        private int? ValidarJaCadastrado(TipoRelacaoDTO tipoRelacaoDTO)
+        private bool ValidarJaCadastrado(TipoRelacaoDTO tipoRelacaoDTO)
         {
-            var resultado = DataContext.ObterDataContext().Table<TipoRelacao>().FirstOrDefault(tipoRelacao => tipoRelacao.Nome == tipoRelacaoDTO.Nome);
-            return resultado != null ? resultado.Codigo : null;
+            var resultado = DataContext.Tiporelacaos.AsNoTracking().FirstOrDefault(tipoRelacao => tipoRelacao.Nome == tipoRelacaoDTO.Nome);
+            return resultado != null;
         } 
     }
 }

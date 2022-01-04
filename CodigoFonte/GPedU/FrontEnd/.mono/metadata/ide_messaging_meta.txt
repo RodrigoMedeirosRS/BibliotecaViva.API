@@ -1,2 +1,0 @@
-﻿42921
-/usr/share/myapps/GodotEngine/Godot_3.3.64

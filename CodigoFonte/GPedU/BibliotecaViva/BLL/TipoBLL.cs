@@ -1,5 +1,6 @@
 using BibliotecaViva.DTO;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using BibliotecaViva.DAL.Interfaces;
 using BibliotecaViva.BLL.Interfaces;
 
@@ -31,17 +32,17 @@ namespace BibliotecaViva.BLL
             TipoRelacaoDAL.Cadastrar(tipoRelacaoDTO);
             return "Idioma " + tipoRelacaoDTO.Nome + "Cadastrado com Sucesso!";
         }
-        public async Task<string> ConsultarIdiomas()
+        public async Task<List<IdiomaDTO>> ConsultarIdiomas()
         {
-            return SerializarRetorno(IdiomaDAL.Listar());
+            return IdiomaDAL.Listar();
         }
-        public async Task<string> ConsultarTipos()
+        public async Task<List<TipoDTO>> ConsultarTipos()
         {
-            return SerializarRetorno(TipoDAL.Listar());
+            return TipoDAL.Listar();
         }
-        public async Task<string> ConsultarTiposRelacao()
+        public async Task<List<TipoRelacaoDTO>> ConsultarTiposRelacao()
         {
-            return SerializarRetorno(TipoRelacaoDAL.Listar());
+            return TipoRelacaoDAL.Listar();
         }
     }
 }

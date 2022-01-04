@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 
 using API.Interface;
 
@@ -8,33 +7,34 @@ namespace API
 {
     public class Requisicao : IRequisicao
     {
-        public ActionResult<string> ExecutarRequisicao<T>(T entrada, Func<T, Task<string>> metodo)
+        public Task<S> ExecutarRequisicao<T, S>(T entrada, Func<T, Task<S>> metodo)
         {
             try
             {
-                return Task<string>.Run(async () =>
+                return Task<S>.Run(async () =>
                 {
                     return await metodo(entrada);
-                }).Result;
+                });
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                throw ex;
             }
         }
 
-        public ActionResult<string> ExecutarRequisicao(Func<Task<string>> metodo)
+
+        public Task<T> ExecutarRequisicao<T>(Func<Task<T>> metodo)
         {
             try
             {
-                return Task<string>.Run(async () =>
+                return Task<T>.Run(async () =>
                 {
                     return await metodo();
-                }).Result;
+                });
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                throw ex;
             }
         }
     }

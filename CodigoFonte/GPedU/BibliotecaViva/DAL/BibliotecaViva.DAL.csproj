@@ -1,19 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DTO\BibliotecaViva.DTO.csproj" />
-    <ProjectReference Include="..\System.Data.SQLite.NetStandard\System.Data.SQLite.NetStandard.csproj" />
     <ProjectReference Include="..\DAO\BibliotecaViva.DAO.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="BibliotecaViva.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
   <ItemGroup>

@@ -1,7 +1,6 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
-
 using BibliotecaViva.DTO;
-using BibliotecaViva.DTO.Dominio;
 
 namespace BibliotecaViva.BLL.Interfaces
 {
@@ -10,8 +9,8 @@ namespace BibliotecaViva.BLL.Interfaces
         Task<string> Cadastrar(IdiomaDTO idiomaDTO);
         Task<string> Cadastrar(TipoDTO tipoDTO);
         Task<string> Cadastrar(TipoRelacaoDTO tipoRelacaoDTO);
-        Task<string> ConsultarIdiomas();
-        Task<string> ConsultarTipos();
-        Task<string> ConsultarTiposRelacao();
+        Task<List<IdiomaDTO>> ConsultarIdiomas();
+        Task<List<TipoDTO>> ConsultarTipos();
+        Task<List<TipoRelacaoDTO>> ConsultarTiposRelacao();
     }
 }

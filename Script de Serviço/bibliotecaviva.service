@@ -1,0 +1,13 @@
+[Unit] 
+Description=Biblioteca Viva
+
+[Service] 
+WorkingDirectory=/home/rmlehnemann/Publish/ServicosDotnet
+ExecStart=/usr/bin/dotnet /home/rmlehnemann/Publish/ServicosDotnet/API.dll 
+Restart=always 
+RestartSec=10
+SyslogIdentifier=offershare-web-app
+Environment=ASPNETCORE_ENVIRONMENT=Production 
+
+[Install] 
+WantedBy=multi-user.target

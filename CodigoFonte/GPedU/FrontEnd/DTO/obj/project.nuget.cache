@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "qC8ES2DirclR0ozAfaqf+8zupXEsG1Y14aZzBMhhws/xRgKjgVxfs1ElMWoH07np3bYl/HrXZHxplwRAocx4BA==",
+  "success": true,
+  "projectFilePath": "c:\\Users\\edmundo\\Documents\\Rodrigo\\Projetos\\Biblioteca_Viva\\CodigoFonte\\GPedU\\FrontEnd\\DTO\\DTO.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\edmundo\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\edmundo\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,17 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Enum\**" />
+    <Compile Remove="Utils\**" />
+    <EmbeddedResource Remove="Enum\**" />
+    <EmbeddedResource Remove="Utils\**" />
+    <None Remove="Enum\**" />
+    <None Remove="Utils\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DAL\BibliotecaViva.DAL.csproj" />
     <ProjectReference Include="..\DTO\BibliotecaViva.DTO.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Enum\" />
-    <Folder Include="Utils\" />
   </ItemGroup>
 
   <ItemGroup>

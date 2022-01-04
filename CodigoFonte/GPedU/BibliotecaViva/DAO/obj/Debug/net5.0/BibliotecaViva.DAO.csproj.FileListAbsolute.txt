@@ -1,5 +1,0 @@
-C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\BibliotecaViva\DAO\obj\Debug\net5.0\BibliotecaViva.DAO.csprojAssemblyReference.cache
-C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\BibliotecaViva\DAO\obj\Debug\net5.0\BibliotecaViva.DAO.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\BibliotecaViva\DAO\obj\Debug\net5.0\BibliotecaViva.DAO.AssemblyInfoInputs.cache
-C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\BibliotecaViva\DAO\obj\Debug\net5.0\BibliotecaViva.DAO.AssemblyInfo.cs
-C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\BibliotecaViva\DAO\obj\Debug\net5.0\BibliotecaViva.DAO.csproj.CoreCompileInputs.cache

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using BibliotecaViva.DTO;
 using BibliotecaViva.DTO.Dominio;
 using BibliotecaViva.DAL.Interfaces;
@@ -19,31 +20,24 @@ namespace BibliotecaViva.BLL
         public async Task<string> Cadastrar(PessoaDTO pessoa)
         {
             PessoaDAL.Cadastrar(pessoa);
-            return ObterMensagemDeSucesso(pessoa);
+            return pessoa.Nome + " " + pessoa.Sobrenome + " Registrado(a) com Sucesso!";
         }
 
-        public async Task<string> Consultar(PessoaConsulta pessoa)
+        public async Task<List<PessoaDTO>> Consultar(PessoaConsulta pessoa)
         {
-            var resultado = PessoaDAL.Consultar(new PessoaDTO()
+            return PessoaDAL.Consultar(new PessoaDTO()
             {
                 Nome = pessoa.Nome,
                 Sobrenome = pessoa.Sobrenome
             });
-            return SerializarRetorno(resultado);
         }
 
-        public async Task<string> ObterRelacoes(int codPessoa)
+        public async Task<List<RegistroDTO>> ObterRelacoes(int codPessoa)
         {
-            var resultado = PessoaRegistroDAL.ObterRelacaoCompleta(new PessoaDTO()
+            return PessoaRegistroDAL.ObterRelacaoCompleta(new PessoaDTO()
             {
                 Codigo = codPessoa
             });
-            return SerializarRetorno(resultado);
-        }
-
-        private string ObterMensagemDeSucesso(PessoaDTO pessoa)
-        {
-            return pessoa.Nome + " " + pessoa.Sobrenome + " Registrado(a) com Sucesso!";
         }
     }
 }

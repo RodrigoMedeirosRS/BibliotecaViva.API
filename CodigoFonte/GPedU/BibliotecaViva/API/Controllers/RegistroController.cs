@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
 using API.Interface;
@@ -22,21 +24,21 @@ namespace BibliotecaViva.Controllers
         }
 
         [HttpPost("Cadastrar")]
-        public async Task<IActionResult> Cadastrar(RegistroDTO registro)
+        public async Task<string> Cadastrar(RegistroDTO registro)
         {
-            return Ok(_Requisicao.ExecutarRequisicao<RegistroDTO>(registro, _BLL.Cadastrar));
+            return _Requisicao.ExecutarRequisicao<RegistroDTO, string>(registro, _BLL.Cadastrar).Result;
         }
 
         [HttpPost("Consultar")]
-        public async Task<IActionResult> Consultar(RegistroConsulta registro)
+        public async Task<List<RegistroDTO>> Consultar(RegistroConsulta registro)
         {
-            return Ok(_Requisicao.ExecutarRequisicao<RegistroConsulta>(registro, _BLL.Consultar));
+            return _Requisicao.ExecutarRequisicao<RegistroConsulta, List<RegistroDTO>>(registro, _BLL.Consultar).Result;
         }
 
         [HttpPost("ObterReferencias")]
-        public async Task<IActionResult> ObterReferencias(int codRegistro)
+        public async Task<List<RegistroDTO>> ObterReferencias(string codRegistro)
         {
-            return Ok(_Requisicao.ExecutarRequisicao<int>(codRegistro, _BLL.ObterReferencias));
+            return _Requisicao.ExecutarRequisicao<int, List<RegistroDTO>>(Convert.ToInt32(codRegistro), _BLL.ObterReferencias).Result;
         }
     }
 }

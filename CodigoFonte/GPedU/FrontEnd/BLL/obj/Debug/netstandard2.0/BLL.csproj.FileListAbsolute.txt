@@ -1,0 +1,17 @@
+C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\FrontEnd\BLL\bin\Debug\netstandard2.0\BLL.deps.json
+C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\FrontEnd\BLL\bin\Debug\netstandard2.0\BLL.dll
+C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\FrontEnd\BLL\bin\Debug\netstandard2.0\BLL.pdb
+C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\FrontEnd\BLL\bin\Debug\netstandard2.0\DTO.dll
+C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\FrontEnd\BLL\bin\Debug\netstandard2.0\GodotSharp.dll
+C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\FrontEnd\BLL\bin\Debug\netstandard2.0\GodotSharpEditor.dll
+C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\FrontEnd\BLL\bin\Debug\netstandard2.0\SAL.dll
+C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\FrontEnd\BLL\bin\Debug\netstandard2.0\DTO.pdb
+C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\FrontEnd\BLL\bin\Debug\netstandard2.0\SAL.pdb
+C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\FrontEnd\BLL\obj\Debug\netstandard2.0\BLL.AssemblyInfoInputs.cache
+C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\FrontEnd\BLL\obj\Debug\netstandard2.0\BLL.AssemblyInfo.cs
+C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\FrontEnd\BLL\obj\Debug\netstandard2.0\BLL.csproj.CoreCompileInputs.cache
+C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\FrontEnd\BLL\obj\Debug\netstandard2.0\BLL.csproj.CopyComplete
+C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\FrontEnd\BLL\obj\Debug\netstandard2.0\BLL.dll
+C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\FrontEnd\BLL\obj\Debug\netstandard2.0\BLL.pdb
+C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\FrontEnd\BLL\obj\Debug\netstandard2.0\BLL.csproj.AssemblyReference.cache
+C:\Users\edmundo\Documents\Rodrigo\Projetos\Biblioteca_Viva\CodigoFonte\GPedU\FrontEnd\BLL\obj\Debug\netstandard2.0\BLL.GeneratedMSBuildEditorConfig.editorconfig
