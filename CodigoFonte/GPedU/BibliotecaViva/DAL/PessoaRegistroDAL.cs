@@ -1,65 +1,127 @@
+using MoreLinq;
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using BibliotecaViva.DAO;
 using BibliotecaViva.DTO;
+using BibliotecaViva.DAL.Utils;
 using BibliotecaViva.DAL.Interfaces;
+
 
 namespace BibliotecaViva.DAL
 {
     public class PessoaRegistroDAL : BaseDAL, IPessoaRegistroDAL
     {
-        ITipoRelacaoDAL TipoRelacaoDAL { get; set; }
-        IRegistroDAL RegistroDAL { get; set; }
-        public PessoaRegistroDAL(ISQLiteDataContext dataContext, ITipoRelacaoDAL tipoRelacaoDAL, IRegistroDAL registroDAL) : base(dataContext)
+        private ITipoRelacaoDAL TipoRelacaoDAL { get; set; }
+        private IRegistroDAL RegistroDAL { get; set; }
+        private IReferenciaDAL ReferenciaDAL { get; set; }
+        public PessoaRegistroDAL(bibliotecavivaContext dataContext, ITipoRelacaoDAL tipoRelacaoDAL, IRegistroDAL registroDAL, IReferenciaDAL referenciaDAL) : base(dataContext)
         {
             TipoRelacaoDAL = tipoRelacaoDAL;
             RegistroDAL = registroDAL;
+            ReferenciaDAL = referenciaDAL;
         }
 
         public void VincularReferencia(PessoaDTO pessoaDTO)
         {
-            DataContext.ObterDataContext().Table<PessoaRegistro>().Delete(relacao => relacao.Pessoa == pessoaDTO.Codigo);  
-            
-            foreach(var relacao in pessoaDTO.Relacoes)
-                DataContext.ObterDataContext().InsertOrReplace(new PessoaRegistro()
+            var relacoes = ListarRelacoes((int)pessoaDTO.Codigo);
+
+            foreach (var ralacao in relacoes)
+                DataContext.Pessoaregistros.Remove(ralacao);
+
+            foreach (var relacao in pessoaDTO.Relacoes)
+                DataContext.Add(new Pessoaregistro()
                 {
-                    Pessoa = relacao.Pessoa,
-                    Registro = relacao.Registro,
-                    TipoRelacao = TipoRelacaoDAL.Consultar(new TipoRelacaoDTO()
+                    Pessoa = (int)relacao.Pessoa,
+                    Registro = (int)relacao.Registro,
+                    Tiporelacao = (int)TipoRelacaoDAL.Consultar(new TipoRelacaoDTO()
                     {
-                        Nome =relacao.TipoRelacao
+                        Nome = relacao.TipoRelacao
                     }).Codigo
                 });
+            DataContext.SaveChanges();
         }
         public List<PessoaRegistroDTO> ObterRelacao(int codPessoa)
         {
-            return (from relacao in DataContext.ObterDataContext().Table<PessoaRegistro>()
-            where relacao.Pessoa == codPessoa
-            select new PessoaRegistroDTO()
-            {
-                Codigo = relacao.Codigo,
-                Registro = (int)relacao.Registro,
-                Pessoa = (int)relacao.Pessoa,
-                TipoRelacao = TipoRelacaoDAL.Consultar(new TipoRelacaoDTO()
-                {
-                    Codigo = relacao.TipoRelacao
-                }).Nome
-            }).ToList();
+            var relacoes = (from relacao in DataContext.Pessoaregistros
+                join
+                    tiporelacao in DataContext.Tiporelacaos
+                    on relacao.Tiporelacao equals tiporelacao.Codigo
+                where 
+                    relacao.Pessoa == codPessoa
+                select 
+                    new PessoaRegistroDTO()
+                    {
+                        Codigo = relacao.Codigo,
+                        Registro = (int)relacao.Registro,
+                        Pessoa = (int)relacao.Pessoa,
+                        TipoRelacao = tiporelacao.Nome
+                    }).AsNoTracking().ToList();
+            return relacoes;
         }
         public List<RegistroDTO> ObterRelacaoCompleta(PessoaDTO pessoaDTO)
         {
-            var relacoes = DataContext.ObterDataContext().Table<PessoaRegistro>().Where(
-                relacao => relacao.Codigo == pessoaDTO.Codigo);
+            var registros = (from pessoaRelacao in DataContext.Pessoaregistros
+                join         
+                    registro in DataContext.Registros
+                    on pessoaRelacao.Registro equals registro.Codigo
+                join
+                    idioma in DataContext.Idiomas
+                    on registro.Idioma equals idioma.Codigo
+                join
+                    tipo in DataContext.Tipos
+                    on registro.Tipo equals tipo.Codigo
+                join
+                    descricao in DataContext.Descricaos
+                    on registro.Codigo equals descricao.Registro into descricaoLeftJoin from descricaoLeft in descricaoLeftJoin.DefaultIfEmpty()
+                join
+                    registroApelido in DataContext.Registroapelidos
+                    on registro.Codigo equals registroApelido.Registro into registroApelidoLeftJoin from registroApelidoLeft in registroApelidoLeftJoin.DefaultIfEmpty()
+                join
+                   apelido in DataContext.Apelidos
+                   on new Registroapelido(){ 
+                       Apelido = registroApelidoLeft != null ? registroApelidoLeft.Apelido : 0
+                    }.Apelido equals apelido.Codigo into apelidoLeftJoin from apelidoLeft in apelidoLeftJoin.DefaultIfEmpty()
+                join
+                    registroLocalizacao in DataContext.Registrolocalizacaos
+                    on registro.Codigo equals registroLocalizacao.Registro into registroLocalizacaoLeftJoin from registroLocalizacaoLeft in registroLocalizacaoLeftJoin.DefaultIfEmpty()
+                join
+                   localizacaoGeografica in DataContext.Localizacaogeograficas
+                   on new Registrolocalizacao(){ 
+                       Localizacaogeografica = registroLocalizacaoLeft != null ? registroLocalizacaoLeft.Localizacaogeografica : 0
+                    }.Localizacaogeografica equals localizacaoGeografica.Codigo into localizacaoGeograficaLeftJoin from localizacaoGeograficaLeft in localizacaoGeograficaLeftJoin.DefaultIfEmpty()
+
+                where 
+                    pessoaRelacao.Pessoa == pessoaDTO.Codigo
+                
+                select new RegistroDTO()
+                {
+                    Codigo = registro.Codigo,
+                    Nome = registro.Nome,
+                    Apelido = apelidoLeft != null ? apelidoLeft.Nome : string.Empty,
+                    Idioma = idioma.Nome,
+                    Tipo = tipo.Nome,
+                    Conteudo = registro.Conteudo,
+                    Descricao = descricaoLeft != null ? descricaoLeft.Conteudo : string.Empty,
+                    DataInsercao = registro.Datainsercao,
+                    Latitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, true),
+                    Longitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, false)
+                }).AsNoTracking().DistinctBy(registroDB => registroDB.Codigo).ToList();
             
-            var registros = new List<RegistroDTO>();
-
-            if (relacoes == null)
-                return registros;
-
-            foreach(var relacao in relacoes)
-                registros.Add(RegistroDAL.Consultar((int)relacao.Registro));
-
+            foreach(var registro in registros)
+                registro.Referencias = ReferenciaDAL.ObterReferencia(registro.Codigo);
+            
             return registros;
+        }
+        private static long? ObterLocalizacaoGeografica(Localizacaogeografica localizacaoGeograficaLeft, bool latitude)
+        {
+            if (localizacaoGeograficaLeft != null)
+                return latitude ? localizacaoGeograficaLeft.Latitude : localizacaoGeograficaLeft.Longitude;
+            return null;
+        }
+        private IQueryable<Pessoaregistro> ListarRelacoes(int codPessoa)
+        {
+            return DataContext.Pessoaregistros.Where(relacao => relacao.Pessoa == codPessoa).AsNoTracking();
         }
     }
 }

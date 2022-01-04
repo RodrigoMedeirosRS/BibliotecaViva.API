@@ -9,8 +9,8 @@ namespace BibliotecaViva.DTO
         public string Genero { get; set; }
         public string Apelido { get; set; }
         public string NomeSocial { get; set; }
-        public double? Latitude { get; set; }
-        public double? Longitude { get; set; }
+        public long? Latitude { get; set; }
+        public long? Longitude { get; set; }
         public List<PessoaRegistroDTO> Relacoes { get; set; }
     }
 }

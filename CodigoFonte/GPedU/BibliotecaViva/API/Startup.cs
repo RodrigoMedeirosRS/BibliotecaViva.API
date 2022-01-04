@@ -5,13 +5,15 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.EntityFrameworkCore;
 
 using API.Interface;
 using BibliotecaViva.BLL;
 using BibliotecaViva.DAL;
-using BibliotecaViva.DataContext;
+using BibliotecaViva.DAO;
 using BibliotecaViva.DAL.Interfaces;
 using BibliotecaViva.BLL.Interfaces;
+
 namespace API
 {
     public class Startup
@@ -25,6 +27,7 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             AdicionarControladores(services);
+            AdicionarDataContext(services, Configuration.GetConnectionString("BibliotecaVivaApiConnection"));
             RealizarInjecaoDeDependenciasBLL(services);
             RealizarInjecaoDeDependenciasDAL(services);
             DefinirConfiguracaoSwagger(services);           
@@ -32,7 +35,11 @@ namespace API
 
         private static void AdicionarControladores(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
+        }
+        private static void AdicionarDataContext(IServiceCollection services, string connectionString)
+        {
+            services.AddDbContext<bibliotecavivaContext>(options => options.UseNpgsql(connectionString));
         }
 
         private static void RealizarInjecaoDeDependenciasBLL(IServiceCollection services)
@@ -57,9 +64,7 @@ namespace API
             services.AddScoped<INomeSocialDAL, NomeSocialDAL>(); 
             services.AddScoped<ITipoRelacaoDAL, TipoRelecaoDAL>();
             services.AddScoped<IPessoaRegistroDAL, PessoaRegistroDAL>();
-            services.AddScoped<ILocalizacaoGeograficaDAL, LocalizacaoGeograficaDAL>();         
-            
-            services.AddSingleton<ISQLiteDataContext, SQLiteDataContext>();
+            services.AddScoped<ILocalizacaoGeograficaDAL, LocalizacaoGeograficaDAL>();
         }
 
         private static void DefinirConfiguracaoSwagger(IServiceCollection services)
@@ -86,6 +91,7 @@ namespace API
             });
 
             app.UseSwaggerUI(option => {
+                option.RoutePrefix = swaggerOptions.RoutePrefix;
                 option.SwaggerEndpoint(swaggerOptions.UIEndpoint, swaggerOptions.Description);
             });
 

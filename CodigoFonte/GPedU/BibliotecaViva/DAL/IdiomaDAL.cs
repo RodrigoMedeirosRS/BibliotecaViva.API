@@ -1,50 +1,45 @@
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+
 using BibliotecaViva.DAO;
 using BibliotecaViva.DTO;
+using BibliotecaViva.DAL.Utils;
 using BibliotecaViva.DAL.Interfaces;
 
 namespace BibliotecaViva.DAL
 {
     public class IdiomaDAL : BaseDAL, IIdiomaDAL
     {
-        public IdiomaDAL(ISQLiteDataContext dataContext) : base(dataContext)
+        public IdiomaDAL(bibliotecavivaContext dataContext) : base(dataContext)
         {
         }
 
         public void Cadastrar(IdiomaDTO idiomaDTO)
         {
-            DataContext.ObterDataContext().InsertOrReplace(new Idioma()
+            if (Consultar(idiomaDTO) == null)
             {
-                Codigo = ValidarJaCadastrado(idiomaDTO),
-                Nome = idiomaDTO.Nome
-            });
+                DataContext.Add(Conversor.Mapear(idiomaDTO));
+                DataContext.SaveChanges();
+            };
         }
         public IdiomaDTO Consultar(IdiomaDTO idiomaDTO)
         {
             var resultado = new Idioma();
 
             if (string.IsNullOrEmpty(idiomaDTO.Nome))
-                resultado = DataContext.ObterDataContext().Table<Idioma>().FirstOrDefault(idioma => idioma.Codigo == idiomaDTO.Codigo);
+                resultado = DataContext.Idiomas.AsNoTracking().FirstOrDefault(idioma => idioma.Codigo == idiomaDTO.Codigo);
             else
-                resultado = DataContext.ObterDataContext().Table<Idioma>().FirstOrDefault(idioma => idioma.Nome == idiomaDTO.Nome);
+                resultado = DataContext.Idiomas.AsNoTracking().FirstOrDefault(idioma => idioma.Nome == idiomaDTO.Nome);
             
-            return Mapear<Idioma, IdiomaDTO>(resultado);
+            return Conversor.Mapear(resultado);
         }
 
         public List<IdiomaDTO> Listar()
         {
-            return (from tipo in DataContext.ObterDataContext().Table<Idioma>() select new IdiomaDTO()
-            {
-                Codigo = tipo.Codigo,
-                Nome = tipo.Nome
-            }).ToList(); 
-        }
-
-        private int? ValidarJaCadastrado(IdiomaDTO idiomaDTO)
-        {
-            var resultado = DataContext.ObterDataContext().Table<Idioma>().FirstOrDefault(idioma => idioma.Nome == idiomaDTO.Nome);
-            return resultado != null ? resultado.Codigo : null;
+            return (from idioma in DataContext.Idiomas 
+                select 
+                    Conversor.Mapear(idioma)).ToList(); 
         }  
     }
 }

@@ -1,65 +1,58 @@
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+
 using BibliotecaViva.DAO;
 using BibliotecaViva.DTO;
+using BibliotecaViva.DAL.Utils;
 using BibliotecaViva.DAL.Interfaces;
 
 namespace BibliotecaViva.DAL
 {
     public class LocalizacaoGeograficaDAL : BaseDAL, ILocalizacaoGeograficaDAL
     {
-        public LocalizacaoGeograficaDAL(ISQLiteDataContext dataContext) : base(dataContext)
+        public LocalizacaoGeograficaDAL(bibliotecavivaContext dataContext) : base(dataContext)
         {
 
         }
 
         public void Cadastrar(LocalizacaoGeograficaDTO localizacaoGeograficaDTO)
         {
-            localizacaoGeograficaDTO.Codigo = ValidarJaCadastrado(localizacaoGeograficaDTO);
-            DataContext.ObterDataContext().InsertOrReplace(Mapear<LocalizacaoGeograficaDTO, LocalizacaoGeografica>(localizacaoGeograficaDTO));
+            DataContext.Localizacaogeograficas.Add(Conversor.Mapear(localizacaoGeograficaDTO));
+            DataContext.SaveChanges();
         }
 
         public void Vincular(LocalizacaoGeograficaDTO localizacaoGeograficaDTO, PessoaDTO pessoaDTO)
         {
-            localizacaoGeograficaDTO.Codigo = ValidarJaCadastrado(localizacaoGeograficaDTO);
-            if (localizacaoGeograficaDTO.Codigo != null)
-                DataContext.ObterDataContext().InsertOrReplace(new PessoaLocalizao()
-                {
-                    Pessoa = (int)pessoaDTO.Codigo,
-                    LocalizacaoGeografica = (int)localizacaoGeograficaDTO.Codigo
-                });
+            DataContext.Pessoalocalizacaos.Add(new Pessoalocalizacao()
+            {
+                Pessoa = (int)pessoaDTO.Codigo,
+                Localizacaogeografica = (int)localizacaoGeograficaDTO.Codigo
+            });
+            DataContext.SaveChanges();
         }
 
         public void Vincular(LocalizacaoGeograficaDTO localizacaoGeograficaDTO, RegistroDTO registroDTO)
         {
-            localizacaoGeograficaDTO.Codigo = ValidarJaCadastrado(localizacaoGeograficaDTO);
-            if (localizacaoGeograficaDTO.Codigo != null)
-                DataContext.ObterDataContext().InsertOrReplace(new RegistroLocalizacao()
-                {
-                    Registro = (int)registroDTO.Codigo,
-                    LocalizacaoGeografica = (int)localizacaoGeograficaDTO.Codigo
-                });
+            DataContext.Registrolocalizacaos.Add(new Registrolocalizacao()
+            {
+                Registro = (int)registroDTO.Codigo,
+                Localizacaogeografica = (int)localizacaoGeograficaDTO.Codigo
+            });
+            DataContext.SaveChanges();
         }
         
         public void RemoverVinculoPessoa(int? codigoPessoa)
         {
-            var resultado = DataContext.ObterDataContext().Table<PessoaLocalizao>().FirstOrDefault(localizacaoGeografica => localizacaoGeografica.Pessoa == codigoPessoa);
-            if (resultado != null)
-                DataContext.ObterDataContext().Delete(resultado);
+            var localizacao = DataContext.Pessoalocalizacaos.AsNoTracking().FirstOrDefault(localizacao => localizacao.Pessoa == codigoPessoa);
+            DataContext.Remove(localizacao);
+            DataContext.SaveChanges();
         }
 
         public void RemoverVinculoRegistro(int? codigoRegistro)
         {
-            var resultado = DataContext.ObterDataContext().Table<RegistroApelido>().FirstOrDefault(localizacaoGeografica => localizacaoGeografica.Registro == codigoRegistro);
-            if (resultado != null)
-                DataContext.ObterDataContext().Delete(resultado);
-        }
-
-        private int? ValidarJaCadastrado(LocalizacaoGeograficaDTO localizacaoGeograficaDTO)
-        {
-            var resultado = DataContext.ObterDataContext().Table<LocalizacaoGeografica>().
-                FirstOrDefault(localizacaoGeografica => 
-                    localizacaoGeografica.Latitude == localizacaoGeograficaDTO.Latitude &&
-                    localizacaoGeografica.Longitude == localizacaoGeograficaDTO.Longitude);
-            return resultado != null ? resultado.Codigo : null;
+            var localizacao = DataContext.Registrolocalizacaos.AsNoTracking().FirstOrDefault(localizacao => localizacao.Registro == codigoRegistro);
+            DataContext.Remove(localizacao);
+            DataContext.SaveChanges();
         }  
     }
 }
