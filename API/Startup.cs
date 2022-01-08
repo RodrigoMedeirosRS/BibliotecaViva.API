@@ -71,7 +71,7 @@ namespace API
         {
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Biblioteca Viva", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Biblioteca Viva API", Version = "v1" });
                 options.CustomOperationIds(d => (d.ActionDescriptor as ControllerActionDescriptor)?.ActionName);
             });
         }
