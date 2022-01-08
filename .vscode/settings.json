@@ -9,6 +9,7 @@
     "DTO/bin": true,
     "DTO/obj": true,
     "DAO/bin": true,
-    "DAO/obj": true
+    "DAO/obj": true,
+    ".vscode": true
   }
 }
