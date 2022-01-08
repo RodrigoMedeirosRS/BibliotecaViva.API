@@ -1,0 +1,7 @@
+dotnet publish -c Release --runtime linux-x64 --self-contained true
+dotnet publish -c Release --runtime win-x64 --self-contained true
+
+dotnet tool install --global dotnet-ef
+
+dotnet ef dbcontext scaffold "User ID=postgres;Password=@rodrigo1;Server=127.0.0.1;Port=5432;Database=bibliotecaviva;Integrated Security=true;" Npgsql.EntityFrameworkCore.PostgreSQL --startup-project API/ --project DAO/ -f
+ --table "nome_da_tabela"
