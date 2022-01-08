@@ -1,5 +1,0 @@
-dotnet tool install --global dotnet-ef
-
-dotnet ef dbcontext scaffold "User ID=postgres;Password=@rodrigo1;Server=127.0.0.1;Port=5432;Database=bibliotecaviva;Integrated Security=true;" Npgsql.EntityFrameworkCore.PostgreSQL --startup-project API/ --project DAO/ -f
-
- --table "erro_detran"
