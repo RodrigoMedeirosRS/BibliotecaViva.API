@@ -10,6 +10,7 @@
     "DTO/obj": true,
     "DAO/bin": true,
     "DAO/obj": true,
-    ".vscode": true
+    ".vscode": true,
+    "Biblioteca_Viva.LIB\\.vscode": true
   }
 }
