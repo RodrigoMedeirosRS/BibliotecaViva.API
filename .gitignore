@@ -1,0 +1,10 @@
+API/bin
+API/obj
+BLL/bin
+BLL/obj
+DAL/bin
+DAL/obj
+DAO/bin
+DAO/obj
+DTO/bin
+DTO/obj
