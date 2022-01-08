@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Biblioteca_Viva.LIB\DTO\BibliotecaViva.DTO.csproj" />
+    <ProjectReference Include="..\BibliotecaViva.LIB\DTO\BibliotecaViva.DTO.csproj" />
     <ProjectReference Include="..\DAO\BibliotecaViva.DAO.csproj" />
   </ItemGroup>
 
