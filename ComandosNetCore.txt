@@ -22,5 +22,9 @@ dotnet-ef migrations add [Nome da migration]
 # Atualiza banco de dados com base na migration
 dotnet-ef migrations update
 
+# Instala o entityframwork
+dotnet tool install --global dotnet-ef
+
 # Executa o Scaffold, atualizando os dados do rest conforme o banco de dados
-dotnet ef dbcontext scaffold "Host=localhost;Database=biblioteca_viva;Username=rmlehnemann;Password=jh3niffer" Npgsql.EntityFrameworkCore.PostgreSQL -o Models/DTO
+dotnet ef dbcontext scaffold "User ID=postgres;Password=@rodrigo1;Server=127.0.0.1;Port=5432;Database=bibliotecaviva;Integrated Security=true;" Npgsql.EntityFrameworkCore.PostgreSQL --startup-project API/ --project DAO/ -f
+ --table "nome_da_tabela"

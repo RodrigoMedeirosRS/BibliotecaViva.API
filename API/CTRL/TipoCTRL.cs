@@ -6,7 +6,7 @@ using API.Interface;
 using BibliotecaViva.DTO;
 using BibliotecaViva.BLL.Interfaces;
 
-namespace BibliotecaViva.Controllers
+namespace BibliotecaViva.CTRL
 {
     [Route("Api/Tipo")]
     [ApiController]

@@ -7,7 +7,7 @@ using BibliotecaViva.DTO;
 using BibliotecaViva.DTO.Dominio;
 using BibliotecaViva.BLL.Interfaces;
 
-namespace BibliotecaViva.Controllers
+namespace BibliotecaViva.CTRL
 {
     [Route("Api/Sonar")]
     [ApiController]
