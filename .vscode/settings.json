@@ -13,6 +13,7 @@
     ".vscode": true,
     "Biblioteca_Viva.LIB\\.vscode": true,
     "Biblioteca_Viva.LIB\\DTO\\bin": true,
-    "Biblioteca_Viva.LIB\\DTO\\obj": true
+    "Biblioteca_Viva.LIB\\DTO\\obj": true,
+    "BibliotecaViva.LIB\\.vscode": true
   }
 }
