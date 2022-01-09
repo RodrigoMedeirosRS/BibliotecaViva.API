@@ -37,7 +37,9 @@ namespace BibliotecaViva.DAL
 
         public List<IdiomaDTO> Listar()
         {
-            return (from idioma in DataContext.Idiomas 
+            return (from idioma in DataContext.Idiomas
+                orderby
+                    idioma.Nome 
                 select 
                     Conversor.Mapear(idioma)).ToList(); 
         }  

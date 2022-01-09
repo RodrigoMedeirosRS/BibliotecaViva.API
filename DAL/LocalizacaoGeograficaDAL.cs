@@ -44,7 +44,8 @@ namespace BibliotecaViva.DAL
         public void RemoverVinculoPessoa(int? codigoPessoa)
         {
             var localizacao = DataContext.Pessoalocalizacaos.AsNoTracking().FirstOrDefault(localizacao => localizacao.Pessoa == codigoPessoa);
-            DataContext.Remove(localizacao);
+            if (localizacao != null)
+                DataContext.Remove(localizacao);
             DataContext.SaveChanges();
         }
 

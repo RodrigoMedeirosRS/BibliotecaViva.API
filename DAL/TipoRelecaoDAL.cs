@@ -37,6 +37,8 @@ namespace BibliotecaViva.DAL
         public List<TipoRelacaoDTO> Listar()
         {
             return (from tipo in DataContext.Tiporelacaos 
+                orderby
+                    tipo.Nome
                 select 
                     Conversor.Mapear(tipo)).AsNoTracking().ToList(); 
         }
