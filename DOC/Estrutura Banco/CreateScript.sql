@@ -1,7 +1,7 @@
 CREATE TABLE LocalizacaoGeografica (
   Codigo SERIAL  NOT NULL ,
-  Latitude BIGINT   NOT NULL ,
-  Longitude BIGINT   NOT NULL   ,
+  Latitude DOUBLE PRECISION  NOT NULL ,
+  Longitude DOUBLE PRECISION  NOT NULL   ,
 PRIMARY KEY(Codigo));
 
 CREATE TABLE TipoRelacao (
