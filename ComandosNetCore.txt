@@ -26,5 +26,11 @@ dotnet-ef migrations update
 dotnet tool install --global dotnet-ef
 
 # Executa o Scaffold, atualizando os dados do rest conforme o banco de dados
-dotnet ef dbcontext scaffold "User ID=postgres;Password=@rodrigo1;Server=127.0.0.1;Port=5432;Database=bibliotecaviva;Integrated Security=true;" Npgsql.EntityFrameworkCore.PostgreSQL --startup-project API/ --project DAO/ -f
+dotnet ef dbcontext scaffold "User ID=postgres;Password=senha;Server=127.0.0.1;Port=5432;Database=bibliotecaviva;Integrated Security=true;" Npgsql.EntityFrameworkCore.PostgreSQL --startup-project API/ --project DAO/ -f
  --table "nome_da_tabela"
+
+ # Cria Submodulo
+git submodule add https://github.com/RodrigoMedeirosRS/BibliotecaViva.LIB.git
+
+# Clona com Submodulo
+git clone -recursive https://github.com/RodrigoMedeirosRS/BibliotecaViva.LIB.git
