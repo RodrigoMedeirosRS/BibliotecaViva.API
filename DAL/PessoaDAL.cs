@@ -86,7 +86,7 @@ namespace BibliotecaViva.DAL
             return pessoas;
         }
 
-        private static long? ObterLocalizacaoGeorafica(Localizacaogeografica localizacaoGeograficaLeft, bool latitude)
+        private static double? ObterLocalizacaoGeorafica(Localizacaogeografica localizacaoGeograficaLeft, bool latitude)
         {
             if (localizacaoGeograficaLeft != null)
                 return latitude ? localizacaoGeograficaLeft.Latitude : localizacaoGeograficaLeft.Longitude;
@@ -156,8 +156,8 @@ namespace BibliotecaViva.DAL
             {
                 var localizacaoGeograficaDTO = new LocalizacaoGeograficaDTO()
                 { 
-                    Latitude = (long)pessoaDTO.Latitude,
-                    Longitude = (long)pessoaDTO.Longitude,
+                    Latitude = (double)pessoaDTO.Latitude,
+                    Longitude = (double)pessoaDTO.Longitude,
                 };
                 
                 LocalizacaoGeograficaDAL.Cadastrar(localizacaoGeograficaDTO);

@@ -38,13 +38,13 @@ namespace BibliotecaViva.DAO
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseNpgsql("User ID=postgres;Password=@rodrigo1;Server=127.0.0.1;Port=5432;Database=bibliotecaviva;Integrated Security=true;");
+                optionsBuilder.UseNpgsql("User ID=postgres;Password=senha;Server=127.0.0.1;Port=5432;Database=bibliotecaviva;Integrated Security=true;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "pt_BR.UTF-8");
+            modelBuilder.HasAnnotation("Relational:Collation", "Portuguese_Brazil.1252");
 
             modelBuilder.Entity<Apelido>(entity =>
             {

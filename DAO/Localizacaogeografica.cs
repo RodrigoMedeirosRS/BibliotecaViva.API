@@ -14,8 +14,8 @@ namespace BibliotecaViva.DAO
         }
 
         public int Codigo { get; set; }
-        public long Latitude { get; set; }
-        public long Longitude { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
 
         public virtual ICollection<Pessoalocalizacao> Pessoalocalizacaos { get; set; }
         public virtual ICollection<Registrolocalizacao> Registrolocalizacaos { get; set; }
