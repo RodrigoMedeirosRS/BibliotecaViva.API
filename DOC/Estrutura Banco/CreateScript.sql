@@ -23,7 +23,7 @@ PRIMARY KEY(Codigo));
 
 CREATE TABLE Tipo (
   Codigo SERIAL  NOT NULL ,
-  Nome VARCHAR(20) UNIQUE  NOT NULL ,
+  Nome VARCHAR(30) UNIQUE  NOT NULL ,
   Extensao VARCHAR(7)   NOT NULL ,
   Binario BOOL   NOT NULL   ,
 PRIMARY KEY(Codigo));
