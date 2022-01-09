@@ -37,6 +37,8 @@ namespace BibliotecaViva.DAL
         public List<TipoDTO> Listar()
         {
             return (from tipo in DataContext.Tipos 
+            orderby
+                tipo.Nome
             select 
                 Conversor.Mapear(tipo)).ToList(); 
         } 
