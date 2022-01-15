@@ -1,5 +1,6 @@
 using BibliotecaViva.DAO;
 using BibliotecaViva.DTO;
+using BibliotecaViva.DTO.Utils;
 
 namespace BibliotecaViva.DAL.Utils
 {
@@ -60,7 +61,7 @@ namespace BibliotecaViva.DAL.Utils
                 Codigo = tipo.Codigo,
                 Nome = tipo.Nome,
                 Extensao = tipo.Extensao,
-                Tipodeexecucao = tipo.TipoExecucao
+                Tipodeexecucao = (int)tipo.TipoExecucao
             } : null;
         }
         internal static TipoDTO Mapear(Tipo tipo)
@@ -70,7 +71,8 @@ namespace BibliotecaViva.DAL.Utils
                 Codigo = tipo.Codigo,
                 Nome = tipo.Nome,
                 Extensao = tipo.Extensao,
-                TipoExecucao = tipo.Tipodeexecucao
+                TipoExecucao = (TipoExecucao)tipo.Tipodeexecucao,
+                Binario = TratadorUtil.VerificarBinario((TipoExecucao)tipo.Tipodeexecucao)
             } : null;
         }
         internal static TipoExecucaoDTO Mapear(Tipodeexecucao tipo)
