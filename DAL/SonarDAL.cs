@@ -1,6 +1,7 @@
 using System;
 using MoreLinq;
 using System.Linq;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
@@ -48,10 +49,10 @@ namespace BibliotecaViva.DAL
                 join
                     localizacaoGeografica in DataContext.Localizacaogeograficas
                     on pessoaLocalizacao.Localizacaogeografica equals localizacaoGeografica.Codigo
-                where localizacaoGeografica.Latitude >= sonar.CoordenadaInicio[0] && 
-                    localizacaoGeografica.Latitude <= sonar.CoordenadaFim[0] &&
-                    localizacaoGeografica.Longitude >= sonar.CoordenadaInicio[1] &&
-                    localizacaoGeografica.Longitude <= sonar.CoordenadaFim[1]
+                where localizacaoGeografica.Latitude >= double.Parse(sonar.CoordenadaInicio[0], System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US")) && 
+                    localizacaoGeografica.Latitude <= double.Parse(sonar.CoordenadaFim[0], System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US")) &&
+                    localizacaoGeografica.Longitude >= double.Parse(sonar.CoordenadaInicio[1], System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US")) &&
+                    localizacaoGeografica.Longitude <= double.Parse(sonar.CoordenadaFim[1], System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"))
                 select new PessoaDTO()
                 {
                     Codigo = pessoa.Codigo,
@@ -82,10 +83,10 @@ namespace BibliotecaViva.DAL
                 join
                     idioma in DataContext.Idiomas
                     on registro.Idioma equals idioma.Codigo
-                where localizacaoGeografica.Latitude >= sonar.CoordenadaInicio[0] && 
-                    localizacaoGeografica.Latitude <= sonar.CoordenadaFim[0] &&
-                    localizacaoGeografica.Longitude >= sonar.CoordenadaInicio[1] &&
-                    localizacaoGeografica.Longitude <= sonar.CoordenadaFim[1]
+                where localizacaoGeografica.Latitude >= double.Parse(sonar.CoordenadaInicio[0], System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US")) && 
+                    localizacaoGeografica.Latitude <= double.Parse(sonar.CoordenadaFim[0], System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US")) &&
+                    localizacaoGeografica.Longitude >= double.Parse(sonar.CoordenadaInicio[1], System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US")) &&
+                    localizacaoGeografica.Longitude <= double.Parse(sonar.CoordenadaFim[1], System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"))
                 select new RegistroDTO()
                 {
                     Codigo = registro.Codigo,

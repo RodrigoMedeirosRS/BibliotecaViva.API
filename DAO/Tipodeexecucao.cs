@@ -14,6 +14,7 @@ namespace BibliotecaViva.DAO
 
         public int Codigo { get; set; }
         public string Nome { get; set; }
+        public bool Binario { get; set; }
 
         public virtual ICollection<Tipo> Tipos { get; set; }
     }

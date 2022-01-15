@@ -483,6 +483,8 @@ namespace BibliotecaViva.DAO
 
                 entity.Property(e => e.Codigo).HasColumnName("codigo");
 
+                entity.Property(e => e.Binario).HasColumnName("binario");
+
                 entity.Property(e => e.Nome)
                     .IsRequired()
                     .HasMaxLength(40)

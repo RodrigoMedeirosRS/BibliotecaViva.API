@@ -1,6 +1,7 @@
 using MoreLinq;
 using System;
 using System.Linq;
+using System.Globalization;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using BibliotecaViva.DAO;
@@ -70,8 +71,8 @@ namespace BibliotecaViva.DAL
                     Conteudo = registro.Conteudo,
                     Descricao = descricaoLeft != null ? descricaoLeft.Conteudo : string.Empty,
                     DataInsercao = registro.Datainsercao,
-                    Latitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, true),
-                    Longitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, false),
+                    Latitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, true).ToString(),
+                    Longitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, false).ToString(),
                 }).AsNoTracking().FirstOrDefault();
             
             resultado.Referencias = ReferenciaDAL.ObterReferencia(resultado.Codigo);
@@ -121,8 +122,8 @@ namespace BibliotecaViva.DAL
                     Conteudo = registro.Conteudo,
                     Descricao = descricaoLeft != null ? descricaoLeft.Conteudo : string.Empty,
                     DataInsercao = registro.Datainsercao,
-                    Latitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, true),
-                    Longitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, false)
+                    Latitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, true).ToString(),
+                    Longitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, false).ToString()
                 }).AsNoTracking().DistinctBy(registroDB => registroDB.Codigo).ToList(); 
 
             foreach(var registro in registros)
@@ -223,8 +224,8 @@ namespace BibliotecaViva.DAL
             {
                 var localizacaoGeograficaDTO = new LocalizacaoGeograficaDTO()
                 { 
-                    Latitude = (long)registroDTO.Latitude,
-                    Longitude = (long)registroDTO.Longitude,
+                    Latitude = double.Parse(registroDTO.Latitude, System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US")),
+                    Longitude = double.Parse(registroDTO.Longitude, System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US")),
                 };
                 
                 LocalizacaoGeograficaDAL.Cadastrar(localizacaoGeograficaDTO);

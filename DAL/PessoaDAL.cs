@@ -1,5 +1,7 @@
+using System;
 using MoreLinq;
 using System.Linq;
+using System.Globalization;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using BibliotecaViva.DAO;
@@ -76,8 +78,8 @@ namespace BibliotecaViva.DAL
                     Genero = pessoa.Genero,
                     Apelido = apelidoLeft != null ? apelidoLeft.Nome : string.Empty,
                     NomeSocial = nomeSocialLeft != null ? nomeSocialLeft.Nome : string.Empty,
-                    Latitude = ObterLocalizacaoGeorafica(localizacaoGeograficaLeft, true),
-                    Longitude = ObterLocalizacaoGeorafica(localizacaoGeograficaLeft, false)
+                    Latitude = ObterLocalizacaoGeorafica(localizacaoGeograficaLeft, true).ToString(),
+                    Longitude = ObterLocalizacaoGeorafica(localizacaoGeograficaLeft, false).ToString()
                 }).AsNoTracking().DistinctBy(pessoaDB => pessoaDB.Codigo).ToList();
                 
             foreach(var pessoa in pessoas)
@@ -156,8 +158,8 @@ namespace BibliotecaViva.DAL
             {
                 var localizacaoGeograficaDTO = new LocalizacaoGeograficaDTO()
                 { 
-                    Latitude = (double)pessoaDTO.Latitude,
-                    Longitude = (double)pessoaDTO.Longitude,
+                    Latitude = double.Parse(pessoaDTO.Latitude, System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US")),
+                    Longitude = double.Parse(pessoaDTO.Longitude, System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US")),
                 };
                 
                 LocalizacaoGeograficaDAL.Cadastrar(localizacaoGeograficaDTO);
