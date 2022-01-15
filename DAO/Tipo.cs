@@ -13,10 +13,11 @@ namespace BibliotecaViva.DAO
         }
 
         public int Codigo { get; set; }
+        public int Tipodeexecucao { get; set; }
         public string Nome { get; set; }
         public string Extensao { get; set; }
-        public bool Binario { get; set; }
 
+        public virtual Tipodeexecucao TipodeexecucaoNavigation { get; set; }
         public virtual ICollection<Registro> Registros { get; set; }
     }
 }
