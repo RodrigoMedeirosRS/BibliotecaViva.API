@@ -57,5 +57,11 @@ namespace BibliotecaViva.CTRL
         {
             return _Requisicao.ExecutarRequisicao(_BLL.ConsultarTiposRelacao).Result;
         }
+
+        [HttpPost("ConsultarTiposExecucao")]
+        public async Task<List<TipoExecucaoDTO>> ConsultarTiposExecucao()
+        {
+            return _Requisicao.ExecutarRequisicao(_BLL.ConsultarTiposExecucao).Result;
+        }
     }
 }

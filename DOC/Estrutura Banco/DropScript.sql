@@ -8,24 +8,24 @@ DROP TABLE PessoaRegistro;
 
 DROP TABLE Referencia;
 
-DROP TABLE PessoaApelido;
+DROP TABLE Registro;
 
 DROP TABLE PessoaLocalizacao;
 
-DROP TABLE Registro;
+DROP TABLE PessoaApelido;
 
 DROP TABLE NomeSocial;
 
-DROP TABLE Idioma;
-
 DROP TABLE Tipo;
+
+DROP TABLE Idioma;
 
 DROP TABLE Apelido;
 
-DROP TABLE Pessoa;
+DROP TABLE LocalizacaoGeografica;
+
+DROP TABLE TipoDeExecucao;
 
 DROP TABLE TipoRelacao;
 
-DROP TABLE LocalizacaoGeografica;
-
-
+DROP TABLE Pessoa;

@@ -60,7 +60,7 @@ namespace BibliotecaViva.DAL.Utils
                 Codigo = tipo.Codigo,
                 Nome = tipo.Nome,
                 Extensao = tipo.Extensao,
-                Binario = tipo.Binario
+                Tipodeexecucao = tipo.TipoExecucao
             } : null;
         }
         internal static TipoDTO Mapear(Tipo tipo)
@@ -70,7 +70,23 @@ namespace BibliotecaViva.DAL.Utils
                 Codigo = tipo.Codigo,
                 Nome = tipo.Nome,
                 Extensao = tipo.Extensao,
-                Binario = tipo.Binario
+                TipoExecucao = tipo.Tipodeexecucao
+            } : null;
+        }
+        internal static TipoExecucaoDTO Mapear(Tipodeexecucao tipo)
+        {
+            return tipo != null ? new TipoExecucaoDTO()
+            {
+                Codigo = tipo.Codigo,
+                Nome = tipo.Nome
+            } : null;
+        }
+        internal static Tipodeexecucao Mapear(TipoExecucaoDTO tipo)
+        {
+            return tipo != null ? new Tipodeexecucao()
+            {
+                Codigo = tipo.Codigo,
+                Nome = tipo.Nome
             } : null;
         }
         internal static Localizacaogeografica Mapear(LocalizacaoGeograficaDTO localizacaoGeografica)

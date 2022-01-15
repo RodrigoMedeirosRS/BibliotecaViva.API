@@ -31,6 +31,7 @@ namespace BibliotecaViva.DAO
         public virtual DbSet<Registroapelido> Registroapelidos { get; set; }
         public virtual DbSet<Registrolocalizacao> Registrolocalizacaos { get; set; }
         public virtual DbSet<Tipo> Tipos { get; set; }
+        public virtual DbSet<Tipodeexecucao> Tipodeexecucaos { get; set; }
         public virtual DbSet<Tiporelacao> Tiporelacaos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -38,13 +39,13 @@ namespace BibliotecaViva.DAO
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseNpgsql("User ID=postgres;Password=senha;Server=127.0.0.1;Port=5432;Database=bibliotecaviva;Integrated Security=true;");
+                optionsBuilder.UseNpgsql("User ID=postgres;Password=@rodrigo1;Server=127.0.0.1;Port=5432;Database=bibliotecaviva;Integrated Security=true;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Portuguese_Brazil.1252");
+            modelBuilder.HasAnnotation("Relational:Collation", "pt_BR.UTF-8");
 
             modelBuilder.Entity<Apelido>(entity =>
             {
@@ -100,6 +101,7 @@ namespace BibliotecaViva.DAO
                 entity.Property(e => e.Codigo).HasColumnName("codigo");
 
                 entity.Property(e => e.Nome)
+                    .IsRequired()
                     .HasMaxLength(20)
                     .HasColumnName("nome");
             });
@@ -441,12 +443,14 @@ namespace BibliotecaViva.DAO
 
                 entity.ToTable("tipo");
 
+                entity.HasIndex(e => e.Tipodeexecucao, "ifk_rel_27");
+
+                entity.HasIndex(e => e.Tipodeexecucao, "tipo_fkindex1");
+
                 entity.HasIndex(e => e.Nome, "tipo_nome_key")
                     .IsUnique();
 
                 entity.Property(e => e.Codigo).HasColumnName("codigo");
-
-                entity.Property(e => e.Binario).HasColumnName("binario");
 
                 entity.Property(e => e.Extensao)
                     .IsRequired()
@@ -455,7 +459,33 @@ namespace BibliotecaViva.DAO
 
                 entity.Property(e => e.Nome)
                     .IsRequired()
-                    .HasMaxLength(20)
+                    .HasMaxLength(30)
+                    .HasColumnName("nome");
+
+                entity.Property(e => e.Tipodeexecucao).HasColumnName("tipodeexecucao");
+
+                entity.HasOne(d => d.TipodeexecucaoNavigation)
+                    .WithMany(p => p.Tipos)
+                    .HasForeignKey(d => d.Tipodeexecucao)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("tipo_tipodeexecucao_fkey");
+            });
+
+            modelBuilder.Entity<Tipodeexecucao>(entity =>
+            {
+                entity.HasKey(e => e.Codigo)
+                    .HasName("tipodeexecucao_pkey");
+
+                entity.ToTable("tipodeexecucao");
+
+                entity.HasIndex(e => e.Nome, "tipodeexecucao_nome_key")
+                    .IsUnique();
+
+                entity.Property(e => e.Codigo).HasColumnName("codigo");
+
+                entity.Property(e => e.Nome)
+                    .IsRequired()
+                    .HasMaxLength(40)
                     .HasColumnName("nome");
             });
 
