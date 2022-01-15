@@ -110,7 +110,10 @@ namespace BibliotecaViva.DAL
                     }.Localizacaogeografica equals localizacaoGeografica.Codigo into localizacaoGeograficaLeftJoin from localizacaoGeograficaLeft in localizacaoGeograficaLeftJoin.DefaultIfEmpty()
 
 
-                where registro.Nome == registroDTO.Nome && registro.Idioma == registro.Idioma
+                where
+                    registro.Idioma == registro.Idioma &&
+                    ((!string.IsNullOrEmpty(registroDTO.Nome) && registro.Nome.Contains(registroDTO.Nome)) 
+                    || (!string.IsNullOrEmpty(registroDTO.Apelido) && (apelidoLeft != null) && apelidoLeft.Nome.Contains(registroDTO.Apelido)))                
                 
                 select new RegistroDTO()
                 {
