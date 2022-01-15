@@ -78,7 +78,8 @@ namespace BibliotecaViva.DAL.Utils
             return tipo != null ? new TipoExecucaoDTO()
             {
                 Codigo = tipo.Codigo,
-                Nome = tipo.Nome
+                Nome = tipo.Nome,
+                Binario = tipo.Binario
             } : null;
         }
         internal static Tipodeexecucao Mapear(TipoExecucaoDTO tipo)
@@ -86,7 +87,8 @@ namespace BibliotecaViva.DAL.Utils
             return tipo != null ? new Tipodeexecucao()
             {
                 Codigo = tipo.Codigo,
-                Nome = tipo.Nome
+                Nome = tipo.Nome,
+                Binario  = tipo.Binario
             } : null;
         }
         internal static Localizacaogeografica Mapear(LocalizacaoGeograficaDTO localizacaoGeografica)
