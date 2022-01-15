@@ -1,6 +1,7 @@
 using MoreLinq;
 using System;
 using System.Linq;
+using System.Globalization;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using BibliotecaViva.DAO;
@@ -223,8 +224,8 @@ namespace BibliotecaViva.DAL
             {
                 var localizacaoGeograficaDTO = new LocalizacaoGeograficaDTO()
                 { 
-                    Latitude = Convert.ToDouble(registroDTO.Latitude),
-                    Longitude = Convert.ToDouble(registroDTO.Longitude),
+                    Latitude = double.Parse(registroDTO.Latitude, System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US")),
+                    Longitude = double.Parse(registroDTO.Longitude, System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US")),
                 };
                 
                 LocalizacaoGeograficaDAL.Cadastrar(localizacaoGeograficaDTO);
