@@ -7,7 +7,7 @@ PRIMARY KEY(Codigo));
 
 CREATE TABLE TipoDeExecucao (
   Codigo SERIAL  NOT NULL ,
-  Nome INTEGER UNIQUE NOT NULL   ,
+  Nome VARCHAR(40) UNIQUE NOT NULL   ,
 PRIMARY KEY(Codigo));
 
 CREATE TABLE TipoRelacao (

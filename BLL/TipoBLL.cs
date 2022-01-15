@@ -11,11 +11,13 @@ namespace BibliotecaViva.BLL
         private ITipoDAL TipoDAL { get; set; }
         private IIdiomaDAL IdiomaDAL { get; set; }
         private ITipoRelacaoDAL TipoRelacaoDAL { get; set; }
-        public TipoBLL(ITipoDAL tipoDAL, IIdiomaDAL idiomaDAL, ITipoRelacaoDAL tipoRelacaoDAL)
+        private ITipoExecucaoDAL TipoExecucaoDAL { get; set; }
+        public TipoBLL(ITipoDAL tipoDAL, IIdiomaDAL idiomaDAL, ITipoRelacaoDAL tipoRelacaoDAL, ITipoExecucaoDAL tipoExecucaoDAL)
         {
             TipoDAL = tipoDAL;
             IdiomaDAL = idiomaDAL;
             TipoRelacaoDAL = tipoRelacaoDAL;
+            TipoExecucaoDAL = tipoExecucaoDAL;
         }
         public async Task<string> Cadastrar(IdiomaDTO idiomaDTO)
         {
@@ -43,6 +45,10 @@ namespace BibliotecaViva.BLL
         public async Task<List<TipoRelacaoDTO>> ConsultarTiposRelacao()
         {
             return TipoRelacaoDAL.Listar();
+        }
+        public async Task<List<TipoExecucaoDTO>> ConsultarTiposExecucao()
+        {
+            return TipoExecucaoDAL.Listar();
         }
     }
 }

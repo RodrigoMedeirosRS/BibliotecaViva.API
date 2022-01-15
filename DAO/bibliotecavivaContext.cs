@@ -483,7 +483,10 @@ namespace BibliotecaViva.DAO
 
                 entity.Property(e => e.Codigo).HasColumnName("codigo");
 
-                entity.Property(e => e.Nome).HasColumnName("nome");
+                entity.Property(e => e.Nome)
+                    .IsRequired()
+                    .HasMaxLength(40)
+                    .HasColumnName("nome");
             });
 
             modelBuilder.Entity<Tiporelacao>(entity =>

@@ -12,5 +12,6 @@ namespace BibliotecaViva.BLL.Interfaces
         Task<List<IdiomaDTO>> ConsultarIdiomas();
         Task<List<TipoDTO>> ConsultarTipos();
         Task<List<TipoRelacaoDTO>> ConsultarTiposRelacao();
+        Task<List<TipoExecucaoDTO>> ConsultarTiposExecucao();
     }
 }
