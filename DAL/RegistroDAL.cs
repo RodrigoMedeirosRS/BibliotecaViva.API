@@ -70,8 +70,8 @@ namespace BibliotecaViva.DAL
                     Conteudo = registro.Conteudo,
                     Descricao = descricaoLeft != null ? descricaoLeft.Conteudo : string.Empty,
                     DataInsercao = registro.Datainsercao,
-                    Latitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, true),
-                    Longitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, false),
+                    Latitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, true).ToString(),
+                    Longitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, false).ToString(),
                 }).AsNoTracking().FirstOrDefault();
             
             resultado.Referencias = ReferenciaDAL.ObterReferencia(resultado.Codigo);
@@ -121,8 +121,8 @@ namespace BibliotecaViva.DAL
                     Conteudo = registro.Conteudo,
                     Descricao = descricaoLeft != null ? descricaoLeft.Conteudo : string.Empty,
                     DataInsercao = registro.Datainsercao,
-                    Latitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, true),
-                    Longitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, false)
+                    Latitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, true).ToString(),
+                    Longitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, false).ToString()
                 }).AsNoTracking().DistinctBy(registroDB => registroDB.Codigo).ToList(); 
 
             foreach(var registro in registros)
@@ -223,8 +223,8 @@ namespace BibliotecaViva.DAL
             {
                 var localizacaoGeograficaDTO = new LocalizacaoGeograficaDTO()
                 { 
-                    Latitude = (long)registroDTO.Latitude,
-                    Longitude = (long)registroDTO.Longitude,
+                    Latitude = Convert.ToDouble(registroDTO.Latitude),
+                    Longitude = Convert.ToDouble(registroDTO.Longitude),
                 };
                 
                 LocalizacaoGeograficaDAL.Cadastrar(localizacaoGeograficaDTO);

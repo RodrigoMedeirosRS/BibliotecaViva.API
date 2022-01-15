@@ -48,10 +48,10 @@ namespace BibliotecaViva.DAL
                 join
                     localizacaoGeografica in DataContext.Localizacaogeograficas
                     on pessoaLocalizacao.Localizacaogeografica equals localizacaoGeografica.Codigo
-                where localizacaoGeografica.Latitude >= sonar.CoordenadaInicio[0] && 
-                    localizacaoGeografica.Latitude <= sonar.CoordenadaFim[0] &&
-                    localizacaoGeografica.Longitude >= sonar.CoordenadaInicio[1] &&
-                    localizacaoGeografica.Longitude <= sonar.CoordenadaFim[1]
+                where localizacaoGeografica.Latitude >= Convert.ToDouble(sonar.CoordenadaInicio[0]) && 
+                    localizacaoGeografica.Latitude <= Convert.ToDouble(sonar.CoordenadaFim[0]) &&
+                    localizacaoGeografica.Longitude >= Convert.ToDouble(sonar.CoordenadaInicio[1]) &&
+                    localizacaoGeografica.Longitude <= Convert.ToDouble(sonar.CoordenadaFim[1])
                 select new PessoaDTO()
                 {
                     Codigo = pessoa.Codigo,
@@ -82,10 +82,10 @@ namespace BibliotecaViva.DAL
                 join
                     idioma in DataContext.Idiomas
                     on registro.Idioma equals idioma.Codigo
-                where localizacaoGeografica.Latitude >= sonar.CoordenadaInicio[0] && 
-                    localizacaoGeografica.Latitude <= sonar.CoordenadaFim[0] &&
-                    localizacaoGeografica.Longitude >= sonar.CoordenadaInicio[1] &&
-                    localizacaoGeografica.Longitude <= sonar.CoordenadaFim[1]
+                where localizacaoGeografica.Latitude >= Convert.ToDouble(sonar.CoordenadaInicio[0]) && 
+                    localizacaoGeografica.Latitude <= Convert.ToDouble(sonar.CoordenadaFim[0]) &&
+                    localizacaoGeografica.Longitude >= Convert.ToDouble(sonar.CoordenadaInicio[1]) &&
+                    localizacaoGeografica.Longitude <= Convert.ToDouble(sonar.CoordenadaFim[1])
                 select new RegistroDTO()
                 {
                     Codigo = registro.Codigo,
