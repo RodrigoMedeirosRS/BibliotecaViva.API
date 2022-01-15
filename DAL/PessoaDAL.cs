@@ -68,7 +68,10 @@ namespace BibliotecaViva.DAL
                        Localizacaogeografica = pessoaLocalizacaoLeft != null ? pessoaLocalizacaoLeft.Localizacaogeografica : 0
                     }.Localizacaogeografica equals localizacaoGeografica.Codigo into localizacaoGeograficaLeftJoin from localizacaoGeograficaLeft in localizacaoGeograficaLeftJoin.DefaultIfEmpty()
 
-                where pessoa.Nome == pessoaDTO.Nome && pessoa.Sobrenome == pessoaDTO.Sobrenome
+                where 
+                    (!string.IsNullOrEmpty(pessoaDTO.Nome) && pessoa.Nome.Contains(pessoaDTO.Nome)) 
+                    || (!string.IsNullOrEmpty(pessoaDTO.Sobrenome) && pessoa.Sobrenome.Contains(pessoaDTO.Sobrenome))
+                    || (!string.IsNullOrEmpty(pessoaDTO.Apelido) && (apelidoLeft != null) && apelidoLeft.Nome.Contains(pessoaDTO.Apelido))
                 
                 select new PessoaDTO()
                 {

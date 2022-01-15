@@ -28,7 +28,8 @@ namespace BibliotecaViva.BLL
             return PessoaDAL.Consultar(new PessoaDTO()
             {
                 Nome = pessoa.Nome,
-                Sobrenome = pessoa.Sobrenome
+                Sobrenome = pessoa.Sobrenome,
+                Apelido = pessoa.Apelido
             });
         }
 
