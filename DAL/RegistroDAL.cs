@@ -153,8 +153,10 @@ namespace BibliotecaViva.DAL
             }
             else
             {
-                DataContext.Add(MapearRegistro(registroDTO));
+                registro = MapearRegistro(registroDTO);
+                DataContext.Add(registro);
                 DataContext.SaveChanges();
+                registroDTO.Codigo = registro.Codigo;
             }
             CadastrarDadosOpcionais(registroDTO);
         }
@@ -177,17 +179,9 @@ namespace BibliotecaViva.DAL
 
         private void CadastrarDadosOpcionais(RegistroDTO registroDTO)
         {
-            registroDTO = PopularCodigo(registroDTO);
             CadastrarDescricao(registroDTO);
             CadastrarApelido(registroDTO);
             CadastrarLocalizacaoGeografica(registroDTO);
-        }
-
-        private RegistroDTO PopularCodigo(RegistroDTO registroDTO)
-        {
-            if (registroDTO.Codigo == null || registroDTO.Codigo == 0)
-                registroDTO.Codigo = Consultar(registroDTO).FirstOrDefault().Codigo;
-            return registroDTO;
         }
 
         private void CadastrarDescricao(RegistroDTO registroDTO)
