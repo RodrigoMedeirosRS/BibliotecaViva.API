@@ -29,11 +29,10 @@ namespace BibliotecaViva.DAL
             if (string.IsNullOrEmpty(tipoRelacaoDTO.Nome))
                 resultado = DataContext.Tiporelacaos.AsNoTracking().FirstOrDefault(tipo => tipo.Codigo == tipoRelacaoDTO.Codigo);
             else
-                resultado = DataContext.Tiporelacaos.AsNoTracking().FirstOrDefault(tipo => tipo.Nome == tipoRelacaoDTO.Nome);
+                resultado = DataContext.Tiporelacaos.AsNoTracking().FirstOrDefault(tipo => tipo.Nome.ToLower() == tipoRelacaoDTO.Nome.ToLower());
             
             return Conversor.Mapear(resultado);
         }
-
         public List<TipoRelacaoDTO> Listar()
         {
             return (from tipo in DataContext.Tiporelacaos 
@@ -42,10 +41,9 @@ namespace BibliotecaViva.DAL
                 select 
                     Conversor.Mapear(tipo)).AsNoTracking().ToList(); 
         }
-
         private bool ValidarJaCadastrado(TipoRelacaoDTO tipoRelacaoDTO)
         {
-            var resultado = DataContext.Tiporelacaos.AsNoTracking().FirstOrDefault(tipoRelacao => tipoRelacao.Nome == tipoRelacaoDTO.Nome);
+            var resultado = DataContext.Tiporelacaos.AsNoTracking().FirstOrDefault(tipoRelacao => tipoRelacao.Nome.ToLower() == tipoRelacaoDTO.Nome.ToLower());
             return resultado != null;
         } 
     }

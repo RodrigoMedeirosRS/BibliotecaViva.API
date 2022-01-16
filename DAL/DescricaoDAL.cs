@@ -34,7 +34,6 @@ namespace BibliotecaViva.DAL
             DataContext.Remove(apelido);
             DataContext.SaveChanges();
         }
-
         private Descricao ValidarJaCadastrado(DescricaoDTO descricaoDTO)
         {
             return DataContext.Descricaos.AsNoTracking().FirstOrDefault(descricao => descricao.Registro == descricaoDTO.Registro);

@@ -30,7 +30,7 @@ namespace BibliotecaViva.DAL
             if (string.IsNullOrEmpty(tipoDTO.Nome))
                 resultado = DataContext.Tipos.AsNoTracking().FirstOrDefault(tipo => tipo.Codigo == tipoDTO.Codigo);
             else
-                resultado = DataContext.Tipos.AsNoTracking().FirstOrDefault(tipo => tipo.Nome == tipoDTO.Nome);
+                resultado = DataContext.Tipos.AsNoTracking().FirstOrDefault(tipo => tipo.Nome.ToLower() == tipoDTO.Nome.ToLower());
             
             return Conversor.Mapear(resultado);
         }

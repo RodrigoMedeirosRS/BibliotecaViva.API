@@ -14,7 +14,6 @@ namespace BibliotecaViva.DAL
         public IdiomaDAL(bibliotecavivaContext dataContext) : base(dataContext)
         {
         }
-
         public void Cadastrar(IdiomaDTO idiomaDTO)
         {
             if (Consultar(idiomaDTO) == null)
@@ -30,11 +29,10 @@ namespace BibliotecaViva.DAL
             if (string.IsNullOrEmpty(idiomaDTO.Nome))
                 resultado = DataContext.Idiomas.AsNoTracking().FirstOrDefault(idioma => idioma.Codigo == idiomaDTO.Codigo);
             else
-                resultado = DataContext.Idiomas.AsNoTracking().FirstOrDefault(idioma => idioma.Nome == idiomaDTO.Nome);
+                resultado = DataContext.Idiomas.AsNoTracking().FirstOrDefault(idioma => idioma.Nome.ToLower() == idiomaDTO.Nome.ToLower());
             
             return Conversor.Mapear(resultado);
         }
-
         public List<IdiomaDTO> Listar()
         {
             return (from idioma in DataContext.Idiomas

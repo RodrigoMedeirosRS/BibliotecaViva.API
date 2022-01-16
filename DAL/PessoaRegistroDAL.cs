@@ -21,7 +21,6 @@ namespace BibliotecaViva.DAL
             RegistroDAL = registroDAL;
             ReferenciaDAL = referenciaDAL;
         }
-
         public void VincularReferencia(PessoaDTO pessoaDTO)
         {
             var relacoes = ListarRelacoes((int)pessoaDTO.Codigo);

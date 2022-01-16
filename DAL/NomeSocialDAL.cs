@@ -14,7 +14,6 @@ namespace BibliotecaViva.DAL
         {
 
         }
-
         public void Cadastrar(NomeSocialDTO nomeSocialDTO)
         {
             var nomeSocial = ValidarJaCadastrado(nomeSocialDTO);
@@ -30,7 +29,6 @@ namespace BibliotecaViva.DAL
                 DataContext.SaveChanges();
             }
         }
-        
         public void Remover(int? codigoPessoa)
         {
             var nomesocial = DataContext.Nomesocials.AsNoTracking().FirstOrDefault(nomeSocial => nomeSocial.Pessoa == codigoPessoa);
@@ -38,7 +36,6 @@ namespace BibliotecaViva.DAL
                 DataContext.Remove(nomesocial);
             DataContext.SaveChanges();
         }
-
         private Nomesocial ValidarJaCadastrado(NomeSocialDTO nomeSocialDTO)
         {
             return DataContext.Nomesocials.AsNoTracking().FirstOrDefault(nomeSocial => nomeSocial.Pessoa == nomeSocialDTO.Pessoa);
