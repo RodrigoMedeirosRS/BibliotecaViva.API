@@ -17,7 +17,6 @@ namespace BibliotecaViva.DAL
         private IApelidoDAL ApelidoDAL { get; set; }
         private ILocalizacaoGeograficaDAL LocalizacaoGeograficaDAL { get; set; }
         private IPessoaRegistroDAL PessoaRegistroDAL { get; set; }
-        
         public PessoaDAL(bibliotecavivaContext dataContext, INomeSocialDAL nomeSocialDAL, IApelidoDAL apelidoDAL, ILocalizacaoGeograficaDAL localizacaoGeograficaDAL, IPessoaRegistroDAL pessoaRegistroDAL) : base(dataContext)
         {
             ApelidoDAL = apelidoDAL;
@@ -25,7 +24,6 @@ namespace BibliotecaViva.DAL
             PessoaRegistroDAL = pessoaRegistroDAL;
             LocalizacaoGeograficaDAL = localizacaoGeograficaDAL;
         }
-
         public void Cadastrar(PessoaDTO pessoaDTO)
         {
             var pessoa = DataContext.Pessoas.AsNoTracking().FirstOrDefault(pessoa => pessoa.Codigo == pessoaDTO.Codigo);
@@ -46,7 +44,6 @@ namespace BibliotecaViva.DAL
             }
             CadastrarDadosOpcionais(pessoaDTO);
         }
-
         public List<PessoaDTO> Consultar(PessoaDTO pessoaDTO)
         {
             var pessoas = (from pessoa in DataContext.Pessoas
@@ -71,9 +68,9 @@ namespace BibliotecaViva.DAL
                     }.Localizacaogeografica equals localizacaoGeografica.Codigo into localizacaoGeograficaLeftJoin from localizacaoGeograficaLeft in localizacaoGeograficaLeftJoin.DefaultIfEmpty()
 
                 where 
-                    (!string.IsNullOrEmpty(pessoaDTO.Nome) && pessoa.Nome.Contains(pessoaDTO.Nome)) 
-                    || (!string.IsNullOrEmpty(pessoaDTO.Sobrenome) && pessoa.Sobrenome.Contains(pessoaDTO.Sobrenome))
-                    || (!string.IsNullOrEmpty(pessoaDTO.Apelido) && (apelidoLeft != null) && apelidoLeft.Nome.Contains(pessoaDTO.Apelido))
+                    (!string.IsNullOrEmpty(pessoaDTO.Nome) && pessoa.Nome.ToLower().Contains(pessoaDTO.Nome.ToLower())) 
+                    || (!string.IsNullOrEmpty(pessoaDTO.Sobrenome) && pessoa.Sobrenome.ToLower().Contains(pessoaDTO.Sobrenome.ToLower()))
+                    || (!string.IsNullOrEmpty(pessoaDTO.Apelido) && (apelidoLeft != null) && apelidoLeft.Nome.ToLower().Contains(pessoaDTO.Apelido.ToLower()))
                 
                 select new PessoaDTO()
                 {
@@ -92,34 +89,12 @@ namespace BibliotecaViva.DAL
             
             return pessoas;
         }
-        private bool ValidarConsulta(Pessoa idioma, Registro registro, Apelido apelido, RegistroDTO registroDTO)
-        {
-            var retorno = !string.IsNullOrEmpty(registroDTO.Nome) || !string.IsNullOrEmpty(registroDTO.Apelido);
-                retorno = retorno && registro.Idioma == registro.Idioma;
-            if (!string.IsNullOrEmpty(registroDTO.Nome))
-                retorno = retorno && registro.Nome.Contains(registroDTO.Nome);
-            if (!string.IsNullOrEmpty(registroDTO.Apelido))
-                retorno = retorno && apelido.Nome.Contains(registroDTO.Apelido);
-            return retorno;
-        }
-
         private static double? ObterLocalizacaoGeorafica(Localizacaogeografica localizacaoGeograficaLeft, bool latitude)
         {
             if (localizacaoGeograficaLeft != null)
                 return latitude ? localizacaoGeograficaLeft.Latitude : localizacaoGeograficaLeft.Longitude;
             return null;
         }
-
-        private List<PessoaDTO> MapearPessoas(List<Pessoa> pessoas)
-        {
-            var retorno = new List<PessoaDTO>();
-
-            foreach(var pessoa in pessoas)
-                retorno.Add(Conversor.Mapear(pessoa));
-
-            return retorno;
-        }
-
         private void CadastrarDadosOpcionais(PessoaDTO pessoaDTO)
         {
             CadastrarNomeSocial(pessoaDTO);
@@ -127,7 +102,6 @@ namespace BibliotecaViva.DAL
             CadastrarLocalizacaoGeografica(pessoaDTO);
             PessoaRegistroDAL.VincularReferencia(pessoaDTO);
         }
-
         private void CadastrarNomeSocial(PessoaDTO pessoaDTO)
         {
             if (string.IsNullOrEmpty(pessoaDTO.NomeSocial))
@@ -139,7 +113,6 @@ namespace BibliotecaViva.DAL
                     Nome = pessoaDTO.NomeSocial
                 });
         }
-
         private void CadastrarApelido(PessoaDTO pessoaDTO)
         {
             if (string.IsNullOrEmpty(pessoaDTO.Apelido))
@@ -152,11 +125,10 @@ namespace BibliotecaViva.DAL
                 };
                 
                 ApelidoDAL.Cadastrar(apelidoDTO);
-                apelidoDTO.Codigo = DataContext.Apelidos.FirstOrDefault(apelido => apelido.Nome == pessoaDTO.Apelido).Codigo;
+                apelidoDTO.Codigo = DataContext.Apelidos.FirstOrDefault(apelido => apelido.Nome.ToLower() == pessoaDTO.Apelido.ToLower()).Codigo;
                 ApelidoDAL.VincularPessoa(apelidoDTO, pessoaDTO);
             }     
         }
-
         private void CadastrarLocalizacaoGeografica(PessoaDTO pessoaDTO)
         {
             if (pessoaDTO.Latitude == null || pessoaDTO.Longitude == null)

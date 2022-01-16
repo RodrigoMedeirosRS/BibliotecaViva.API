@@ -14,7 +14,6 @@ namespace BibliotecaViva.DAL
         {
 
         }
-
         public void Cadastrar(ApelidoDTO apelidoDTO)
         {
             if (!ValidarJaCadastrado(apelidoDTO))
@@ -23,7 +22,6 @@ namespace BibliotecaViva.DAL
                 DataContext.SaveChanges();
             }
         }
-
         public void VincularPessoa(ApelidoDTO apelidoDTO, PessoaDTO pessoaDTO)
         {
             DataContext.Add(new Pessoaapelido()
@@ -33,7 +31,6 @@ namespace BibliotecaViva.DAL
             });
             DataContext.SaveChanges();
         }
-
         public void VincularRegistro(ApelidoDTO apelidoDTO, RegistroDTO registroDTO)
         {
             DataContext.Add(new Registroapelido()
@@ -43,7 +40,6 @@ namespace BibliotecaViva.DAL
             });
             DataContext.SaveChanges();
         }
-        
         public void RemoverVinculo(int codigoPessoa)
         {
             var apelido = DataContext.Pessoaapelidos.AsNoTracking().FirstOrDefault(apelido => apelido.Pessoa == codigoPessoa);
@@ -51,7 +47,6 @@ namespace BibliotecaViva.DAL
                 DataContext.Remove(apelido);
             DataContext.SaveChanges();
         }
-
         public void RemoverVinculoRegistro(int codigoRegistro)
         {
             var registro = DataContext.Registroapelidos.AsNoTracking().FirstOrDefault(apelido => apelido.Registro == codigoRegistro);
@@ -59,10 +54,9 @@ namespace BibliotecaViva.DAL
                 DataContext.Remove(registro);
             DataContext.SaveChanges();
         }
-
         private bool ValidarJaCadastrado(ApelidoDTO apelidoDTO)
         {
-            var resultado = DataContext.Apelidos.AsNoTracking().FirstOrDefault(apelido => apelido.Nome == apelidoDTO.Nome);
+            var resultado = DataContext.Apelidos.AsNoTracking().FirstOrDefault(apelido => apelido.Nome.ToLower() == apelidoDTO.Nome.ToLower());
             return resultado != null;
         }  
     }

@@ -19,7 +19,6 @@ namespace BibliotecaViva.DAL
         private IReferenciaDAL ReferenciaDAL { get; set; }
         private IDescricaoDAL DescricaoDAL { get ; set; }
         private ILocalizacaoGeograficaDAL LocalizacaoGeograficaDAL { get; set; }
-
         public RegistroDAL(bibliotecavivaContext dataContext, IDescricaoDAL descricaoDAL, IIdiomaDAL idiomaDAL, IApelidoDAL apelidoDAL,ITipoDAL tipoDAL, ILocalizacaoGeograficaDAL localizacaoGeograficaDAL, IReferenciaDAL referenciaDAL) : base(dataContext)
         {
             TipoDAL = tipoDAL;
@@ -29,7 +28,6 @@ namespace BibliotecaViva.DAL
             ReferenciaDAL = referenciaDAL;
             LocalizacaoGeograficaDAL = localizacaoGeograficaDAL;
         }
-
         public RegistroDTO Consultar(int codRegistro)
         {
             var resultado = (from registro in DataContext.Registros
@@ -59,8 +57,9 @@ namespace BibliotecaViva.DAL
                        Localizacaogeografica = registroLocalizacaoLeft != null ? registroLocalizacaoLeft.Localizacaogeografica : 0
                     }.Localizacaogeografica equals localizacaoGeografica.Codigo into localizacaoGeograficaLeftJoin from localizacaoGeograficaLeft in localizacaoGeograficaLeftJoin.DefaultIfEmpty()
 
-                where registro.Codigo == codRegistro
-                
+                where 
+                    registro.Codigo == codRegistro
+
                 select new RegistroDTO()
                 {
                     Codigo = registro.Codigo,
@@ -111,9 +110,9 @@ namespace BibliotecaViva.DAL
 
 
                 where
-                    registro.Idioma == registro.Idioma &&
-                    ((!string.IsNullOrEmpty(registroDTO.Nome) && registro.Nome.Contains(registroDTO.Nome)) 
-                    || (!string.IsNullOrEmpty(registroDTO.Apelido) && (apelidoLeft != null) && apelidoLeft.Nome.Contains(registroDTO.Apelido)))                
+                    registroDTO.Idioma.ToLower() == idioma.Nome.ToLower() &&
+                    ((!string.IsNullOrEmpty(registroDTO.Nome) && registro.Nome.ToLower().Contains(registroDTO.Nome.ToLower())) 
+                    || (!string.IsNullOrEmpty(registroDTO.Apelido) && (apelidoLeft != null) && apelidoLeft.Nome.ToLower().Contains(registroDTO.Apelido.ToLower())))                
                 
                 select new RegistroDTO()
                 {
@@ -141,10 +140,9 @@ namespace BibliotecaViva.DAL
                 return latitude ? localizacaoGeograficaLeft.Latitude : localizacaoGeograficaLeft.Longitude;
             return null;
         }
-        
         public void Cadastrar(RegistroDTO registroDTO)
         {
-            var registro = DataContext.Registros.AsNoTracking().FirstOrDefault(registro => registro.Nome == registroDTO.Nome);
+            var registro = DataContext.Registros.AsNoTracking().FirstOrDefault(registro => registro.Nome.ToLower() == registroDTO.Nome.ToLower());
             if(registro != null)
             {
                 registroDTO.Codigo = registro.Codigo;
@@ -160,7 +158,6 @@ namespace BibliotecaViva.DAL
             }
             CadastrarDadosOpcionais(registroDTO);
         }
-
         private Registro MapearRegistro(RegistroDTO registroDTO)
         {
             var idioma = IdiomaDAL.Consultar(new IdiomaDTO(){ Nome = registroDTO.Idioma });
@@ -176,14 +173,12 @@ namespace BibliotecaViva.DAL
                 Datainsercao = DateTime.Now
             };
         }
-
         private void CadastrarDadosOpcionais(RegistroDTO registroDTO)
         {
             CadastrarDescricao(registroDTO);
             CadastrarApelido(registroDTO);
             CadastrarLocalizacaoGeografica(registroDTO);
         }
-
         private void CadastrarDescricao(RegistroDTO registroDTO)
         {
             if (string.IsNullOrEmpty(registroDTO.Descricao))
@@ -202,7 +197,6 @@ namespace BibliotecaViva.DAL
                     Conteudo = registroDTO.Descricao
                 });
         }
-
         private void CadastrarApelido(RegistroDTO registroDTO)
         {
             if (string.IsNullOrEmpty(registroDTO.Apelido))
@@ -222,11 +216,10 @@ namespace BibliotecaViva.DAL
                 };
                 
                 ApelidoDAL.Cadastrar(apelidoDTO);
-                apelidoDTO.Codigo = DataContext.Apelidos.FirstOrDefault(apelido => apelido.Nome == registroDTO.Apelido).Codigo;
+                apelidoDTO.Codigo = DataContext.Apelidos.FirstOrDefault(apelido => apelido.Nome.ToLower() == registroDTO.Apelido.ToLower()).Codigo;
                 ApelidoDAL.VincularRegistro(apelidoDTO, registroDTO);
             }     
         }
-
         private void CadastrarLocalizacaoGeografica(RegistroDTO registroDTO)
         {
             if (registroDTO.Latitude == null || registroDTO.Longitude == null)
@@ -253,7 +246,6 @@ namespace BibliotecaViva.DAL
                 LocalizacaoGeograficaDAL.Vincular(localizacaoGeograficaDTO, registroDTO);
             }     
         }
-
         private void CadastrarReferencias(RegistroDTO registroDTO)
         {           
             ReferenciaDAL.VincularReferencia(registroDTO);

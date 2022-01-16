@@ -7,7 +7,6 @@ using BibliotecaViva.DTO;
 using BibliotecaViva.DAL.Utils;
 using BibliotecaViva.DAL.Interfaces;
 
-
 namespace BibliotecaViva.DAL
 {
     public class ReferenciaDAL : BaseDAL, IReferenciaDAL
