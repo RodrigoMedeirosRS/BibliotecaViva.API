@@ -193,7 +193,14 @@ namespace BibliotecaViva.DAL
         private void CadastrarDescricao(RegistroDTO registroDTO)
         {
             if (string.IsNullOrEmpty(registroDTO.Descricao))
-                DescricaoDAL.Remover(registroDTO.Codigo);
+                try
+                {
+                    DescricaoDAL.Remover(registroDTO.Codigo);
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             else
                 DescricaoDAL.Cadastrar(new DescricaoDTO()
                 {
@@ -205,7 +212,14 @@ namespace BibliotecaViva.DAL
         private void CadastrarApelido(RegistroDTO registroDTO)
         {
             if (string.IsNullOrEmpty(registroDTO.Apelido))
-                ApelidoDAL.RemoverVinculo(registroDTO.Codigo);
+                try
+                {
+                    ApelidoDAL.RemoverVinculo(registroDTO.Codigo);
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             else
             {
                 var apelidoDTO = new ApelidoDTO()
@@ -222,7 +236,14 @@ namespace BibliotecaViva.DAL
         private void CadastrarLocalizacaoGeografica(RegistroDTO registroDTO)
         {
             if (registroDTO.Latitude == null || registroDTO.Longitude == null)
-                LocalizacaoGeograficaDAL.RemoverVinculoRegistro(registroDTO.Codigo);
+                try
+                {
+                    LocalizacaoGeograficaDAL.RemoverVinculoRegistro(registroDTO.Codigo);
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             else
             {
                 var localizacaoGeograficaDTO = new LocalizacaoGeograficaDTO()
