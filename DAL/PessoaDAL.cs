@@ -90,6 +90,16 @@ namespace BibliotecaViva.DAL
             
             return pessoas;
         }
+        private bool ValidarConsulta(Pessoa idioma, Registro registro, Apelido apelido, RegistroDTO registroDTO)
+        {
+            var retorno = !string.IsNullOrEmpty(registroDTO.Nome) || !string.IsNullOrEmpty(registroDTO.Apelido);
+                retorno = retorno && registro.Idioma == registro.Idioma;
+            if (!string.IsNullOrEmpty(registroDTO.Nome))
+                retorno = retorno && registro.Nome.Contains(registroDTO.Nome);
+            if (!string.IsNullOrEmpty(registroDTO.Apelido))
+                retorno = retorno && apelido.Nome.Contains(registroDTO.Apelido);
+            return retorno;
+        }
 
         private static double? ObterLocalizacaoGeorafica(Localizacaogeografica localizacaoGeograficaLeft, bool latitude)
         {
