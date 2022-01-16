@@ -39,8 +39,10 @@ namespace BibliotecaViva.DAL
             }
             else
             {
-                DataContext.Add(Conversor.Mapear(pessoaDTO));
+                pessoa = Conversor.Mapear(pessoaDTO);
+                DataContext.Add(pessoa);
                 DataContext.SaveChanges();
+                pessoaDTO.Codigo = pessoa.Codigo;
             }
             CadastrarDadosOpcionais(pessoaDTO);
         }
@@ -118,16 +120,8 @@ namespace BibliotecaViva.DAL
             return retorno;
         }
 
-        private PessoaDTO PopularCodigo(PessoaDTO pessoaDTO)
-        {
-            if (pessoaDTO.Codigo == null || pessoaDTO.Codigo == 0)
-                    pessoaDTO.Codigo = Consultar(pessoaDTO).FirstOrDefault().Codigo;
-            return pessoaDTO;
-        }
-
         private void CadastrarDadosOpcionais(PessoaDTO pessoaDTO)
         {
-            pessoaDTO = PopularCodigo(pessoaDTO);
             CadastrarNomeSocial(pessoaDTO);
             CadastrarApelido(pessoaDTO);
             CadastrarLocalizacaoGeografica(pessoaDTO);
