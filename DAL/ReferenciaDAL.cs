@@ -21,11 +21,11 @@ namespace BibliotecaViva.DAL
             foreach (var ralacao in relacoes)
                 DataContext.Referencia.Remove(ralacao);  
             
-            foreach(var referencia in registroDTO.Referencias)
+            foreach(var relacao in registroDTO.Referencias)
                 DataContext.Add(new Referencium()
                 {
-                    Registro = referencia.Registro,
-                    Referencia = referencia.Referencia
+                    Registro = (int)relacao.RegistroPessoaID,
+                    Referencia = (int)relacao.RelacaoID,
                 });
         }
         public List<RegistroDTO> ObterReferenciaCompleta(RegistroDTO registroDTO, IRegistroDAL registroDAL)
@@ -41,17 +41,17 @@ namespace BibliotecaViva.DAL
 
             return registros;
         }
-        public List<ReferenciaDTO> ObterReferencia(int codRegistro)
+        public List<RelacaoDTO> ObterReferencia(int codRegistro)
         {
-            return (from referencia in DataContext.Referencia
+            return (from relacao in DataContext.Referencia
                 where 
-                    referencia.Registro == codRegistro
+                    relacao.Registro == codRegistro
                 select 
-                    new ReferenciaDTO()
+                    new RelacaoDTO()
                     {
-                        Codigo = referencia.Codigo,
-                        Registro = (int)referencia.Registro,
-                        Referencia = (int)referencia.Referencia
+                        Codigo = relacao.Codigo,
+                        RegistroPessoaID = (int)relacao.Registro,
+                        RelacaoID = (int)relacao.Referencia
                     }).AsNoTracking().ToList();
         }
         private IQueryable<Referencium> ListarRelacoes(int codRegistro)
