@@ -31,8 +31,8 @@ namespace BibliotecaViva.DAL
             foreach (var relacao in pessoaDTO.Relacoes)
                 DataContext.Add(new Pessoaregistro()
                 {
-                    Pessoa = (int)relacao.Pessoa,
-                    Registro = (int)relacao.Registro,
+                    Pessoa = (int)relacao.RegistroPessoaID,
+                    Registro = (int)relacao.RelacaoID,
                     Tiporelacao = (int)TipoRelacaoDAL.Consultar(new TipoRelacaoDTO()
                     {
                         Nome = relacao.TipoRelacao
@@ -40,7 +40,7 @@ namespace BibliotecaViva.DAL
                 });
             DataContext.SaveChanges();
         }
-        public List<PessoaRegistroDTO> ObterRelacao(int codPessoa)
+        public List<RelacaoDTO> ObterRelacao(int codPessoa)
         {
             var relacoes = (from relacao in DataContext.Pessoaregistros
                 join
@@ -49,11 +49,11 @@ namespace BibliotecaViva.DAL
                 where 
                     relacao.Pessoa == codPessoa
                 select 
-                    new PessoaRegistroDTO()
+                    new RelacaoDTO()
                     {
                         Codigo = relacao.Codigo,
-                        Registro = (int)relacao.Registro,
-                        Pessoa = (int)relacao.Pessoa,
+                        RegistroPessoaID = (int)relacao.Pessoa,
+                        RelacaoID = (int)relacao.Registro,
                         TipoRelacao = tiporelacao.Nome
                     }).AsNoTracking().ToList();
             return relacoes;
