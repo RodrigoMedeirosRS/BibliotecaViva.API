@@ -178,6 +178,7 @@ namespace BibliotecaViva.DAL
             CadastrarDescricao(registroDTO);
             CadastrarApelido(registroDTO);
             CadastrarLocalizacaoGeografica(registroDTO);
+            CadastrarReferencias(registroDTO);
         }
         private void CadastrarDescricao(RegistroDTO registroDTO)
         {

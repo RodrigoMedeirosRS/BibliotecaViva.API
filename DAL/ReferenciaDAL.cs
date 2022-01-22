@@ -27,6 +27,7 @@ namespace BibliotecaViva.DAL
                     Registro = registroDTO.Codigo,
                     Referencia = (int)relacao.RelacaoID,
                 });
+            DataContext.SaveChanges();
         }
         public List<RegistroDTO> ObterReferenciaCompleta(RegistroDTO registroDTO, IRegistroDAL registroDAL)
         {
