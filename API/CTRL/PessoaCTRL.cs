@@ -36,9 +36,9 @@ namespace BibliotecaViva.CTRL
         }
 
         [HttpPost("ObterRelacoes")]
-        public async Task<List<RegistroDTO>> Relacoes(string codRegistro)
+        public async Task<List<RegistroDTO>> Relacoes(RelacaoConsulta Relacao)
         {
-            return _Requisicao.ExecutarRequisicao<int, List<RegistroDTO>>(Convert.ToInt32(codRegistro), _BLL.ObterRelacoes).Result;
+            return _Requisicao.ExecutarRequisicao<int, List<RegistroDTO>>(Relacao.CodRegistro, _BLL.ObterRelacoes).Result;
         }
     }
 }
