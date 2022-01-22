@@ -30,29 +30,29 @@ namespace BibliotecaViva.DAL
         }
         public RegistroDTO Consultar(int codRegistro)
         {
-            var resultado = (from registro in DataContext.Registros
+            var resultado = (from registro in DataContext.Registros.AsNoTracking()
                 join
-                    idioma in DataContext.Idiomas
+                    idioma in DataContext.Idiomas.AsNoTracking()
                     on registro.Idioma equals idioma.Codigo
                 join
-                    tipo in DataContext.Tipos
+                    tipo in DataContext.Tipos.AsNoTracking()
                     on registro.Tipo equals tipo.Codigo
                 join
-                    descricao in DataContext.Descricaos
+                    descricao in DataContext.Descricaos.AsNoTracking()
                     on registro.Codigo equals descricao.Registro into descricaoLeftJoin from descricaoLeft in descricaoLeftJoin.DefaultIfEmpty()
                 join
-                    registroApelido in DataContext.Registroapelidos
+                    registroApelido in DataContext.Registroapelidos.AsNoTracking()
                     on registro.Codigo equals registroApelido.Registro into registroApelidoLeftJoin from registroApelidoLeft in registroApelidoLeftJoin.DefaultIfEmpty()
                 join
-                   apelido in DataContext.Apelidos
+                   apelido in DataContext.Apelidos.AsNoTracking()
                    on new Registroapelido(){ 
                        Apelido = registroApelidoLeft != null ? registroApelidoLeft.Apelido : 0
                     }.Apelido equals apelido.Codigo into apelidoLeftJoin from apelidoLeft in apelidoLeftJoin.DefaultIfEmpty()
                 join
-                    registroLocalizacao in DataContext.Registrolocalizacaos
+                    registroLocalizacao in DataContext.Registrolocalizacaos.AsNoTracking()
                     on registro.Codigo equals registroLocalizacao.Registro into registroLocalizacaoLeftJoin from registroLocalizacaoLeft in registroLocalizacaoLeftJoin.DefaultIfEmpty()
                 join
-                   localizacaoGeografica in DataContext.Localizacaogeograficas
+                   localizacaoGeografica in DataContext.Localizacaogeograficas.AsNoTracking()
                    on new Registrolocalizacao(){ 
                        Localizacaogeografica = registroLocalizacaoLeft != null ? registroLocalizacaoLeft.Localizacaogeografica : 0
                     }.Localizacaogeografica equals localizacaoGeografica.Codigo into localizacaoGeograficaLeftJoin from localizacaoGeograficaLeft in localizacaoGeograficaLeftJoin.DefaultIfEmpty()

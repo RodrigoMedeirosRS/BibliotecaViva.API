@@ -55,9 +55,12 @@ namespace BibliotecaViva.DAL
                         RelacaoID = (int)relacao.Referencia
                     }).AsNoTracking().ToList();
         }
-        private IQueryable<Referencium> ListarRelacoes(int codRegistro)
+        private List<Referencium> ListarRelacoes(int codRegistro)
         {
-            return DataContext.Referencia.Where(relacao => relacao.Registro == codRegistro);
+            return (from referencia in DataContext.Referencia.AsNoTracking()
+                where
+                    referencia.Registro == codRegistro
+                select referencia).AsNoTracking().ToList();
         }
     }
 }
