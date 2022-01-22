@@ -53,13 +53,13 @@ namespace BibliotecaViva.CTRL
         }
 
         [HttpPost("ConsultarTiposRelacao")]
-        public async Task<List<TipoRelacaoDTO>> ConsultarTiposRelacao()
+        public async Task<List<TipoRelacaoDTO>> ConsultarTiposRelacao(string entrada)
         {
             return _Requisicao.ExecutarRequisicao(_BLL.ConsultarTiposRelacao).Result;
         }
 
         [HttpPost("ConsultarTiposExecucao")]
-        public async Task<List<TipoExecucaoDTO>> ConsultarTiposExecucao()
+        public async Task<List<TipoExecucaoDTO>> ConsultarTiposExecucao(string entrada)
         {
             return _Requisicao.ExecutarRequisicao(_BLL.ConsultarTiposExecucao).Result;
         }
