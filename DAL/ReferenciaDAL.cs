@@ -24,7 +24,7 @@ namespace BibliotecaViva.DAL
             foreach(var relacao in registroDTO.Referencias)
                 DataContext.Add(new Referencium()
                 {
-                    Registro = (int)relacao.RegistroPessoaID,
+                    Registro = registroDTO.Codigo,
                     Referencia = (int)relacao.RelacaoID,
                 });
         }

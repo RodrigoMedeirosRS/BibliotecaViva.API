@@ -31,7 +31,7 @@ namespace BibliotecaViva.DAL
             foreach (var relacao in pessoaDTO.Relacoes)
                 DataContext.Add(new Pessoaregistro()
                 {
-                    Pessoa = (int)relacao.RegistroPessoaID,
+                    Pessoa = pessoaDTO.Codigo,
                     Registro = (int)relacao.RelacaoID,
                     Tiporelacao = (int)TipoRelacaoDAL.Consultar(new TipoRelacaoDTO()
                     {
