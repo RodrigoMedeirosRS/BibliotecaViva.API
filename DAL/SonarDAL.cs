@@ -18,10 +18,12 @@ namespace BibliotecaViva.DAL
     {
         private IPessoaDAL PessoaDAL { get; set; }
         private IRegistroDAL RegistroDAL { get; set; }
-        public SonarDAL(bibliotecavivaContext dataContext) : base(dataContext)
+        public SonarDAL(bibliotecavivaContext dataContext, IPessoaDAL pessoaDAL, IRegistroDAL registroDAL) : base(dataContext)
         {
+            PessoaDAL = pessoaDAL;
+            RegistroDAL = registroDAL;
         }
-        public SonarRetorno Consultar(SonarConsulta sonar)
+        public SonarRetorno Consultar(SonarDTO sonar)
         {
             return new SonarRetorno()
             {
@@ -40,20 +42,17 @@ namespace BibliotecaViva.DAL
             return retorno.DistinctBy(pessoa => pessoa.Codigo).ToList();
         }
 
-        private List<PessoaDTO> BuscarPessoas(SonarConsulta sonar)
+        private List<PessoaDTO> BuscarPessoas(SonarDTO sonar)
         {
-            return(from pessoaLocalizacao in DataContext.Pessoalocalizacaos
+            return(from pessoaLocalizacao in DataContext.Pessoalocalizacaos.AsNoTracking()
                 join
-                    pessoa in DataContext.Pessoas
+                    pessoa in DataContext.Pessoas.AsNoTracking()
                     on pessoaLocalizacao.Pessoa equals pessoa.Codigo
                 join
-                    localizacaoGeografica in DataContext.Localizacaogeograficas
+                    localizacaoGeografica in DataContext.Localizacaogeograficas.AsNoTracking()
                     on pessoaLocalizacao.Localizacaogeografica equals localizacaoGeografica.Codigo
                 where 
-                    localizacaoGeografica.Latitude >= double.Parse(sonar.CoordenadaInicio[0], System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US")) && 
-                    localizacaoGeografica.Latitude <= double.Parse(sonar.CoordenadaFim[0], System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US")) &&
-                    localizacaoGeografica.Longitude >= double.Parse(sonar.CoordenadaInicio[1], System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US")) &&
-                    localizacaoGeografica.Longitude <= double.Parse(sonar.CoordenadaFim[1], System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"))
+                    (Math.Sqrt(Math.Pow((sonar.Latitude - localizacaoGeografica.Latitude), 2) + Math.Pow((sonar.Longitude - localizacaoGeografica.Longitude), 2))) <= sonar.Alcance
                 select new PessoaDTO()
                 {
                     Codigo = pessoa.Codigo,
@@ -72,23 +71,20 @@ namespace BibliotecaViva.DAL
             return retorno.DistinctBy(registro => registro.Codigo).ToList();
         }
 
-        private List<RegistroDTO> BuscarRegistros(SonarConsulta sonar)
+        private List<RegistroDTO> BuscarRegistros(SonarDTO sonar)
         {
-            return(from registroLocalizacao in DataContext.Registrolocalizacaos
+            return(from registroLocalizacao in DataContext.Registrolocalizacaos.AsNoTracking()
                 join
-                    registro in DataContext.Registros
+                    registro in DataContext.Registros.AsNoTracking()
                     on registroLocalizacao.Registro equals registro.Codigo
                 join
-                    localizacaoGeografica in DataContext.Localizacaogeograficas
+                    localizacaoGeografica in DataContext.Localizacaogeograficas.AsNoTracking()
                     on registroLocalizacao.Localizacaogeografica equals localizacaoGeografica.Codigo
                 join
-                    idioma in DataContext.Idiomas
+                    idioma in DataContext.Idiomas.AsNoTracking()
                     on registro.Idioma equals idioma.Codigo
                 where 
-                    localizacaoGeografica.Latitude >= double.Parse(sonar.CoordenadaInicio[0], System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US")) && 
-                    localizacaoGeografica.Latitude <= double.Parse(sonar.CoordenadaFim[0], System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US")) &&
-                    localizacaoGeografica.Longitude >= double.Parse(sonar.CoordenadaInicio[1], System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US")) &&
-                    localizacaoGeografica.Longitude <= double.Parse(sonar.CoordenadaFim[1], System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"))
+                    (Math.Sqrt(Math.Pow((sonar.Latitude - localizacaoGeografica.Latitude), 2) + Math.Pow((sonar.Longitude - localizacaoGeografica.Longitude), 2))) <= sonar.Alcance
                 select new RegistroDTO()
                 {
                     Codigo = registro.Codigo,
