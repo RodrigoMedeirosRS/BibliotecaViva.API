@@ -8,7 +8,7 @@ using BibliotecaViva.BLL.Interfaces;
 
 namespace BibliotecaViva.CTRL
 {
-    [Route("Api/Tipo")]
+    [Route("BibliotecaViva/Tipo")]
     [ApiController]
     public class TipoController : Controller
     {
