@@ -47,7 +47,8 @@ namespace BibliotecaViva.DAL
         public void RemoverVinculoRegistro(int? codigoRegistro)
         {
             var localizacao = DataContext.Registrolocalizacaos.AsNoTracking().FirstOrDefault(localizacao => localizacao.Registro == codigoRegistro);
-            DataContext.Remove(localizacao);
+            if (localizacao != null)
+                DataContext.Remove(localizacao);
             DataContext.SaveChanges();
         }  
     }
