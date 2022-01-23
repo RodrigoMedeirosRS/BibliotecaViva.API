@@ -124,8 +124,8 @@ namespace BibliotecaViva.DAL
                     Conteudo = registro.Conteudo,
                     Descricao = descricaoLeft != null ? descricaoLeft.Conteudo : string.Empty,
                     DataInsercao = registro.Datainsercao,
-                    Latitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, true).ToString(),
-                    Longitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, false).ToString()
+                    Latitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, true).ToString().Replace(",", "."),
+                    Longitude = ObterLocalizacaoGeografica(localizacaoGeograficaLeft, false).ToString().Replace(",", ".")
                 }).AsNoTracking().DistinctBy(registroDB => registroDB.Codigo).ToList(); 
 
             foreach(var registro in registros)
@@ -223,16 +223,15 @@ namespace BibliotecaViva.DAL
         }
         private void CadastrarLocalizacaoGeografica(RegistroDTO registroDTO)
         {
-            if (registroDTO.Latitude == null || registroDTO.Longitude == null)
-                try
-                {
-                    LocalizacaoGeograficaDAL.RemoverVinculoRegistro(registroDTO.Codigo);
-                }
-                catch(Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            else
+            try
+            {
+                LocalizacaoGeograficaDAL.RemoverVinculoRegistro(registroDTO.Codigo);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            if (registroDTO.Latitude != null && registroDTO.Longitude != null)
             {
                 var localizacaoGeograficaDTO = new LocalizacaoGeograficaDTO()
                 { 

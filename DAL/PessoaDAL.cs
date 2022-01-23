@@ -80,8 +80,8 @@ namespace BibliotecaViva.DAL
                     Genero = pessoa.Genero,
                     Apelido = apelidoLeft != null ? apelidoLeft.Nome : string.Empty,
                     NomeSocial = nomeSocialLeft != null ? nomeSocialLeft.Nome : string.Empty,
-                    Latitude = ObterLocalizacaoGeorafica(localizacaoGeograficaLeft, true).ToString(),
-                    Longitude = ObterLocalizacaoGeorafica(localizacaoGeograficaLeft, false).ToString()
+                    Latitude = ObterLocalizacaoGeorafica(localizacaoGeograficaLeft, true).ToString().Replace(",", "."),
+                    Longitude = ObterLocalizacaoGeorafica(localizacaoGeograficaLeft, false).ToString().Replace(",", ".")
                 }).AsNoTracking().DistinctBy(pessoaDB => pessoaDB.Codigo).ToList();
                 
             foreach(var pessoa in pessoas)
@@ -131,9 +131,15 @@ namespace BibliotecaViva.DAL
         }
         private void CadastrarLocalizacaoGeografica(PessoaDTO pessoaDTO)
         {
-            if (pessoaDTO.Latitude == null || pessoaDTO.Longitude == null)
+            try
+            {
                 LocalizacaoGeograficaDAL.RemoverVinculoPessoa(pessoaDTO.Codigo);
-            else
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            if (pessoaDTO.Latitude != null && pessoaDTO.Longitude != null)
             {
                 var localizacaoGeograficaDTO = new LocalizacaoGeograficaDTO()
                 { 
