@@ -9,7 +9,7 @@ using BibliotecaViva.BLL.Interfaces;
 
 namespace BibliotecaViva.CTRL
 {
-    [Route("Api/Sonar")]
+    [Route("BibliotecaViva/Sonar")]
     [ApiController]
     public class SonarController : Controller
     {

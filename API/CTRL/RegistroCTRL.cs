@@ -10,7 +10,7 @@ using BibliotecaViva.BLL.Interfaces;
 
 namespace BibliotecaViva.CTRL
 {
-    [Route("Api/Registro")]
+    [Route("BibliotecaViva/Registro")]
     [ApiController]
     public class RegistroController : Controller
     {
