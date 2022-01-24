@@ -37,3 +37,9 @@ git submodule add https://github.com/RodrigoMedeirosRS/BibliotecaViva.LIB.git
 
 # Clona com Submodulo
 git clone -recursive https://github.com/RodrigoMedeirosRS/BibliotecaViva.LIB.git
+
+# Cria Tag de Publicação
+git tag V.1.0.0
+
+# Da push na tag para o repositório
+git push origin --tags
