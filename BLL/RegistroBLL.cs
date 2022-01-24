@@ -11,10 +11,12 @@ namespace BibliotecaViva.BLL
     {
         private IRegistroDAL RegistroDAL { get; set; }
         private IReferenciaDAL ReferenciaDAL { get; set; }
-        public RegistroBLL(IRegistroDAL registroDAL, IReferenciaDAL referenciaDAL)
+        private IPessoaDAL PessoaDAL { get; set; }
+        public RegistroBLL(IRegistroDAL registroDAL, IReferenciaDAL referenciaDAL, IPessoaDAL pessoaDAL)
         {
             RegistroDAL = registroDAL;
             ReferenciaDAL = referenciaDAL;
+            PessoaDAL = pessoaDAL;
         }
         public async Task<string> Cadastrar(RegistroDTO registro) 
         {
@@ -29,12 +31,21 @@ namespace BibliotecaViva.BLL
                 Idioma = registro.Idioma
             });
         }
-        public async Task<List<RegistroDTO>> ObterReferencias(int codRegistro)
+        public async Task<ReferenciaRetorno> ObterReferencias(int codRegistro)
         {
-            return ReferenciaDAL.ObterReferenciaCompleta(new RegistroDTO()
+            var registro = new RegistroDTO()
             {
                 Codigo = codRegistro
-            }, RegistroDAL);
+            };
+
+            var registros = ReferenciaDAL.ObterReferenciaCompleta(registro, RegistroDAL);
+            var pessoas = ReferenciaDAL.ObterPessoasReferenciadas(registro, PessoaDAL);
+
+            return new ReferenciaRetorno()
+            {
+                Registros = registros ?? new List<RegistroDTO>(),
+                Pessoas = pessoas ?? new List<PessoaDTO>()
+            };
         }
     }
 }

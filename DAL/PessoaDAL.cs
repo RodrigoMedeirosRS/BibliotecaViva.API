@@ -89,6 +89,48 @@ namespace BibliotecaViva.DAL
             
             return pessoas;
         }
+        public PessoaDTO Consultar(int codigoPessoa)
+        {
+            var pessoaDB = (from pessoa in DataContext.Pessoas
+                join
+                    nomeSocial in DataContext.Nomesocials
+                    on pessoa.Codigo equals nomeSocial.Pessoa into nomeSocialLeftJoin from nomeSocialLeft in nomeSocialLeftJoin.DefaultIfEmpty()
+                join
+                    pessoaApelido in DataContext.Pessoaapelidos
+                    on pessoa.Codigo equals pessoaApelido.Pessoa into pessoaApelidoLeftJoin from pessoaApelidoLeft in pessoaApelidoLeftJoin.DefaultIfEmpty()
+                join
+                   apelido in DataContext.Apelidos
+                   on new Pessoaapelido(){ 
+                       Apelido = pessoaApelidoLeft != null ? pessoaApelidoLeft.Apelido : 0
+                    }.Apelido equals apelido.Codigo into apelidoLeftJoin from apelidoLeft in apelidoLeftJoin.DefaultIfEmpty()
+                join
+                    pessoaLocalizacao in DataContext.Pessoalocalizacaos
+                    on pessoa.Codigo equals pessoaLocalizacao.Pessoa into pessoaLocalizacaoLeftJoin from pessoaLocalizacaoLeft in pessoaLocalizacaoLeftJoin.DefaultIfEmpty()
+                join
+                   localizacaoGeografica in DataContext.Localizacaogeograficas
+                   on new Pessoalocalizacao(){ 
+                       Localizacaogeografica = pessoaLocalizacaoLeft != null ? pessoaLocalizacaoLeft.Localizacaogeografica : 0
+                    }.Localizacaogeografica equals localizacaoGeografica.Codigo into localizacaoGeograficaLeftJoin from localizacaoGeograficaLeft in localizacaoGeograficaLeftJoin.DefaultIfEmpty()
+
+                where 
+                    pessoa.Codigo == codigoPessoa
+                
+                select new PessoaDTO()
+                {
+                    Codigo = pessoa.Codigo,
+                    Nome = pessoa.Nome,
+                    Sobrenome = pessoa.Sobrenome,
+                    Genero = pessoa.Genero,
+                    Apelido = apelidoLeft != null ? apelidoLeft.Nome : string.Empty,
+                    NomeSocial = nomeSocialLeft != null ? nomeSocialLeft.Nome : string.Empty,
+                    Latitude = ObterLocalizacaoGeorafica(localizacaoGeograficaLeft, true).ToString().Replace(",", "."),
+                    Longitude = ObterLocalizacaoGeorafica(localizacaoGeograficaLeft, false).ToString().Replace(",", ".")
+                }).AsNoTracking().FirstOrDefault();
+                
+            pessoaDB.Relacoes = PessoaRegistroDAL.ObterRelacao((int)pessoaDB.Codigo);
+            
+            return pessoaDB;
+        }
         private static double? ObterLocalizacaoGeorafica(Localizacaogeografica localizacaoGeograficaLeft, bool latitude)
         {
             if (localizacaoGeograficaLeft != null)
