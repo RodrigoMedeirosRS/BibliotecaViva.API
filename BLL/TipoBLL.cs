@@ -22,17 +22,17 @@ namespace BibliotecaViva.BLL
         public async Task<string> Cadastrar(IdiomaDTO idiomaDTO)
         {
             IdiomaDAL.Cadastrar(idiomaDTO);
-            return "Idioma " + idiomaDTO.Nome + "Cadastrado com Sucesso!";
+            return "Idioma " + idiomaDTO.Nome + " Cadastrado com Sucesso!";
         }
         public async Task<string> Cadastrar(TipoDTO tipoDTO)
         {
             TipoDAL.Cadastrar(tipoDTO);
-            return "Idioma " + tipoDTO.Nome + "Cadastrado com Sucesso!";
+            return "Idioma " + tipoDTO.Nome + " Cadastrado com Sucesso!";
         }
         public async Task<string> Cadastrar(TipoRelacaoDTO tipoRelacaoDTO)
         {
             TipoRelacaoDAL.Cadastrar(tipoRelacaoDTO);
-            return "Idioma " + tipoRelacaoDTO.Nome + "Cadastrado com Sucesso!";
+            return "Tipo Relacao " + tipoRelacaoDTO.Nome + " Cadastrado com Sucesso!";
         }
         public async Task<List<IdiomaDTO>> ConsultarIdiomas()
         {
