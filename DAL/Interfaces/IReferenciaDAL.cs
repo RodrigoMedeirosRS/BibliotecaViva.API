@@ -8,5 +8,6 @@ namespace BibliotecaViva.DAL.Interfaces
         void VincularReferencia(RegistroDTO registroDTO);
         List<RelacaoDTO> ObterReferencia(int codRegistro);
         List<RegistroDTO> ObterReferenciaCompleta(RegistroDTO registroDTO, IRegistroDAL registroDAL);
+        List<PessoaDTO> ObterPessoasReferenciadas(RegistroDTO registroDTO, IPessoaDAL pessoaDAL);
     }
 }

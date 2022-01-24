@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using BibliotecaViva.DAO;
 using BibliotecaViva.DTO;
 using BibliotecaViva.DAL.Utils;
+using BibliotecaViva.DTO.Dominio;
 using BibliotecaViva.DAL.Interfaces;
 
 namespace BibliotecaViva.DAL
@@ -16,7 +17,7 @@ namespace BibliotecaViva.DAL
         }
         public void VincularReferencia(RegistroDTO registroDTO)
         {          
-            var relacoes = ListarRelacoes((int)registroDTO.Codigo);
+            var relacoes = ListarReferencias((int)registroDTO.Codigo);
 
             foreach (var ralacao in relacoes)
                 DataContext.Referencia.Remove(ralacao);  
@@ -31,7 +32,7 @@ namespace BibliotecaViva.DAL
         }
         public List<RegistroDTO> ObterReferenciaCompleta(RegistroDTO registroDTO, IRegistroDAL registroDAL)
         {
-            var referencias = ListarRelacoes((int)registroDTO.Codigo);
+            var referencias = ListarReferencias((int)registroDTO.Codigo);
             var registros = new List<RegistroDTO>();
 
             if (referencias == null)
@@ -41,6 +42,18 @@ namespace BibliotecaViva.DAL
                 registros.Add(registroDAL.Consultar((int)referencia.Referencia));
 
             return registros;
+        }
+        public List<PessoaDTO> ObterPessoasReferenciadas(RegistroDTO registroDTO, IPessoaDAL pessoaDAL)
+        {
+            var referencias = ListarRelacoes((int)registroDTO.Codigo);
+            var pessoas = new List<PessoaDTO>();
+
+            if (referencias == null)
+                return pessoas;
+            foreach(var referencia in referencias)
+                pessoas.Add(pessoaDAL.Consultar((int)referencia.Pessoa));
+            
+            return pessoas;            
         }
         public List<RelacaoDTO> ObterReferencia(int codRegistro)
         {
@@ -55,10 +68,17 @@ namespace BibliotecaViva.DAL
                         RelacaoID = (int)relacao.Referencia
                     }).AsNoTracking().ToList();
         }
-        private List<Referencium> ListarRelacoes(int codRegistro)
+        private List<Referencium> ListarReferencias(int codRegistro)
         {
             return (from referencia in DataContext.Referencia.AsNoTracking()
                 where
+                    referencia.Registro == codRegistro
+                select referencia).AsNoTracking().ToList();
+        }
+        private List<Pessoaregistro> ListarRelacoes(int codRegistro)
+        {
+            return(from referencia in DataContext.Pessoaregistros.AsNoTracking()
+                where  
                     referencia.Registro == codRegistro
                 select referencia).AsNoTracking().ToList();
         }
