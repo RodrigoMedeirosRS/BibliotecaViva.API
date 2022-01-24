@@ -47,6 +47,7 @@ namespace API
             services.AddScoped<ITipoBLL, TipoBLL>();
             services.AddScoped<ISonarBLL, SonarBLL>();
             services.AddScoped<IPessoaBLL, PessoaBLL>();
+            services.AddScoped<IRastrosBLL, RastrosBLL>();
             services.AddScoped<IRegistroBLL, RegistroBLL>();
         }
 
@@ -57,6 +58,7 @@ namespace API
             services.AddScoped<IIdiomaDAL, IdiomaDAL>();
             services.AddScoped<IPessoaDAL, PessoaDAL>();
             services.AddScoped<IApelidoDAL, ApelidoDAL>();
+            services.AddScoped<IRastrosDAL, RastrosDAL>();
             services.AddScoped<IRequisicao, Requisicao>();
             services.AddScoped<IRegistroDAL, RegistroDAL>();
             services.AddScoped<IDescricaoDAL, DescricaoDAL>(); 
