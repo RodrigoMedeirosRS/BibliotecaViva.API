@@ -5,15 +5,15 @@ CREATE TABLE Pessoa (
   Genero VARCHAR(20)   NOT NULL   ,
 PRIMARY KEY(Codigo));
 
+CREATE TABLE TipoRelacao (
+  Codigo SERIAL  NOT NULL ,
+  Nome VARCHAR(50) UNIQUE NOT NULL   ,
+PRIMARY KEY(Codigo));
+
 CREATE TABLE TipoDeExecucao (
   Codigo SERIAL  NOT NULL ,
   Nome VARCHAR(40) UNIQUE NOT NULL   ,
   Binario BOOL   NOT NULL   ,
-PRIMARY KEY(Codigo));
-
-CREATE TABLE TipoRelacao (
-  Codigo SERIAL  NOT NULL ,
-  Nome VARCHAR(50) UNIQUE NOT NULL   ,
 PRIMARY KEY(Codigo));
 
 CREATE TABLE LocalizacaoGeografica (
@@ -45,18 +45,6 @@ CREATE INDEX Tipo_FKIndex1 ON Tipo (TipoDeExecucao);
 
 CREATE INDEX IFK_Rel_27 ON Tipo (TipoDeExecucao);
 
-CREATE TABLE NomeSocial (
-  Codigo SERIAL  NOT NULL ,
-  Pessoa INTEGER   NOT NULL ,
-  Nome VARCHAR(30)   NOT NULL   ,
-PRIMARY KEY(Codigo)  ,
-  FOREIGN KEY(Pessoa)
-    REFERENCES Pessoa(Codigo));
-
-CREATE INDEX NomeSocial_FKIndex1 ON NomeSocial (Pessoa);
-
-CREATE INDEX IFK_Rel_03 ON NomeSocial (Pessoa);
-
 CREATE TABLE PessoaApelido (
   Codigo SERIAL  NOT NULL ,
   Apelido INTEGER   NOT NULL ,
@@ -72,22 +60,6 @@ CREATE INDEX PessoaApelido_FKIndex2 ON PessoaApelido (Apelido);
 
 CREATE INDEX IFK_Rel_07 ON PessoaApelido (Pessoa);
 CREATE INDEX IFK_Rel_08 ON PessoaApelido (Apelido);
-
-CREATE TABLE PessoaLocalizacao (
-  Codigo SERIAL  NOT NULL ,
-  LocalizacaoGeografica INTEGER   NOT NULL ,
-  Pessoa INTEGER   NOT NULL   ,
-PRIMARY KEY(Codigo)    ,
-  FOREIGN KEY(Pessoa)
-    REFERENCES Pessoa(Codigo),
-  FOREIGN KEY(LocalizacaoGeografica)
-    REFERENCES LocalizacaoGeografica(Codigo));
-
-CREATE INDEX PessoaLocalizao_FKIndex1 ON PessoaLocalizacao (Pessoa);
-CREATE INDEX PessoaLocalizao_FKIndex2 ON PessoaLocalizacao (LocalizacaoGeografica);
-
-CREATE INDEX IFK_Rel_18 ON PessoaLocalizacao (Pessoa);
-CREATE INDEX IFK_Rel_20 ON PessoaLocalizacao (LocalizacaoGeografica);
 
 CREATE TABLE Registro (
   Codigo SERIAL  NOT NULL ,
@@ -107,22 +79,6 @@ CREATE INDEX Registro_FKIndex2 ON Registro (Idioma);
 
 CREATE INDEX IFK_Rel_17 ON Registro (Tipo);
 CREATE INDEX IFK_Rel_23 ON Registro (Idioma);
-
-CREATE TABLE Referencia (
-  Codigo SERIAL  NOT NULL ,
-  Referencia INTEGER   NOT NULL ,
-  Registro INTEGER   NOT NULL   ,
-PRIMARY KEY(Codigo)    ,
-  FOREIGN KEY(Registro)
-    REFERENCES Registro(Codigo),
-  FOREIGN KEY(Referencia)
-    REFERENCES Registro(Codigo));
-
-CREATE INDEX RegistroRelacionado_FKIndex1 ON Referencia (Registro);
-CREATE INDEX RegistroRelacionado_FKIndex2 ON Referencia (Referencia);
-
-CREATE INDEX IFK_Rel_24 ON Referencia (Registro);
-CREATE INDEX IFK_Rel_25 ON Referencia (Referencia);
 
 CREATE TABLE PessoaRegistro (
   Codigo SERIAL  NOT NULL ,
@@ -157,23 +113,6 @@ CREATE INDEX Descricao_FKIndex1 ON Descricao (Registro);
 
 CREATE INDEX IFK_Rel_14 ON Descricao (Registro);
 
-CREATE TABLE RegistroApelido (
-  Codigo SERIAL  NOT NULL ,
-  Registro INTEGER   NOT NULL ,
-  Apelido INTEGER   NOT NULL   ,
-PRIMARY KEY(Codigo)    ,
-  FOREIGN KEY(Apelido)
-    REFERENCES Apelido(Codigo),
-  FOREIGN KEY(Registro)
-    REFERENCES Registro(Codigo));
-
-
-CREATE INDEX RegistroApelido_FKIndex1 ON RegistroApelido (Apelido);
-CREATE INDEX RegistroApelido_FKIndex2 ON RegistroApelido (Registro);
-
-CREATE INDEX IFK_Rel_12 ON RegistroApelido (Apelido);
-CREATE INDEX IFK_Rel_13 ON RegistroApelido (Registro);
-
 CREATE TABLE RegistroLocalizacao (
   Codigo SERIAL  NOT NULL ,
   Registro INTEGER   NOT NULL ,
@@ -189,3 +128,35 @@ CREATE INDEX RegistroLocalizacao_FKIndex2 ON RegistroLocalizacao (Registro);
 
 CREATE INDEX IFK_Rel_21 ON RegistroLocalizacao (LocalizacaoGeografica);
 CREATE INDEX IFK_Rel_22 ON RegistroLocalizacao (Registro);
+
+CREATE TABLE RegistroApelido (
+  Codigo SERIAL  NOT NULL ,
+  Registro INTEGER   NOT NULL ,
+  Apelido INTEGER   NOT NULL   ,
+PRIMARY KEY(Codigo)    ,
+  FOREIGN KEY(Apelido)
+    REFERENCES Apelido(Codigo),
+  FOREIGN KEY(Registro)
+    REFERENCES Registro(Codigo));
+
+CREATE INDEX RegistroApelido_FKIndex1 ON RegistroApelido (Apelido);
+CREATE INDEX RegistroApelido_FKIndex2 ON RegistroApelido (Registro);
+
+CREATE INDEX IFK_Rel_12 ON RegistroApelido (Apelido);
+CREATE INDEX IFK_Rel_13 ON RegistroApelido (Registro);
+
+CREATE TABLE Referencia (
+  Codigo SERIAL  NOT NULL ,
+  Referencia INTEGER   NOT NULL ,
+  Registro INTEGER   NOT NULL   ,
+PRIMARY KEY(Codigo)    ,
+  FOREIGN KEY(Registro)
+    REFERENCES Registro(Codigo),
+  FOREIGN KEY(Referencia)
+    REFERENCES Registro(Codigo));
+
+CREATE INDEX RegistroRelacionado_FKIndex1 ON Referencia (Registro);
+CREATE INDEX RegistroRelacionado_FKIndex2 ON Referencia (Referencia);
+
+CREATE INDEX IFK_Rel_24 ON Referencia (Registro);
+CREATE INDEX IFK_Rel_25 ON Referencia (Referencia);

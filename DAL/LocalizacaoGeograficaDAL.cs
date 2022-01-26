@@ -19,15 +19,6 @@ namespace BibliotecaViva.DAL
             DataContext.Localizacaogeograficas.Add(Conversor.Mapear(localizacaoGeograficaDTO));
             DataContext.SaveChanges();
         }
-        public void Vincular(LocalizacaoGeograficaDTO localizacaoGeograficaDTO, PessoaDTO pessoaDTO)
-        {
-            DataContext.Pessoalocalizacaos.Add(new Pessoalocalizacao()
-            {
-                Pessoa = (int)pessoaDTO.Codigo,
-                Localizacaogeografica = (int)localizacaoGeograficaDTO.Codigo
-            });
-            DataContext.SaveChanges();
-        }
         public void Vincular(LocalizacaoGeograficaDTO localizacaoGeograficaDTO, RegistroDTO registroDTO)
         {
             DataContext.Registrolocalizacaos.Add(new Registrolocalizacao()
@@ -35,13 +26,6 @@ namespace BibliotecaViva.DAL
                 Registro = (int)registroDTO.Codigo,
                 Localizacaogeografica = (int)localizacaoGeograficaDTO.Codigo
             });
-            DataContext.SaveChanges();
-        }
-        public void RemoverVinculoPessoa(int? codigoPessoa)
-        {
-            var localizacao = DataContext.Pessoalocalizacaos.AsNoTracking().FirstOrDefault(localizacao => localizacao.Pessoa == codigoPessoa);
-            if (localizacao != null)
-                DataContext.Remove(localizacao);
             DataContext.SaveChanges();
         }
         public void RemoverVinculoRegistro(int? codigoRegistro)

@@ -21,10 +21,8 @@ namespace BibliotecaViva.DAO
         public virtual DbSet<Descricao> Descricaos { get; set; }
         public virtual DbSet<Idioma> Idiomas { get; set; }
         public virtual DbSet<Localizacaogeografica> Localizacaogeograficas { get; set; }
-        public virtual DbSet<Nomesocial> Nomesocials { get; set; }
         public virtual DbSet<Pessoa> Pessoas { get; set; }
         public virtual DbSet<Pessoaapelido> Pessoaapelidos { get; set; }
-        public virtual DbSet<Pessoalocalizacao> Pessoalocalizacaos { get; set; }
         public virtual DbSet<Pessoaregistro> Pessoaregistros { get; set; }
         public virtual DbSet<Referencium> Referencia { get; set; }
         public virtual DbSet<Registro> Registros { get; set; }
@@ -39,13 +37,13 @@ namespace BibliotecaViva.DAO
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseNpgsql("User ID=postgres;Password=@rodrigo1;Server=127.0.0.1;Port=5432;Database=bibliotecaviva;Integrated Security=true;");
+                optionsBuilder.UseNpgsql("User ID=postgres;Password=senha;Server=127.0.0.1;Port=5432;Database=bibliotecaviva;Integrated Security=true;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "pt_BR.UTF-8");
+            modelBuilder.HasAnnotation("Relational:Collation", "Portuguese_Brazil.1252");
 
             modelBuilder.Entity<Apelido>(entity =>
             {
@@ -120,33 +118,6 @@ namespace BibliotecaViva.DAO
                 entity.Property(e => e.Longitude).HasColumnName("longitude");
             });
 
-            modelBuilder.Entity<Nomesocial>(entity =>
-            {
-                entity.HasKey(e => e.Codigo)
-                    .HasName("nomesocial_pkey");
-
-                entity.ToTable("nomesocial");
-
-                entity.HasIndex(e => e.Pessoa, "ifk_rel_03");
-
-                entity.HasIndex(e => e.Pessoa, "nomesocial_fkindex1");
-
-                entity.Property(e => e.Codigo).HasColumnName("codigo");
-
-                entity.Property(e => e.Nome)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("nome");
-
-                entity.Property(e => e.Pessoa).HasColumnName("pessoa");
-
-                entity.HasOne(d => d.PessoaNavigation)
-                    .WithMany(p => p.Nomesocials)
-                    .HasForeignKey(d => d.Pessoa)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("nomesocial_pessoa_fkey");
-            });
-
             modelBuilder.Entity<Pessoa>(entity =>
             {
                 entity.HasKey(e => e.Codigo)
@@ -204,40 +175,6 @@ namespace BibliotecaViva.DAO
                     .HasForeignKey(d => d.Pessoa)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("pessoaapelido_pessoa_fkey");
-            });
-
-            modelBuilder.Entity<Pessoalocalizacao>(entity =>
-            {
-                entity.HasKey(e => e.Codigo)
-                    .HasName("pessoalocalizacao_pkey");
-
-                entity.ToTable("pessoalocalizacao");
-
-                entity.HasIndex(e => e.Pessoa, "ifk_rel_18");
-
-                entity.HasIndex(e => e.Localizacaogeografica, "ifk_rel_20");
-
-                entity.HasIndex(e => e.Pessoa, "pessoalocalizao_fkindex1");
-
-                entity.HasIndex(e => e.Localizacaogeografica, "pessoalocalizao_fkindex2");
-
-                entity.Property(e => e.Codigo).HasColumnName("codigo");
-
-                entity.Property(e => e.Localizacaogeografica).HasColumnName("localizacaogeografica");
-
-                entity.Property(e => e.Pessoa).HasColumnName("pessoa");
-
-                entity.HasOne(d => d.LocalizacaogeograficaNavigation)
-                    .WithMany(p => p.Pessoalocalizacaos)
-                    .HasForeignKey(d => d.Localizacaogeografica)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("pessoalocalizacao_localizacaogeografica_fkey");
-
-                entity.HasOne(d => d.PessoaNavigation)
-                    .WithMany(p => p.Pessoalocalizacaos)
-                    .HasForeignKey(d => d.Pessoa)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("pessoalocalizacao_pessoa_fkey");
             });
 
             modelBuilder.Entity<Pessoaregistro>(entity =>

@@ -1,20 +1,16 @@
-DROP TABLE RegistroLocalizacao;
+DROP TABLE Referencia;
 
 DROP TABLE RegistroApelido;
+
+DROP TABLE RegistroLocalizacao;
 
 DROP TABLE Descricao;
 
 DROP TABLE PessoaRegistro;
 
-DROP TABLE Referencia;
-
 DROP TABLE Registro;
 
-DROP TABLE PessoaLocalizacao;
-
 DROP TABLE PessoaApelido;
-
-DROP TABLE NomeSocial;
 
 DROP TABLE Tipo;
 
