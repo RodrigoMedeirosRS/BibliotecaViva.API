@@ -27,40 +27,9 @@ namespace BibliotecaViva.DAL
         {
             return new SonarRetorno()
             {
-                Pessoas = PopularPessoas(BuscarPessoas(sonar)),
                 Registros = PopularRegistros(BuscarRegistros(sonar))
             };
         }
-
-        private List<PessoaDTO> PopularPessoas(List<PessoaDTO> pessoas)
-        {
-            var retorno = new List<PessoaDTO>();
-            
-            foreach(var pessoa in pessoas)
-                retorno.AddRange(PessoaDAL.Consultar(pessoa));
-
-            return retorno.DistinctBy(pessoa => pessoa.Codigo).ToList();
-        }
-
-        private List<PessoaDTO> BuscarPessoas(SonarDTO sonar)
-        {
-            return(from pessoaLocalizacao in DataContext.Pessoalocalizacaos.AsNoTracking()
-                join
-                    pessoa in DataContext.Pessoas.AsNoTracking()
-                    on pessoaLocalizacao.Pessoa equals pessoa.Codigo
-                join
-                    localizacaoGeografica in DataContext.Localizacaogeograficas.AsNoTracking()
-                    on pessoaLocalizacao.Localizacaogeografica equals localizacaoGeografica.Codigo
-                where 
-                    (Math.Sqrt(Math.Pow((sonar.Latitude - localizacaoGeografica.Latitude), 2) + Math.Pow((sonar.Longitude - localizacaoGeografica.Longitude), 2))) <= sonar.Alcance
-                select new PessoaDTO()
-                {
-                    Codigo = pessoa.Codigo,
-                    Nome = pessoa.Nome,
-                    Sobrenome = pessoa.Sobrenome
-                }).AsNoTracking().ToList();
-        }
-
         private List<RegistroDTO> PopularRegistros(List<RegistroDTO> registros)
         {
             var retorno = new List<RegistroDTO>();

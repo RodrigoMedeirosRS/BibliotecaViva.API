@@ -17,26 +17,6 @@ namespace BibliotecaViva.DAL
         }
         public List<LocalizacaoGeograficaDTO> Consultar()
         {
-            var resultado = ConsultarLocalizacaoPessoas();
-            resultado.AddRange(ConsultarLocalizacaoRegistros());
-            return resultado;
-        }
-        private List<LocalizacaoGeograficaDTO> ConsultarLocalizacaoPessoas()
-        {
-            return (from Localizacaogeografica in DataContext.Localizacaogeograficas.AsNoTracking()
-                join   
-                    registroLocalizacao in DataContext.Pessoalocalizacaos.AsNoTracking()
-                    on Localizacaogeografica.Codigo equals registroLocalizacao.Localizacaogeografica
-                select 
-                    new LocalizacaoGeograficaDTO()
-                    {
-                        Codigo = Localizacaogeografica.Codigo,
-                        Latitude = Localizacaogeografica.Latitude,
-                        Longitude = Localizacaogeografica.Longitude
-                    }).AsNoTracking().DistinctBy(localizacaoDB => localizacaoDB.Codigo).ToList();
-        }
-        private List<LocalizacaoGeograficaDTO> ConsultarLocalizacaoRegistros()
-        {
             return (from Localizacaogeografica in DataContext.Localizacaogeograficas.AsNoTracking()
                 join   
                     registroLocalizacao in DataContext.Registrolocalizacaos.AsNoTracking()

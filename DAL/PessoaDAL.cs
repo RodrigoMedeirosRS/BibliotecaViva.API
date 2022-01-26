@@ -13,16 +13,12 @@ namespace BibliotecaViva.DAL
 {
     public class PessoaDAL : BaseDAL, IPessoaDAL
     {
-        private INomeSocialDAL NomeSocialDAL { get; set; }
         private IApelidoDAL ApelidoDAL { get; set; }
-        private ILocalizacaoGeograficaDAL LocalizacaoGeograficaDAL { get; set; }
         private IPessoaRegistroDAL PessoaRegistroDAL { get; set; }
-        public PessoaDAL(bibliotecavivaContext dataContext, INomeSocialDAL nomeSocialDAL, IApelidoDAL apelidoDAL, ILocalizacaoGeograficaDAL localizacaoGeograficaDAL, IPessoaRegistroDAL pessoaRegistroDAL) : base(dataContext)
+        public PessoaDAL(bibliotecavivaContext dataContext, IApelidoDAL apelidoDAL, IPessoaRegistroDAL pessoaRegistroDAL) : base(dataContext)
         {
             ApelidoDAL = apelidoDAL;
-            NomeSocialDAL = nomeSocialDAL;
             PessoaRegistroDAL = pessoaRegistroDAL;
-            LocalizacaoGeograficaDAL = localizacaoGeograficaDAL;
         }
         public void Cadastrar(PessoaDTO pessoaDTO)
         {
@@ -48,9 +44,6 @@ namespace BibliotecaViva.DAL
         {
             var pessoas = (from pessoa in DataContext.Pessoas
                 join
-                    nomeSocial in DataContext.Nomesocials
-                    on pessoa.Codigo equals nomeSocial.Pessoa into nomeSocialLeftJoin from nomeSocialLeft in nomeSocialLeftJoin.DefaultIfEmpty()
-                join
                     pessoaApelido in DataContext.Pessoaapelidos
                     on pessoa.Codigo equals pessoaApelido.Pessoa into pessoaApelidoLeftJoin from pessoaApelidoLeft in pessoaApelidoLeftJoin.DefaultIfEmpty()
                 join
@@ -58,14 +51,6 @@ namespace BibliotecaViva.DAL
                    on new Pessoaapelido(){ 
                        Apelido = pessoaApelidoLeft != null ? pessoaApelidoLeft.Apelido : 0
                     }.Apelido equals apelido.Codigo into apelidoLeftJoin from apelidoLeft in apelidoLeftJoin.DefaultIfEmpty()
-                join
-                    pessoaLocalizacao in DataContext.Pessoalocalizacaos
-                    on pessoa.Codigo equals pessoaLocalizacao.Pessoa into pessoaLocalizacaoLeftJoin from pessoaLocalizacaoLeft in pessoaLocalizacaoLeftJoin.DefaultIfEmpty()
-                join
-                   localizacaoGeografica in DataContext.Localizacaogeograficas
-                   on new Pessoalocalizacao(){ 
-                       Localizacaogeografica = pessoaLocalizacaoLeft != null ? pessoaLocalizacaoLeft.Localizacaogeografica : 0
-                    }.Localizacaogeografica equals localizacaoGeografica.Codigo into localizacaoGeograficaLeftJoin from localizacaoGeograficaLeft in localizacaoGeograficaLeftJoin.DefaultIfEmpty()
 
                 where 
                     (!string.IsNullOrEmpty(pessoaDTO.Nome) && pessoa.Nome.ToLower().Contains(pessoaDTO.Nome.ToLower())) 
@@ -78,10 +63,7 @@ namespace BibliotecaViva.DAL
                     Nome = pessoa.Nome,
                     Sobrenome = pessoa.Sobrenome,
                     Genero = pessoa.Genero,
-                    Apelido = apelidoLeft != null ? apelidoLeft.Nome : string.Empty,
-                    NomeSocial = nomeSocialLeft != null ? nomeSocialLeft.Nome : string.Empty,
-                    Latitude = ObterLocalizacaoGeorafica(localizacaoGeograficaLeft, true).ToString().Replace(",", "."),
-                    Longitude = ObterLocalizacaoGeorafica(localizacaoGeograficaLeft, false).ToString().Replace(",", ".")
+                    Apelido = apelidoLeft != null ? apelidoLeft.Nome : string.Empty
                 }).AsNoTracking().DistinctBy(pessoaDB => pessoaDB.Codigo).ToList();
                 
             foreach(var pessoa in pessoas)
@@ -93,9 +75,6 @@ namespace BibliotecaViva.DAL
         {
             var pessoaDB = (from pessoa in DataContext.Pessoas
                 join
-                    nomeSocial in DataContext.Nomesocials
-                    on pessoa.Codigo equals nomeSocial.Pessoa into nomeSocialLeftJoin from nomeSocialLeft in nomeSocialLeftJoin.DefaultIfEmpty()
-                join
                     pessoaApelido in DataContext.Pessoaapelidos
                     on pessoa.Codigo equals pessoaApelido.Pessoa into pessoaApelidoLeftJoin from pessoaApelidoLeft in pessoaApelidoLeftJoin.DefaultIfEmpty()
                 join
@@ -103,15 +82,7 @@ namespace BibliotecaViva.DAL
                    on new Pessoaapelido(){ 
                        Apelido = pessoaApelidoLeft != null ? pessoaApelidoLeft.Apelido : 0
                     }.Apelido equals apelido.Codigo into apelidoLeftJoin from apelidoLeft in apelidoLeftJoin.DefaultIfEmpty()
-                join
-                    pessoaLocalizacao in DataContext.Pessoalocalizacaos
-                    on pessoa.Codigo equals pessoaLocalizacao.Pessoa into pessoaLocalizacaoLeftJoin from pessoaLocalizacaoLeft in pessoaLocalizacaoLeftJoin.DefaultIfEmpty()
-                join
-                   localizacaoGeografica in DataContext.Localizacaogeograficas
-                   on new Pessoalocalizacao(){ 
-                       Localizacaogeografica = pessoaLocalizacaoLeft != null ? pessoaLocalizacaoLeft.Localizacaogeografica : 0
-                    }.Localizacaogeografica equals localizacaoGeografica.Codigo into localizacaoGeograficaLeftJoin from localizacaoGeograficaLeft in localizacaoGeograficaLeftJoin.DefaultIfEmpty()
-
+                
                 where 
                     pessoa.Codigo == codigoPessoa
                 
@@ -122,38 +93,16 @@ namespace BibliotecaViva.DAL
                     Sobrenome = pessoa.Sobrenome,
                     Genero = pessoa.Genero,
                     Apelido = apelidoLeft != null ? apelidoLeft.Nome : string.Empty,
-                    NomeSocial = nomeSocialLeft != null ? nomeSocialLeft.Nome : string.Empty,
-                    Latitude = ObterLocalizacaoGeorafica(localizacaoGeograficaLeft, true).ToString().Replace(",", "."),
-                    Longitude = ObterLocalizacaoGeorafica(localizacaoGeograficaLeft, false).ToString().Replace(",", ".")
                 }).AsNoTracking().FirstOrDefault();
                 
             pessoaDB.Relacoes = PessoaRegistroDAL.ObterRelacao((int)pessoaDB.Codigo);
             
             return pessoaDB;
         }
-        private static double? ObterLocalizacaoGeorafica(Localizacaogeografica localizacaoGeograficaLeft, bool latitude)
-        {
-            if (localizacaoGeograficaLeft != null)
-                return latitude ? localizacaoGeograficaLeft.Latitude : localizacaoGeograficaLeft.Longitude;
-            return null;
-        }
         private void CadastrarDadosOpcionais(PessoaDTO pessoaDTO)
         {
-            CadastrarNomeSocial(pessoaDTO);
             CadastrarApelido(pessoaDTO);
-            CadastrarLocalizacaoGeografica(pessoaDTO);
             PessoaRegistroDAL.VincularReferencia(pessoaDTO);
-        }
-        private void CadastrarNomeSocial(PessoaDTO pessoaDTO)
-        {
-            if (string.IsNullOrEmpty(pessoaDTO.NomeSocial))
-                NomeSocialDAL.Remover(pessoaDTO.Codigo);
-            else
-                NomeSocialDAL.Cadastrar(new NomeSocialDTO()
-                {
-                    Pessoa = pessoaDTO.Codigo,
-                    Nome = pessoaDTO.NomeSocial
-                });
         }
         private void CadastrarApelido(PessoaDTO pessoaDTO)
         {
@@ -169,31 +118,6 @@ namespace BibliotecaViva.DAL
                 ApelidoDAL.Cadastrar(apelidoDTO);
                 apelidoDTO.Codigo = DataContext.Apelidos.FirstOrDefault(apelido => apelido.Nome.ToLower() == pessoaDTO.Apelido.ToLower()).Codigo;
                 ApelidoDAL.VincularPessoa(apelidoDTO, pessoaDTO);
-            }     
-        }
-        private void CadastrarLocalizacaoGeografica(PessoaDTO pessoaDTO)
-        {
-            try
-            {
-                LocalizacaoGeograficaDAL.RemoverVinculoPessoa(pessoaDTO.Codigo);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            if (pessoaDTO.Latitude != null && pessoaDTO.Longitude != null)
-            {
-                var localizacaoGeograficaDTO = new LocalizacaoGeograficaDTO()
-                { 
-                    Latitude = double.Parse(pessoaDTO.Latitude, System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US")),
-                    Longitude = double.Parse(pessoaDTO.Longitude, System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US")),
-                };
-                
-                LocalizacaoGeograficaDAL.Cadastrar(localizacaoGeograficaDTO);
-                localizacaoGeograficaDTO.Codigo = DataContext.Localizacaogeograficas.FirstOrDefault
-                    (localizao => localizao.Latitude == localizacaoGeograficaDTO.Latitude && 
-                        localizao.Longitude == localizacaoGeograficaDTO.Longitude).Codigo;
-                LocalizacaoGeograficaDAL.Vincular(localizacaoGeograficaDTO, pessoaDTO);
             }     
         }
     }

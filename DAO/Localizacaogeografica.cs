@@ -9,7 +9,6 @@ namespace BibliotecaViva.DAO
     {
         public Localizacaogeografica()
         {
-            Pessoalocalizacaos = new HashSet<Pessoalocalizacao>();
             Registrolocalizacaos = new HashSet<Registrolocalizacao>();
         }
 
@@ -17,7 +16,6 @@ namespace BibliotecaViva.DAO
         public double Latitude { get; set; }
         public double Longitude { get; set; }
 
-        public virtual ICollection<Pessoalocalizacao> Pessoalocalizacaos { get; set; }
         public virtual ICollection<Registrolocalizacao> Registrolocalizacaos { get; set; }
     }
 }

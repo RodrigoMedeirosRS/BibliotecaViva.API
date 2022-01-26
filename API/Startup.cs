@@ -63,7 +63,6 @@ namespace API
             services.AddScoped<IRegistroDAL, RegistroDAL>();
             services.AddScoped<IDescricaoDAL, DescricaoDAL>(); 
             services.AddScoped<IReferenciaDAL, ReferenciaDAL>();
-            services.AddScoped<INomeSocialDAL, NomeSocialDAL>(); 
             services.AddScoped<ITipoRelacaoDAL, TipoRelecaoDAL>();
             services.AddScoped<ITipoExecucaoDAL, TipoExecucaoDAL>();
             services.AddScoped<IPessoaRegistroDAL, PessoaRegistroDAL>();
