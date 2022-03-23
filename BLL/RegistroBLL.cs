@@ -20,8 +20,8 @@ namespace BibliotecaViva.BLL
         }
         public async Task<string> Cadastrar(RegistroDTO registro) 
         {
-            RegistroDAL.Cadastrar(registro);
-            return registro.Nome + " Registrado(a) com Sucesso!";
+            var codigo = RegistroDAL.Cadastrar(registro);
+            return codigo + " Registrado(a) com Sucesso!";
         }
         public async Task<List<RegistroDTO>> Consultar(RegistroConsulta registro)
         {

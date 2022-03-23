@@ -139,7 +139,7 @@ namespace BibliotecaViva.DAL
                 return latitude ? localizacaoGeograficaLeft.Latitude : localizacaoGeograficaLeft.Longitude;
             return null;
         }
-        public void Cadastrar(RegistroDTO registroDTO)
+        public int Cadastrar(RegistroDTO registroDTO)
         {
             var registro = DataContext.Registros.AsNoTracking().FirstOrDefault(registro => registro.Nome.ToLower() == registroDTO.Nome.ToLower());
             if(registro != null)
@@ -156,6 +156,7 @@ namespace BibliotecaViva.DAL
                 registroDTO.Codigo = registro.Codigo;
             }
             CadastrarDadosOpcionais(registroDTO);
+            return registro.Codigo;
         }
         private Registro MapearRegistro(RegistroDTO registroDTO)
         {
