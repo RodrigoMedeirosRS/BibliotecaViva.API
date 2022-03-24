@@ -5,7 +5,7 @@ namespace BibliotecaViva.DAL.Interfaces
 {
     public interface IPessoaDAL
     {
-        void Cadastrar(PessoaDTO pessoaDTO);
+        int Cadastrar(PessoaDTO pessoaDTO);
         List<PessoaDTO> Consultar(PessoaDTO pessoaDTO);   
         PessoaDTO Consultar(int codigoPessoa);     
     }

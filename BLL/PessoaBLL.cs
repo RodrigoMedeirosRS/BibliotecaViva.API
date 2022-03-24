@@ -19,8 +19,8 @@ namespace BibliotecaViva.BLL
 
         public async Task<string> Cadastrar(PessoaDTO pessoa)
         {
-            PessoaDAL.Cadastrar(pessoa);
-            return pessoa.Nome + " " + pessoa.Sobrenome + " Registrado(a) com Sucesso!";
+            var codigo = PessoaDAL.Cadastrar(pessoa);
+            return codigo + " Registrado(a) com Sucesso!";
         }
 
         public async Task<List<PessoaDTO>> Consultar(PessoaConsulta pessoa)

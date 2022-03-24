@@ -20,7 +20,7 @@ namespace BibliotecaViva.DAL
             ApelidoDAL = apelidoDAL;
             PessoaRegistroDAL = pessoaRegistroDAL;
         }
-        public void Cadastrar(PessoaDTO pessoaDTO)
+        public int Cadastrar(PessoaDTO pessoaDTO)
         {
             var pessoa = DataContext.Pessoas.AsNoTracking().FirstOrDefault(pessoa => pessoa.Codigo == pessoaDTO.Codigo);
             if(pessoa != null)
@@ -39,6 +39,7 @@ namespace BibliotecaViva.DAL
                 pessoaDTO.Codigo = pessoa.Codigo;
             }
             CadastrarDadosOpcionais(pessoaDTO);
+            return pessoa.Codigo;
         }
         public List<PessoaDTO> Consultar(PessoaDTO pessoaDTO)
         {
